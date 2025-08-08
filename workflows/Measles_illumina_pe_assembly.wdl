@@ -43,7 +43,7 @@ workflow Measles_illumina_pe_assembly {
     call pre_assembly_tasks.align_reads_bwa as align_reads {
         input:
             sample_name = sample_name,
-            ref = select_assets.ref_fasta,
+            ref = measles_ref_fasta,
             fastq_1 = filter_reads.cleaned_1,
             fastq_2 = filter_reads.cleaned_2
     }
@@ -51,22 +51,22 @@ workflow Measles_illumina_pe_assembly {
     call assembly_tasks.trim_primers_ivar as trim_primers {
         input:
             sample_name = sample_name,
-            primers = select_assets.primer_bed,
+            primers = measles_primer_bed,
             bam = align_reads.out_bam
     }
 
     call assembly_tasks.call_variants_ivar as call_variants {
         input:
             sample_name = sample_name,
-            ref = select_assets.ref_fasta,
-            gff = select_assets.ref_gff,
+            ref = measles_ref_fasta,
+            gff = measles_ref_gff,
             bam = trim_primers.trimsort_bam
     }
 
     call assembly_tasks.call_consensus_ivar as call_consensus {
         input:
             sample_name = sample_name,
-            ref = select_assets.ref_fasta,
+            ref = measles_ref_fasta,
             bam = trim_primers.trimsort_bam
     }
 
@@ -87,7 +87,7 @@ workflow Measles_illumina_pe_assembly {
         input:
             sample_name = sample_name,
             fasta = rename_fasta.renamed_consensus,
-            reference_file = select_assets.ref_fasta,
+            reference_file = measles_ref_fasta,
             calc_percent_coverage_py = calc_percent_coverage_py
     }
 
@@ -95,7 +95,7 @@ workflow Measles_illumina_pe_assembly {
         input:
             sample_name = sample_name,
             renamed_consensus = rename_fasta.renamed_consensus,
-            organism_id = select_assets.nextclade_organism_id
+            organism_id = measles_nextclade_organism_id
     }
 
     call version_capture_tasks.workflow_version_capture {
