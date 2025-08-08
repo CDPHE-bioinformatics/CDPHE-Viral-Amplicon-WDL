@@ -1,0 +1,13 @@
+{
+    "Measles_illumina_pe_assembly.sample_name": "${this.sample_name}",
+    "Measles_illumina_pe_assembly.fastq_1": "${this.fastq_1}",
+    "Measles_illumina_pe_assembly.fastq_2": "${this.fastq_2}",
+    "Measles_illumina_pe_assembly.contam_fasta": "${workspace.adapters_and_contaminants}",
+    "Measles_illumina_pe_assembly.out_dir": "terra_outputs",
+    "Measles_illumina_pe_assembly.organism": "${this.organism}",
+    "Measles_illumina_pe_assembly.measles_primer_bed": "${workspace.measles_primer}",
+    "Measles_illumina_pe_assembly.measles_ref_fasta": "${workspace.measles_ref_fasta}",
+    "Measles_illumina_pe_assembly.measles_ref_gff": "${workspace.measles_ref_gff}",
+    "Measles_illumina_pe_assembly.calc_percent_coverage_py": "${workspace.calc_percent_coverage_py}"
+}
+
