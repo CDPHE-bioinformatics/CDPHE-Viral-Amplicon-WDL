@@ -95,7 +95,7 @@ workflow Measles_illumina_pe_assembly {
         input:
             sample_name = sample_name,
             renamed_consensus = rename_fasta.renamed_consensus,
-            organism_id = measles_nextclade_organism_id
+            organism_id = "measles"
     }
 
     call version_capture_tasks.workflow_version_capture {
