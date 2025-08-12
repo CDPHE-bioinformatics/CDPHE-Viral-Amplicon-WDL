@@ -24,10 +24,11 @@ task trim_primers_ivar {
     }
 
     runtime {
-        cpu: 3
-        memory: "6G"
+        cpu: 6
+        memory: "16G"
         disks: "local-disk 1 HDD"
         maxRetries: 2
+        bootDiskSizeGb: 10
         docker: docker 
     }
 }
