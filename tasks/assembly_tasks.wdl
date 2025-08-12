@@ -54,9 +54,11 @@ task call_variants_ivar {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 6
+        memory: "16G"
         disks: "local-disk 1 HDD"
+        maxRetries: 2
+        bootDiskSizeGb: 10
         docker: docker
     }
 }
@@ -95,9 +97,11 @@ task call_consensus_ivar {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 6
+        memory: "16G"
         disks: "local-disk 1 HDD"
+        maxRetries: 2
+        bootDiskSizeGb: 10
         docker: docker
     }
 }
