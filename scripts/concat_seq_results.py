@@ -186,6 +186,10 @@ def concat_results(
     j = j.join(percent_cvg_df, how="left")
     j = j.join(cov_out_df, how="left")
     j = j.join(nextclade_df, how="left")
+    
+    # Preserve index as a separate column to avoid conflicts
+    if j.index.name == "sample_name":
+        j["sample_name_from_index"] = j.index
     j = j.reset_index()
 
     # add fasta header
