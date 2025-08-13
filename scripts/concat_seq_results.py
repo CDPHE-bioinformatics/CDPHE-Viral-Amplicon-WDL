@@ -184,8 +184,9 @@ def concat_results(
     nextclade_df["sample_name"] = nextclade_df["seqName"].apply(
         get_sample_name_from_fasta_header
     )
-    nextclade_df["sample_name"] = nextclade_df["sample_name"].astype(str)  # Ensure string type
+    nextclade_df["sample_name"] = nextclade_df["sample_name"].astype(str) 
     nextclade_df = nextclade_df.set_index("sample_name")
+    
     # Convert all dataframe indexes to string before join
     #df.index = df.index.astype(str)
     #workbook.index = workbook.index.astype(str)
