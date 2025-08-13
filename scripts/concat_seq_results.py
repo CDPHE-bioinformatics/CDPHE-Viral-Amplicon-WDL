@@ -164,6 +164,7 @@ def concat_results(
     # create dataframe and fill with constant strings
     df = pd.DataFrame()
     df["sample_name"] = sample_name_list
+    df["sample_name"] = df["sample_name"].astype(str) 
     df = df.set_index("sample_name")
     df["analysis_date"] = str(date.today())
     df["assembler_version"] = assembler_version
@@ -172,10 +173,13 @@ def concat_results(
     workbook = pd.read_csv(
         workbook_path, sep="\t", dtype={"sample_name": object, "hsn": object}
     )
+    workbook["sample_name"] = workbook["sample_name"].astype(str)  # <-- Add this line
     workbook = workbook.set_index("sample_name")
 
     # set index on the samtools_df and percent_cvg_df and variants_df to prepare for joining
+    cov_out_df["sample_name"] = cov_out_df["sample_name"].astype(str)
     cov_out_df = cov_out_df.set_index("sample_name")
+    percent_cvg_df["sample_name"] = percent_cvg_df["sample_name"].astype(str)
     percent_cvg_df = percent_cvg_df.set_index("sample_name")
     nextclade_df["sample_name"] = nextclade_df["seqName"].apply(
         get_sample_name_from_fasta_header
