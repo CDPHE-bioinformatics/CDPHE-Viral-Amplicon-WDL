@@ -181,12 +181,12 @@ def concat_results(
         get_sample_name_from_fasta_header
     )
 
-    # Convert all dataframe indexes to string (or int) before join
-    df.index = df.index.astype(str)
-    workbook.index = workbook.index.astype(str)
-    percent_cvg_df.index = percent_cvg_df.index.astype(str)
-    cov_out_df.index = cov_out_df.index.astype(str)
-    nextclade_df.index = nextclade_df.index.astype(str)
+    # Convert all dataframe indexes to string before join
+    #df.index = df.index.astype(str)
+    #workbook.index = workbook.index.astype(str)
+    #percent_cvg_df.index = percent_cvg_df.index.astype(str)
+    #cov_out_df.index = cov_out_df.index.astype(str)
+    #nextclade_df.index = nextclade_df.index.astype(str)
 
     # join
     j = df.join(workbook, how="left")
