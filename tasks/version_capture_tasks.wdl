@@ -32,8 +32,8 @@ task workflow_version_capture {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 2
+        memory: "6G"
         disks: "local-disk 1 HDD"
         docker: "ubuntu:focal"
     }
@@ -65,8 +65,8 @@ task task_version_capture {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 2
+        memory: "6G"
         disks: "local-disk 1 HDD"
         docker: "mchether/py3-bio:v4"
     }
