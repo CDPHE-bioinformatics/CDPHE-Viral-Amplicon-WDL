@@ -3,7 +3,7 @@ version 1.0
 import "../tasks/summary_tasks.wdl"
 import "../tasks/version_capture_tasks.wdl"
 
-workflow Measles_illumina_pe_summary {
+workflow viral_amplicon_illumina_pe_summary {
     input {
         Array[String] sample_name
         Array[File?] renamed_consensus
