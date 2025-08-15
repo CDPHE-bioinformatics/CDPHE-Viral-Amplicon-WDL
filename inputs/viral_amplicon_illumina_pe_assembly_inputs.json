@@ -1,0 +1,12 @@
+{
+    "viral_amplicon_illumina_pe_assembly.sample_name": "${this.sample_name}",
+    "viral_amplicon_illumina_pe_assembly.fastq_1": "${this.fastq_1}",
+    "viral_amplicon_illumina_pe_assembly.fastq_2": "${this.fastq_2}",
+    "viral_amplicon_illumina_pe_assembly.contam_fasta": "${workspace.adapters_and_contaminants}",
+    "viral_amplicon_illumina_pe_assembly.out_dir": "terra_outputs",
+    "viral_amplicon_illumina_pe_assembly.organism": "${this.organism}",
+    "viral_amplicon_illumina_pe_assembly.viral_amplicon_primer_bed": "${workspace.viral_amplicon_primer}",
+    "viral_amplicon_illumina_pe_assembly.viral_amplicon_ref_fasta": "${workspace.viral_amplicon_ref_fasta}",
+    "viral_amplicon_illumina_pe_assembly.viral_amplicon_ref_gff": "${workspace.viral_amplicon_ref_gff}",
+    "viral_amplicon_illumina_pe_assembly.calc_percent_coverage_py": "${workspace.calc_percent_coverage_py}"
+}
