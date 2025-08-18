@@ -1,4 +1,4 @@
-version 1.0
+version 1.2
 
 import "../tasks/pre_assembly_tasks.wdl"
 import "../tasks/assembly_tasks.wdl"
