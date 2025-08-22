@@ -30,7 +30,7 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     parser.add_argument(
         "--workflow_name",
         help="the workflow name (i.e. what is on GitHub)",
-        default="CDPHE-Measles",
+        default="CDPHE-Viral-Amplicon-WDL",
     )
     parser.add_argument(
         "--workflow_version",
