@@ -1,4 +1,4 @@
-name: Measles_wdl
+name: viral_amplicon_wdl
 channels:
   - defaults
   - conda-forge
