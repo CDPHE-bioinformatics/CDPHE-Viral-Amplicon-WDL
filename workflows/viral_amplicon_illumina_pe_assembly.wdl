@@ -10,6 +10,7 @@ workflow viral_amplicon_illumina_pe_assembly {
         String project_name
         String sample_name
         String primer_set
+        String viral_amplicon_nextclade_organism_id
         File fastq_1
         File fastq_2
         File contam_fasta
