@@ -1,10 +1,10 @@
 version: 1.2
 
 workflows:
-  - name: Measles_illumina_pe_assembly
+  - name: viral_amplicon_illumina_pe_assembly
     subclass: WDL
-    primaryDescriptorPath: /workflows/Measles_illumina_pe_assembly.wdl
+    primaryDescriptorPath: /workflows/viral_amplicon_illumina_pe_assembly.wdl
     
-  - name: Measles_illumina_pe_summary
+  - name: viral_amplicon_illumina_pe_summary
     subclass: WDL
-    primaryDescriptorPath: /workflows/Measles_illumina_pe_summary.wdl
+    primaryDescriptorPath: /workflows/viral_amplicon_illumina_pe_summary.wdl
