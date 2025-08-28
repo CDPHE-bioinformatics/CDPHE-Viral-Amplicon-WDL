@@ -49,8 +49,7 @@ workflow viral_amplicon_illumina_pe_summary {
         input:
             out_dir = "~{out_dir_path}/~{workflow_version_capture.workflow_version_path}",
             cat_fastas = concatenate_consensus.cat_fastas,
-            sequencing_results_csv = summarize_results.sequencing_results_csv,
-            wgs_clinisys_report_csv = summarize_results.wgs_clinisys_report_csv
+            sequencing_results_csv = summarize_results.sequencing_results_csv
     }
 
     output {
@@ -59,6 +58,5 @@ workflow viral_amplicon_illumina_pe_summary {
         File cat_fastas = concatenate_consensus.cat_fastas
 
         File sequencing_results_csv = summarize_results.sequencing_results_csv
-        File wgs_clinisys_report_csv = summarize_results.wgs_clinisys_report_csv
     }
 }
