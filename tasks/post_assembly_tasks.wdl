@@ -33,8 +33,8 @@ task calc_bam_stats_samtools {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 2
+        memory: "2G"
         disks: "local-disk 1 HDD"
         docker: docker
     }
@@ -82,8 +82,8 @@ task calc_percent_coverage {
     }
 
     runtime {
-        cpu: 1
-        memory: "1G"
+        cpu: 2
+        memory: "2G"
         disks: "local-disk 1 HDD"
         docker: "mchether/py3-bio:v1"
     }
