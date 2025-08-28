@@ -101,11 +101,11 @@ task call_clades_nextclade {
     command <<<
         nextclade --version | awk '/nextclade/ {print $2}' > VERSION
         nextclade dataset get --name "~{organism_id}" \
-            --output-dir /data/~{organism_id}
-        nextclade run --input-dataset /data/~{organism_id} \
-            --output-json ~{sample_name}_nextclade.json \
-            --output-csv ~{sample_name}_nextclade.csv \
-            ~{renamed_consensus}
+            --output-dir "/data/~{organism_id}"
+        nextclade run --input-dataset "/data/~{organism_id}" \
+            --output-json "~{sample_name}_nextclade.json" \
+            --output-csv "~{sample_name}_nextclade.csv" \
+            "~{renamed_consensus}"
     >>>
 
     output {
