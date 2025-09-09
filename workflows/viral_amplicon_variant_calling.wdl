@@ -116,7 +116,7 @@ workflow viral_amplicon_variant_calling {
         Array[File] demix = freyja_demix.demix
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
-        File version_capture_viral_amp_variant_calling = create_version_capture_file.version_captureviral_amp_variant_calling
+        File version_capture_viral_amp_variant_calling = create_version_capture_file.version_capture_viral_amp_variant_calling
         String transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
     }
 }
