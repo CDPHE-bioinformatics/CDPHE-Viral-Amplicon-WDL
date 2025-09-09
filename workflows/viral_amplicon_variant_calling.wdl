@@ -5,7 +5,7 @@ version 1.0
 import "../tasks/version_capture_tasks.wdl" as version_capture
 import "../tasks/transfer_task.wdl" as transfer_task
 
-workflow Viral_Amp_Variant_Calling {
+workflow viral_amplicon_variant_calling {
 
     input {
 
@@ -20,7 +20,7 @@ workflow Viral_Amp_Variant_Calling {
         File reference_gff
 
         # python scripts
-        File version_capture_wwt_variant_calling_py ##
+        File version_capture_viral_amp_variant_calling_py ##
     }
 
     # secret variables
@@ -37,8 +37,8 @@ workflow Viral_Amp_Variant_Calling {
         call variant_calling {
             input:
                 bam = add_RG.rgbam,
-                ref = covid_genome,
-                ref_gff = covid_gff,
+                ref = reference_genome,
+                ref_gff = reference_gff,
                 sample_name = id_bam.left
         }
 
@@ -73,7 +73,7 @@ workflow Viral_Amp_Variant_Calling {
     
     call create_version_capture_file {
         input:
-            version_capture_wwt_variant_calling_py = version_capture_wwt_variant_calling_py,
+            version_capture_viral_amp_variant_calling_py = version_capture_viral_amp_variant_calling_py,
             project_name = project_name,
             samtools_version_staphb = select_all(add_RG.samtools_version_staphb)[0],
             samtools_version_andersenlabapps = select_all(variant_calling.samtools_version_andersenlabapps)[0],
@@ -85,19 +85,19 @@ workflow Viral_Amp_Variant_Calling {
 
     
     SubdirsToFiles subdirs_to_files = object { subdirs_to_files: [
-        ("waste_water_variant_calling/freyja",
+        ("viral_amp_variant_calling/freyja",
             flatten([
                 variant_calling.variants,
                 variant_calling.depth,
                 freyja_demix.demix
             ])
         ),
-        ("waste_water_variant_calling", [
+        ("viral_amp_variant_calling", [
             combine_mutations_tsv.combined_mutations_tsv,
             freyja_aggregate.demix_aggregated
         ]),
         ("version_capture", [
-            create_version_capture_file.version_capture_wwt_variant_calling
+            create_version_capture_file.version_capture_viral_amp_variant_calling
         ])
     ]}
 
@@ -116,8 +116,8 @@ workflow Viral_Amp_Variant_Calling {
         Array[File] demix = freyja_demix.demix
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
-        File version_capture_wwt_variant_calling = create_version_capture_file.version_capture_wwt_variant_calling
-        String transfer_date_wwt_variant_calling = transfer_set_results.transfer_date
+        File version_capture_viral_amp_variant_calling = create_version_capture_file.version_captureviral_amp_variant_calling
+        String transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
     }
 }
 
@@ -289,7 +289,7 @@ task combine_mutations_tsv {
 
 task create_version_capture_file {
     input {
-        File version_capture_wwt_variant_calling_py
+        File version_capture_viral_amp_variant_calling_py
         String project_name
         String samtools_version_staphb
         String samtools_version_andersenlabapps
@@ -300,7 +300,7 @@ task create_version_capture_file {
     }
 
     command <<<
-        python ~{version_capture_wwt_variant_calling_py} \
+        python ~{version_capture_viral_amp_variant_calling_py} \
         --project_name "~{project_name}" \
         --samtools_version_staphb "~{samtools_version_staphb}" \
         --samtools_version_andersenlabapps "~{samtools_version_andersenlabapps}" \
@@ -311,7 +311,7 @@ task create_version_capture_file {
     >>>
 
     output {
-        File version_capture_wwt_variant_calling = 'version_capture_wastewater_variant_calling_~{project_name}_~{workflow_version_path}.csv'
+        File version_capture_viral_amp_variant_calling = 'version_capture_viral_amp_variant_calling_~{project_name}_~{workflow_version_path}.csv'
     }
 
     runtime {
