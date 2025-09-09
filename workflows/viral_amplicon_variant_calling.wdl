@@ -311,8 +311,8 @@ task create_version_capture_file {
     >>>
 
     output {
-        File version_capture_viral_amp_variant_calling = 'version_capture_viral_amp_variant_calling_~{project_name}_~{workflow_version_path}.csv'
-    }
+        File version_capture_viral_amp_variant_calling = "version_capture_viral_amp_variant_calling_~{project_name}_~{workflow_version_path}.csv"
+}
 
     runtime {
       docker: "mchether/py3-bio:v4"
