@@ -48,7 +48,7 @@ workflow viral_amplicon_wwt_variant_calling {
                 variants = variant_calling.variants,
                 depth = variant_calling.depth,
                 sample_name = id_bam.left,
-                freyja_pathogen = freyja_pathogen
+                freyja_pathogen = freyja_pathogen[0]  
         }
         
         call mutations_tsv {
@@ -189,7 +189,7 @@ task freyja_demix {
         String sample_name
         File variants
         File depth
-        
+        String freyja_pathogen
     }
 
     command <<<
