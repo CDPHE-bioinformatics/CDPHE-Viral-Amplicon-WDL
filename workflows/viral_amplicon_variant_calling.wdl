@@ -14,10 +14,7 @@ workflow viral_amplicon_variant_calling {
         Array[String] out_dir_array
         Boolean overwrite
         Array[String] project_name_array 
-
-        # freyja data
-        ## File freyja_barcodes
-        ## File freyja_lineages
+        Array[String] freyja_pathogen
 
         # reference files/workspace data
         File reference_genome
@@ -193,8 +190,7 @@ task freyja_demix {
         String sample_name
         File variants
         File depth
-        #File barcodes
-        #File lineages
+      
     }
 
     command <<<
@@ -202,16 +198,10 @@ task freyja_demix {
         # $NF refers to the last field split by white spaces
 
 
-#####       Remove this part ####
-        #get updated lineages for demixing
-        mkdir ./freyja_db
-        freyja update --outdir ./freyja_db
-        ################
-
         #creates a temp file with the same name as the intended output file that will get output in case of failure or overwritten in case of sucess
         echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
         
-        freyja demix --eps 0.01 --covcut 10 --barcodes ~{barcodes} --meta ~{lineages} --confirmedonly ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
+        freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 --confirmedonly ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
     >>>
 
     output {
