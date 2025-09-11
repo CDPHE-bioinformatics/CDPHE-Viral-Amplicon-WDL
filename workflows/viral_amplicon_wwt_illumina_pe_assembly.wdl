@@ -5,7 +5,7 @@ import "../tasks/assembly_tasks.wdl"
 import "../tasks/post_assembly_tasks.wdl"
 import "../tasks/version_capture_tasks.wdl"
 
-workflow viral_amplicon_illumina_pe_assembly {
+workflow viral_amplicon_wwt_illumina_pe_assembly {
     input {
         String project_name
         String sample_name
