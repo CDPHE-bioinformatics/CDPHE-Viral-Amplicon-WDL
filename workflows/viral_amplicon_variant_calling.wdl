@@ -13,7 +13,11 @@ workflow viral_amplicon_variant_calling {
         Array[String] sample_name
         Array[String] out_dir_array
         Boolean overwrite
-        Array[String] project_name_array
+        Array[String] project_name_array 
+
+        # freyja data
+        ## File freyja_barcodes
+        ## File freyja_lineages
 
         # reference files/workspace data
         File reference_genome
@@ -46,7 +50,9 @@ workflow viral_amplicon_variant_calling {
             input:
                 variants = variant_calling.variants,
                 depth = variant_calling.depth,
-                sample_name = id_bam.left
+                sample_name = id_bam.left,
+                #barcodes = freyja_bracodes,
+                #lineages = freyja_lineages
         }
         
         call mutations_tsv {
@@ -187,20 +193,25 @@ task freyja_demix {
         String sample_name
         File variants
         File depth
+        #File barcodes
+        #File lineages
     }
 
     command <<<
         freyja --version | awk '{print $NF}' | tee VERSION
         # $NF refers to the last field split by white spaces
 
+
+#####       Remove this part ####
         #get updated lineages for demixing
         mkdir ./freyja_db
         freyja update --outdir ./freyja_db
-        
+        ################
+
         #creates a temp file with the same name as the intended output file that will get output in case of failure or overwritten in case of sucess
         echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
         
-        freyja demix --eps 0.01 --covcut 10 --barcodes ./freyja_db/usher_barcodes.feather --meta ./freyja_db/curated_lineages.json --confirmedonly ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
+        freyja demix --eps 0.01 --covcut 10 --barcodes ~{barcodes} --meta ~{lineages} --confirmedonly ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
     >>>
 
     output {
