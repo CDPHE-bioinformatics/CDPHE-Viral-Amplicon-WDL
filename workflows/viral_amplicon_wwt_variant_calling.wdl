@@ -5,7 +5,7 @@ version 1.0
 import "../tasks/version_capture_tasks.wdl" as version_capture
 import "../tasks/transfer_task.wdl" as transfer_task
 
-workflow viral_amplicon_variant_calling {
+workflow viral_amplicon_wwt_variant_calling {
 
     input {
 
