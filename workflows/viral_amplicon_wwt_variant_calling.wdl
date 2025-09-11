@@ -316,7 +316,7 @@ task create_version_capture_file {
 
     runtime {
       docker: "mchether/py3-bio:v4"
-      memory: "1 GB"
+      memory: "4 GB"
       cpu: 4
       disks: "local-disk 10 SSD"
     }
