@@ -5,20 +5,20 @@ import "../tasks/assembly_tasks.wdl"
 import "../tasks/post_assembly_tasks.wdl"
 import "../tasks/version_capture_tasks.wdl"
 
-workflow viral_amplicon_wwt_illumina_pe_assembly {
+workflow viral_amp_wwt_illumina_pe_assembly {
     input {
         String project_name
         String sample_name
         String primer_set
-        String viral_amplicon_nextclade_organism_id
+        String viral_amp_nextclade_organism_id
         File fastq_1
         File fastq_2
         File contam_fasta
         String out_dir
 
-        File viral_amplicon_primer_bed
-        File viral_amplicon_ref_fasta
-        File viral_amplicon_ref_gff
+        File viral_amp_primer_bed
+        File viral_amp_ref_fasta
+        File viral_amp_ref_gff
 
         File calc_percent_coverage_py
         File version_capture_py
@@ -44,7 +44,7 @@ workflow viral_amplicon_wwt_illumina_pe_assembly {
     call pre_assembly_tasks.align_reads_bwa as align_reads {
         input:
             sample_name = sample_name,
-            ref = viral_amplicon_ref_fasta,
+            ref = viral_amp_ref_fasta,
             fastq_1 = filter_reads.cleaned_1,
             fastq_2 = filter_reads.cleaned_2
     }
@@ -52,22 +52,22 @@ workflow viral_amplicon_wwt_illumina_pe_assembly {
     call assembly_tasks.trim_primers_ivar as trim_primers {
         input:
             sample_name = sample_name,
-            primers = viral_amplicon_primer_bed,
+            primers = viral_amp_primer_bed,
             bam = align_reads.out_bam
     }
 
     call assembly_tasks.call_variants_ivar as call_variants {
         input:
             sample_name = sample_name,
-            ref = viral_amplicon_ref_fasta,
-            gff = viral_amplicon_ref_gff,
+            ref = viral_amp_ref_fasta,
+            gff = viral_amp_ref_gff,
             bam = trim_primers.trimsort_bam
     }
 
     call assembly_tasks.call_consensus_ivar as call_consensus {
         input:
             sample_name = sample_name,
-            ref = viral_amplicon_ref_fasta,
+            ref = viral_amp_ref_fasta,
             bam = trim_primers.trimsort_bam
     }
 
@@ -88,7 +88,7 @@ workflow viral_amplicon_wwt_illumina_pe_assembly {
         input:
             sample_name = sample_name,
             fasta = rename_fasta.renamed_consensus,
-            reference_file = viral_amplicon_ref_fasta,
+            reference_file = viral_amp_ref_fasta,
             calc_percent_coverage_py = calc_percent_coverage_py
     }
 
@@ -96,7 +96,7 @@ workflow viral_amplicon_wwt_illumina_pe_assembly {
         input:
             sample_name = sample_name,
             renamed_consensus = rename_fasta.renamed_consensus,
-            organism_id = viral_amplicon_nextclade_organism_id
+            organism_id = viral_amp_nextclade_organism_id
     }
 
     call version_capture_tasks.workflow_version_capture {
@@ -117,7 +117,7 @@ workflow viral_amplicon_wwt_illumina_pe_assembly {
     call version_capture_tasks.task_version_capture as task_version_capture {
         input:
             version_array = version_array,
-            workflow_name = "viral_amplicon_illumina_pe_assembly",
+            workflow_name = "viral_amp_illumina_pe_assembly",
             workflow_version_path = workflow_version_capture.workflow_version_path,
             project_name = project_name,
             analysis_date = workflow_version_capture.analysis_date,
