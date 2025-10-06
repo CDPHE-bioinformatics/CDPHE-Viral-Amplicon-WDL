@@ -40,8 +40,8 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     parser.add_argument(
         "--platform",
         help="the sequencing platform",
-        choices=["illumina", "ont"],
-        default="illumina",
+        #choices=["illumina"],
+        default="illumina"
     )
     parser.add_argument("--sample_name_array")
     parser.add_argument("--workbook_path")
@@ -79,7 +79,7 @@ def create_list_from_write_lines_input(write_lines_input: str) -> list[str]:
 
 
 def concat_cov_out(cov_out_file_list: list[str]) -> pd.DataFrame:
-    """Concatenate covergate output files."""
+    """Concatenate coverage output files."""
     # initiate dataframe for concatenation
     df = pd.DataFrame()
     sample_name_list = []
@@ -91,12 +91,8 @@ def concat_cov_out(cov_out_file_list: list[str]) -> pd.DataFrame:
     # loop through bam file stats files and pull data
     for file in cov_out_file_list:
         d = pd.read_csv(file, sep="\t")
-        if re.search("barcode", file):
-            # for nanopore runs
-            sample_name = re.findall(r"/([0-9a-zA-Z_\-\.]+)_barcode", file)[0]
-        else:
             # for illumina runs
-            sample_name = re.findall(r"/([0-9a-zA-Z_\-\.]+)_coverage.txt", file)[0]
+        sample_name = re.findall(r"/([0-9a-zA-Z_\-\.]+)_coverage.txt", file)[0]
 
         # pull data from samtools output
         num_reads = d.numreads[0]
