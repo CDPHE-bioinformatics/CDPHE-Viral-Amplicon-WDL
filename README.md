@@ -25,7 +25,6 @@ Below is a list of available and maintained workflows and a brief description of
 | ``viral_amp_wwt_illumina_pe_summary`` | Generates summary statistics and quality metrics from assembled viral genomes. |
 | ``viral_amp_wwt_variant_calling`` | Uses Freyja to estimate relative lineage abundances and variant composition from mixed viral samples (e.g., wastewater). |
 
-## Workflow
 
 ```mermaid
 graph TD
@@ -86,7 +85,7 @@ graph TD
     I3[transfer_outputs] --> J3
     J3{{Cloud Bucket}}
     end
-
+```
 
 
 ## Process
