@@ -79,7 +79,7 @@ def create_list_from_write_lines_input(write_lines_input: str) -> list[str]:
 
 
 def concat_cov_out(cov_out_file_list: list[str]) -> pd.DataFrame:
-    """Concatenate covergate output files."""
+    """Concatenate coverage output files."""
     # initiate dataframe for concatenation
     df = pd.DataFrame()
     sample_name_list = []
