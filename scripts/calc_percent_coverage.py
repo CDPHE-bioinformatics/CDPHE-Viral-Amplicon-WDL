@@ -88,7 +88,6 @@ def calculate_percent_coverage(sample_name, fasta_file, reference_file):
     df["N_bases"] = [Ns]
     df["non_ambiguous_bases"] = [num_non_ambiguous_bases]
     df["percent_coverage"] = [coverage]
-    # df['number_seqs_in_fasta'] = [num_records]
 
     outfile = "%s_consensus_cvg_stats.csv" % sample_name
     df.to_csv(outfile, index=False)
