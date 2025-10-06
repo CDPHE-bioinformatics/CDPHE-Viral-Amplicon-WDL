@@ -177,10 +177,13 @@ def concat_results(
     cov_out_df = cov_out_df.set_index("sample_name")
     percent_cvg_df["sample_name"] = percent_cvg_df["sample_name"].astype(str)
     percent_cvg_df = percent_cvg_df.set_index("sample_name")
+    #Filtering the nextclade columns here to only those needed in the final output
     nextclade_df["sample_name"] = nextclade_df["seqName"].apply(
         get_sample_name_from_fasta_header
     )
     nextclade_df["sample_name"] = nextclade_df["sample_name"].astype(str) 
+
+    
     nextclade_df = nextclade_df.set_index("sample_name")
 
 
