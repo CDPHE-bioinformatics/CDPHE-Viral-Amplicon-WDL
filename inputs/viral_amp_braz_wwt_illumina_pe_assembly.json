@@ -3,7 +3,7 @@
     "viral_amp_wwt_illumina_pe_assembly.fastq_1": "${this.fastq_1}",
     "viral_amp_wwt_illumina_pe_assembly.fastq_2": "${this.fastq_2}",
     "viral_amp_wwt_illumina_pe_assembly.contam_fasta": "${workspace.adapters_and_contaminants}",
-    "viral_amp_wwt_illumina_pe_assembly.out_dir": "terra_outputs",
+    "viral_amp_wwt_illumina_pe_assembly.out_dir": "${this.sample_name}.out_dir",
     "viral_amp_wwt_illumina_pe_assembly.organism": "${this.organism}",
     "viral_amp_wwt_illumina_pe_assembly.viral_amp_primer_bed": "${workspace.viral_amp_braz_primer_bed}",
     "viral_amp_wwt_illumina_pe_assembly.viral_amp_ref_fasta": "${workspace.viral_amp_braz_ref_fasta}",

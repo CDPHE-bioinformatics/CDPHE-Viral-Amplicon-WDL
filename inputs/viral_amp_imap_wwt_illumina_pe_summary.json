@@ -4,8 +4,8 @@
     "viral_amp_wwt_illumina_pe_summary.cov_out": "${this.cov_out}",
     "viral_amp_wwt_illumina_pe_summary.percent_cvg_csv": "${this.percent_cvg_csv}",
     "viral_amp_wwt_illumina_pe_summary.nextclade_csv": "${this.nextclade_clades_csv}",
-    "viral_amp_wwt_illumina_pe_summary.out_dir_array": "${this.out_dir_array}",
-    "viral_amp_wwt_illumina_pe_summary.project_name_array": "${this.project_name_array}",
+    "viral_amp_wwt_illumina_pe_summary.out_dir_array": "${this.sample_name}.out_dir",
+    "viral_amp_wwt_illumina_pe_summary.project_name_array": "${this.sample_name}.project_name",
     "viral_amp_wwt_illumina_pe_summary.assembler_version_array": "${this.assembler_version_array}",
     "viral_amp_wwt_illumina_pe_summary.workbook_path_array": "${this.workbook_path_array}",
     "viral_amp_wwt_illumina_pe_summary.concat_seq_results_py": "${workspace.viral_amp_concat_seq_results_py}"

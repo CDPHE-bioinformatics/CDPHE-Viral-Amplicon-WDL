@@ -1,0 +1,9 @@
+{
+    "viral_amp_wwt_variant_calling.freyja_pathogen": ["MEASLES"],
+    "viral_amp_wwt_variant_calling.out_dir_array": "${this.sample_name}.out_dir",
+    "viral_amp_wwt_variant_calling.overwrite": true,
+    "viral_amp_wwt_variant_calling.project_name_array": "${this.sample_name}.project_name",
+    "viral_amp_wwt_variant_calling.reference_genome": "${workspace.viral_amp_braz_ref_fasta}",
+    "viral_amp_wwt_variant_calling.reference_gff": "${workspace.viral_amplicon_braz_ref_gff}"
+}
+
