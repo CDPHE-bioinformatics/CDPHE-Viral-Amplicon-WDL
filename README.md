@@ -9,7 +9,7 @@
 
 The following documentation describes the Colorado Department of Public Health and Environment's workflows for the assembly and analysis of whole genome sequencing data of Viral Amplicon on GCP's Terra.bio platform. Workflows are written in WDL and can be imported into a Terra.bio workspace through dockstore (see Setup section below: https://dockstore.org/).
 
-Our Viral whole genome reference-based assembly workflows are highly adaptable and facilitate the assembly and analysis of tiled amplicon based sequencing data of Viral samples. The workflows can accommodate various amplicon primer schemes including Artic V3, Artic V4, Artic V4.1, Artic V5.3.2 and Measles (BRAZ/WHO), as well as different sequencing technology platforms including both Illumina and Oxford Nanopore Technology (ONT). 
+Our Viral whole genome reference-based assembly workflows are highly adaptable and facilitate the assembly and analysis of tiled amplicon based sequencing data of Viral samples. The workflows can accommodate various amplicon primer schemes including Artic V1 and Measles (BRAZ/WHO), as well as different sequencing technology platforms such as Illumina. These workflows can be applied to both (1) whole-genome tiled amplicon approaches and (2) targeted sequencing approaches using known primer locations to amplify specific regions of the viral genome.
 
 <br/>
 
