@@ -90,23 +90,12 @@ graph TD
 
 ## Process
 
-<br/>
-
 ### Wastewater Viral sequence assembly and variant calling
 Processing of wastewater viral sequencing data involves three coordinated workflows (Figure 1). The first, ``viral_amp_wwt_illumina_pe_assembly``, takes raw paired-end Illumina reads and performs quality control, contamination filtering, primer trimming, reference-guided assembly, variant calling, and consensus genome generation. Intermediate files and consensus sequences are then transferred to a designated Google Cloud bucket(GCP) for storage and downstream access.
 
 Next, the ``viral_amp_wwt_illumina_pe_summary`` workflow aggregates the outputs from multiple samples, concatenates consensus sequences, and generates a comprehensive sequencing results report (including coverage statistics and clade assignments), while also organizing the outputs into a versioned results directory.
 
 Finally, the ``viral_amp_wwt_variant_calling workflow`` applies Freyja to estimate relative lineage abundances in wastewater samples, accounting for the mixed nature of viral populations present. 
-
-<br/>
-
-Figure 1. High level overview of workflow process for clinical and wastewater Viral samples.
-
-
-![Viral Amp high level overview workflow diagram](./docs/img/SC2_overview_workflow_diagram.png "High level overview of Viral Amp workflow")
-
-<br/>
 
 
 ## Setup
@@ -137,7 +126,7 @@ To add data to the terra workspace data:
 Below is a data table detailing the workspace data you will need to set up in order to run the Viral workflows. 
 
 | workspace variable name | workflow | file name | description |
-|---------------------------|-----------------|--------------------|-----------------|
+|-------------------------|------------|----------------|-----------------|
 | ``adapters_and_contaminants`` | ``viral_amp_wwt_illumina_pe_assembly`` | Adapters_plus_PhiX_174.fasta | Adapters and PhiX contaminant sequences removed during FASTQ cleaning and filtering using SeqyClean. Thanks to Erin Young at Utah Public Health Laboratory for providing this file! |
 | ``calc_percent_coverage_py`` | ``viral_amp_wwt_illumina_pe_assembly`` | calc_percent_coverage.py | Python script used in the Viral Amplicon assembly workflow to calculate percent genome coverage from consensus sequences. |
 | ``k2_standard_8gb`` | ``viral_amp_wwt_variant_calling`` | k2_standard_08gb_20230605.tar.gz | Kraken2 standard database (8 GB version) used for taxonomic classification during variant calling. |
