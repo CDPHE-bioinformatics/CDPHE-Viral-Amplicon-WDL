@@ -20,7 +20,7 @@ workflow viral_amp_illumina_pe_assembly {
         File viral_amp_ref_gff
 
         File calc_percent_coverage_py
-        File version_capture_py
+        Boolean transfer_results = true
     }
 
     String out_dir_path = sub(out_dir, "/$", "") # remove trailing slash
