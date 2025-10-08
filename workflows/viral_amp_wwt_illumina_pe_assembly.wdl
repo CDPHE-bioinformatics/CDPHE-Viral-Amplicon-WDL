@@ -9,7 +9,6 @@ workflow viral_amp_wwt_illumina_pe_assembly {
     input {
         String project_name
         String sample_name
-        String primer_set
         String viral_amp_nextclade_organism_id
         File fastq_1
         File fastq_2
