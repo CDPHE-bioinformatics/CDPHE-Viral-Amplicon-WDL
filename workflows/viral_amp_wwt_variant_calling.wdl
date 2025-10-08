@@ -48,7 +48,7 @@ workflow viral_amp_wwt_variant_calling {
                 variants = variant_calling.variants,
                 depth = variant_calling.depth,
                 sample_name = id_bam.left,
-                freyja_pathogen = freyja_pathogen[0]  
+                freyja_pathogen = freyja_pathogen
         }
         
         call mutations_tsv {
