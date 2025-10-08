@@ -203,10 +203,7 @@ def concat_results(
     def get_assembly_pass(percent_coverage: float) -> bool:
         if percent_coverage > 0:
             return True
-        elif percent_coverage == 0:
-            return False
-        else:
-            return False
+        return False
 
     j["assembly_pass"] = j.apply(
         lambda x: get_assembly_pass(x.percent_coverage), axis=1
