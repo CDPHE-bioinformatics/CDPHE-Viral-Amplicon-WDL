@@ -1,6 +1,6 @@
 version 1.0
 
-import "version_capture_tasks.wdl" as version_capture
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
 
 task calc_bam_stats_samtools {
     input {
