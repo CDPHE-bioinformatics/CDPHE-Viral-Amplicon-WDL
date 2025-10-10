@@ -18,7 +18,7 @@ workflow viral_amp_wwt_variant_calling {
 
         # reference files/workspace data
         File reference_genome
-        File reference_gff
+        File? reference_gff
 
         # python scripts
         File version_capture_viral_amp_variant_calling_py ##
@@ -123,30 +123,6 @@ workflow viral_amp_wwt_variant_calling {
     }
 }
 
-task add_RG {
-    input {
-        String sample_name
-        File bam
-    }
-
-    command <<<
-        samtools --version | awk '/samtools/ {print $2}' | tee VERSION
-        samtools addreplacerg -r ID:~{sample_name} -r LB:L1 -r SM:~{sample_name} -o ~{sample_name}_addRG.bam ~{bam}
-    >>>
-
-    output {
-        File rgbam = "${sample_name}_addRG.bam"
-        String samtools_version_staphb = read_string("VERSION")
-    }
-
-    runtime {
-        docker: "staphb/samtools:1.10"
-        memory: "8 GB"
-        cpu: 2
-        disks: "local-disk 100 SSD"
-    }
-}
-
 task variant_calling {
     input {
         File bam
@@ -209,7 +185,7 @@ task freyja_demix {
     }
 
     runtime {
-        docker: "staphb/freyja:1.5.2"
+        docker: "staphb/freyja:2.0.1"
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 200 SSD"
@@ -258,7 +234,7 @@ task freyja_aggregate {
     }
 
     runtime {
-        docker: "staphb/freyja:1.5.2"
+        docker: "staphb/freyja:2.0.1"
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 200 SSD"

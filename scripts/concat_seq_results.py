@@ -6,9 +6,8 @@ import argparse
 import logging
 import re
 import sys
-from datetime import date
-
 import pandas as pd
+from datetime import date
 
 __author__ = "CDPHE"
 __copyright__ = "State of Colorado"
@@ -21,36 +20,33 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Sequencing results summary.")
 
-    parser.add_argument(
-        "--log_level",
+    parser.add_argument("--log_level",
         help="the level to log at",
         choices=["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"],
         default="INFO",
     )
-    parser.add_argument(
-        "--workflow_name",
+    parser.add_argument("--workflow_name",
         help="the workflow name (i.e. what is on GitHub)",
         default="CDPHE-Viral-Amplicon-WDL",
     )
-    parser.add_argument(
-        "--workflow_version",
+    parser.add_argument("--workflow_version", 
         help="the workflow version (i.e. what is on GitHub)",
         required=True,
     )
-    parser.add_argument(
-        "--platform",
+    parser.add_argument("--platform", 
         help="the sequencing platform",
         #choices=["illumina"],
-        default="illumina"
+        default="illumina",
     )
     parser.add_argument("--sample_name_array")
     parser.add_argument("--workbook_path")
-    parser.add_argument("--cov_out_files", help="txt file with list of bam file paths")
-    parser.add_argument(
-        "--percent_cvg_files", help="txt file with list of percent cvg file paths"
+    parser.add_argument("--cov_out_files", 
+        help="txt file with list of bam file paths")
+    parser.add_argument("--percent_cvg_files", 
+        help="txt file with list of percent cvg file paths"
     )
-    parser.add_argument(
-        "--nextclade_csv_files", help="txt file with list of nextclade csv file paths"
+    parser.add_argument("--nextclade_csv_files", 
+        help="txt file with list of nextclade csv file paths"
     )
     parser.add_argument("--assembler_version")
     parser.add_argument("--project_name")
@@ -151,11 +147,13 @@ def concat_results(
 
     # set some functions for getting data formatted
     def get_sample_name_from_fasta_header(fasta_header: str) -> str:
-        sample_name = str(re.findall(r"CO-CDPHE-([0-9a-zA-Z_\-\.]+)", fasta_header)[0])
+        #sample_name = str(re.findall(r"CO-CDPHE-([0-9a-zA-Z_\-\.]+)", fasta_header)[0])
+        sample_name = fasta_header.strip().replace(">", "")
         return sample_name
 
     def create_fasta_header(sample_name: str) -> str:
-        return "CO-CDPHE-%s" % sample_name
+        #return "CO-CDPHE-%s" % sample_name
+        return f">{sample_name}"
 
     # create dataframe and fill with constant strings
     df = pd.DataFrame()

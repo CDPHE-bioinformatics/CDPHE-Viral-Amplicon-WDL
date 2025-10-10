@@ -47,7 +47,7 @@ task rename_fasta {
     }
 
     command <<<
-        sed 's/>.*/>CO-CDPHE-~{sample_name}/' ~{fasta} > ~{sample_name}_consensus_renamed.fa
+        sed 's/>.*/>~{sample_name}/' ~{fasta} > ~{sample_name}_consensus_renamed.fa
     >>>
 
     output {
