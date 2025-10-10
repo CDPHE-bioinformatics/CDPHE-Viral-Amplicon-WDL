@@ -20,11 +20,11 @@ workflow viral_amp_illumina_pe_assembly {
         File viral_amp_ref_gff
 
         File calc_percent_coverage_py
-        Boolean transfer_results = true
+        File version_capture_py
     }
 
     String out_dir_path = sub(out_dir, "/$", "") # remove trailing slash
-
+    
 
     call pre_assembly_tasks.filter_reads_seqyclean as filter_reads {
         input:
