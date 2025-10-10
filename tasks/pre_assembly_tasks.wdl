@@ -72,4 +72,3 @@ task assess_quality_fastqc {
         docker: docker
     }
 }
-
