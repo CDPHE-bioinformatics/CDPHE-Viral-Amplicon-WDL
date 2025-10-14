@@ -5,6 +5,12 @@ import "../tasks/assembly_tasks.wdl"
 import "../tasks/post_assembly_tasks.wdl"
 import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
 
+struct VersionInfo {
+    String software
+    String docker
+    String version
+}
+
 workflow viral_amp_illumina_pe_assembly {
     input {
         String project_name
@@ -14,17 +20,32 @@ workflow viral_amp_illumina_pe_assembly {
         File fastq_2
         File contam_fasta
         String out_dir
+        String analysis_date
 
         File viral_amp_primer_bed
         File viral_amp_ref_fasta
         File viral_amp_ref_gff
 
         File calc_percent_coverage_py
-        File version_capture_py
     }
+
+    #private declarations
+    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v0.1.0'
+    String workflow_name = 'viral_amp_illumina_pe_assembly'
+    String workflow_version = 'v1.0.0'
+    String workflow_version_und = sub(workflow_version, "\\.", "_")
 
     String out_dir_path = sub(out_dir, "/$", "") # remove trailing slash
     
+    call version_capture.workflow_metadata as w_meta {
+        input:
+             #docker = version_capture_docker,
+             workflow_name = workflow_name
+             workflow_version = workflow_version
+
+    }
+
+    ## Pre-assembly tasks    
 
     call pre_assembly_tasks.filter_reads_seqyclean as filter_reads {
         input:
@@ -48,6 +69,8 @@ workflow viral_amp_illumina_pe_assembly {
             fastq_2 = filter_reads.cleaned_2
     }
 
+    ##Assembly tasks
+
     call assembly_tasks.trim_primers_ivar as trim_primers {
         input:
             sample_name = sample_name,
@@ -69,6 +92,8 @@ workflow viral_amp_illumina_pe_assembly {
             ref = viral_amp_ref_fasta,
             bam = trim_primers.trimsort_bam
     }
+    
+    ##Post assembly tasks
 
     call post_assembly_tasks.calc_bam_stats_samtools as calc_bam_stats {
         input:
@@ -98,11 +123,56 @@ workflow viral_amp_illumina_pe_assembly {
             organism_id = viral_amp_nextclade_organism_id
     }
 
-    call version_capture_tasks.workflow_version_capture {
-        input:
+    ##VersionInfo structs
+    
+    VersionInfo seqyclean_version_info = {
+        "software": "seqyclean",
+        "docker": "staphb/seqyclean:1.10.09",
+        "version": "v1.10.09"
     }
 
+    VersionInfo fastqc_version_info = {
+        "software": "fastqc",
+        "docker": "staphb/fastqc:0.12.1",
+        "version": "v0.12.1"
+    }
+
+    VersionInfo bwa_version_info = {
+        "software": "bwa",
+        "docker": "staphb/bwa:0.7.17",
+        "version": "v0.7.17"
+    }
+
+    VersionInfo samtools_version_info = {
+        "software": "samtools",
+        "docker": "staphb/samtools:1.19",
+        "version": "v1.19"
+    }
+
+    VersionInfo ivar_version_info = {
+        "software": "ivar",
+        "docker": "andersenlabapps/ivar:1.3.1",
+        "version": "v1.3.1"
+    }
+
+    VersionInfo nextclade_version_info = {
+        "software": "nextclade",
+        "docker": "ghcr.io/nextstrain/nextclade:3.7.0",
+        "version": "v3.7.0"
+    }
+
+    VersionInfo version_capture_version_info = {
+        "software": "version_capture",
+        "docker": version_capture_docker,
+        "version": "v0.1.0"
+    }
+
+    #call version_capture.workflow_version_capture {
+     #   input:
+    #}
+
     Array[VersionInfo] version_array = [
+        w_meta.version_info,
         filter_reads.seqyclean_version_info,
         assess_quality.fastqc_version_info,
         align_reads.bwa_version_info,
@@ -113,7 +183,17 @@ workflow viral_amp_illumina_pe_assembly {
         call_clades.nextclade_version_info
     ]
 
-    call version_capture_tasks.task_version_capture as task_version_capture {
+    call version_capture.capture_versions as version_cap {
+        input:
+            version_array = version_array,
+            workflow_name = workflow_name,
+            workflow_version = workflow_version_und,
+            project_name = project_name,
+            analysis_date = w_meta.analysis_date,
+            docker = version_capture_docker
+    }
+
+    call version_capture.task_version_capture as task_version_capture {
         input:
             version_array = version_array,
             workflow_name = "viral_amp_illumina_pe_assembly",
@@ -125,7 +205,7 @@ workflow viral_amp_illumina_pe_assembly {
 
     call post_assembly_tasks.transfer_outputs as transfer_outputs {
         input:
-            out_dir = "~{out_dir_path}/~{workflow_version_capture.workflow_version_path}",
+            out_dir = "~{out_dir_path}/summary_results/assembly/~{version_capture.workflow_version_path}",
             filtered_reads_1 = filter_reads.cleaned_1,
             filtered_reads_2 = filter_reads.cleaned_2,
             seqyclean_summary = filter_reads.seqyclean_summary,
@@ -146,7 +226,9 @@ workflow viral_amp_illumina_pe_assembly {
     }
 
     output {
-        String workflow_version = workflow_version_capture.workflow_version
+        #String workflow_version = workflow_version_capture.workflow_version
+        String wf_version = workflow_version
+        String wf_version_und = workflow_version_und
 
         File filtered_reads_1 = filter_reads.cleaned_1
         File filtered_reads_2 = filter_reads.cleaned_2

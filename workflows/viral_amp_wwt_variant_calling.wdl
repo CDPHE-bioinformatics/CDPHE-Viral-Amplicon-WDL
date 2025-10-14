@@ -15,6 +15,8 @@ workflow viral_amp_wwt_variant_calling {
         Boolean overwrite
         Array[String] project_name_array 
         Array[String] freyja_pathogen
+        Array[String] workflow_version
+        Array[String] workflow_version_und
 
         # reference files/workspace data
         File reference_genome
@@ -23,6 +25,11 @@ workflow viral_amp_wwt_variant_calling {
         # python scripts
         File version_capture_viral_amp_variant_calling_py ##
     }
+    #private declarations
+    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v0.1.0'
+    String workflow_name = 'viral_amp_wwt_variant_calling'
+    String wf_version = select_first(workflow_version)
+    String wf_version_und = select_first(workflow_version_und)
 
     # secret variables
     String project_name = project_name_array[0]
@@ -68,6 +75,14 @@ workflow viral_amp_wwt_variant_calling {
         input:
             mutations = mutations_tsv.mutations
     }
+
+    call version_capture.workflow_metadata as w_meta {
+        input:
+            #docker = version_capture_docker,
+            workflow_name = workflow_name
+            workflow_version = workflow_version
+
+    }
     
     call version_capture.workflow_version_capture as workflow_version_capture {
         input:
@@ -85,6 +100,15 @@ workflow viral_amp_wwt_variant_calling {
             workflow_version_path = workflow_version_capture.workflow_version_path
     }
 
+    call version_capture.capture_versions as version_cap {
+        input:
+            version_array = version_array,
+            workflow_name = workflow_name,
+            workflow_version = workflow_version_und,
+            project_name = project_name,
+            analysis_date = w_meta.analysis_date,
+            docker = version_capture_docker
+    }
     
     SubdirsToFiles subdirs_to_files = object { subdirs_to_files: [
         ("viral_amp_variant_calling/freyja",
