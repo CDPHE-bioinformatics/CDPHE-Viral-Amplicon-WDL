@@ -21,8 +21,8 @@ Below is a list of available and maintained workflows and a brief description of
 
 |Workflow Name | Description |
 |--------------|-------------|
-| ``viral_amp_wwt_illumina_pe_assembly`` | Performs reference-based assembly of viral genomes from Illumina paired-end amplicon data. |
-| ``viral_amp_wwt_illumina_pe_summary`` | Generates summary statistics and quality metrics from assembled viral genomes. |
+| ``viral_amp_illumina_pe_assembly`` | Performs reference-based assembly of viral genomes from Illumina paired-end amplicon data. |
+| ``viral_amp_illumina_pe_summary`` | Generates summary statistics and quality metrics from assembled viral genomes. |
 | ``viral_amp_wwt_variant_calling`` | Uses Freyja to estimate relative lineage abundances and variant composition from mixed viral samples (e.g., wastewater). |
 
 
