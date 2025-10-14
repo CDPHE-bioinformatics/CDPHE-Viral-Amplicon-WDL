@@ -19,6 +19,7 @@ workflow viral_amp_illumina_pe_assembly {
         File fastq_1
         File fastq_2
         File contam_fasta
+        Boolean transfer_results = true
         String? out_dir
         String analysis_date
 
@@ -266,6 +267,6 @@ workflow viral_amp_illumina_pe_assembly {
         File nextclade_json = call_clades.nextclade_json
 
         File version_capture_file = task_version_capture.version_capture_file
-        String transfer_date_assembly = transfer_outputs.transfer_date
+        String? transfer_date_assembly = transfer_outputs.transfer_date
     }
 }
