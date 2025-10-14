@@ -1,7 +1,8 @@
 version 1.0
 
 import "../tasks/summary_tasks.wdl"
-import "../tasks/version_capture_tasks.wdl"
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
+
 
 workflow viral_amp_illumina_pe_summary {
     input {

@@ -1,8 +1,8 @@
 
 version 1.0
 
-# import workflow version capture task
-import "../tasks/version_capture_tasks.wdl" as version_capture
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
+
 import "../tasks/transfer_task.wdl" as transfer_task
 
 workflow viral_amp_wwt_variant_calling {
