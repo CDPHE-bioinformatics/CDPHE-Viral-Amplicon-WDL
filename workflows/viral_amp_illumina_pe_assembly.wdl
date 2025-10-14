@@ -19,7 +19,8 @@ workflow viral_amp_illumina_pe_assembly {
         File fastq_1
         File fastq_2
         File contam_fasta
-        String out_dir
+        Boolean transfer_results = true
+        String? out_dir
         String analysis_date
 
         File viral_amp_primer_bed
@@ -204,26 +205,28 @@ workflow viral_amp_illumina_pe_assembly {
             version_capture_py = version_capture_py
     }
 
-    call post_assembly_tasks.transfer_outputs as transfer_outputs {
-        input:
-            out_dir = "~{out_dir_path}/summary_results/assembly/~{version_capture.workflow_version_path}",
-            filtered_reads_1 = filter_reads.cleaned_1,
-            filtered_reads_2 = filter_reads.cleaned_2,
-            seqyclean_summary = filter_reads.seqyclean_summary,
-            fastqc_raw1_html = assess_quality.fastqc1_html,
-            fastqc_raw1_zip = assess_quality.fastqc1_zip,
-            fastqc_raw2_html = assess_quality.fastqc2_html,
-            fastqc_raw2_zip = assess_quality.fastqc2_zip,
-            trimsort_bam = trim_primers.trimsort_bam,
-            trimsort_bamindex = trim_primers.trimsort_bamindex,
-            variants = call_variants.var_out,
-            consensus = call_consensus.consensus_out,
-            flagstat_out = calc_bam_stats.flagstat_out,
-            stats_out = calc_bam_stats.stats_out,
-            covhist_out = calc_bam_stats.covhist_out,
-            cov_out = calc_bam_stats.cov_out,
-            renamed_consensus = rename_fasta.renamed_consensus,
-            version_capture_file = task_version_capture.version_capture_file
+    if (transfer_results) {
+      call post_assembly_tasks.transfer_outputs as transfer_outputs {
+          input:
+              out_dir = "~{out_dir_path}/~{workflow_version_underscores}",
+              filtered_reads_1 = filter_reads.cleaned_1,
+              filtered_reads_2 = filter_reads.cleaned_2,
+              seqyclean_summary = filter_reads.seqyclean_summary,
+              fastqc_raw1_html = assess_quality.fastqc1_html,
+              fastqc_raw1_zip = assess_quality.fastqc1_zip,
+              fastqc_raw2_html = assess_quality.fastqc2_html,
+              fastqc_raw2_zip = assess_quality.fastqc2_zip,
+              trimsort_bam = trim_primers.trimsort_bam,
+              trimsort_bamindex = trim_primers.trimsort_bamindex,
+              variants = call_variants.var_out,
+              consensus = call_consensus.consensus_out,
+              flagstat_out = calc_bam_stats.flagstat_out,
+              stats_out = calc_bam_stats.stats_out,
+              covhist_out = calc_bam_stats.covhist_out,
+              cov_out = calc_bam_stats.cov_out,
+              renamed_consensus = rename_fasta.renamed_consensus,
+              version_capture_file = [capture_versions.output_file],
+      }
     }
 
     output {
@@ -264,7 +267,12 @@ workflow viral_amp_illumina_pe_assembly {
         File nextclade_csv = call_clades.nextclade_csv
         File nextclade_json = call_clades.nextclade_json
 
+<<<<<<< HEAD
         File version_capture_file = capture_versions.output_file
         String transfer_date_assembly = transfer_outputs.transfer_date
+=======
+        File version_capture_file = task_version_capture.version_capture_file
+        String? transfer_date_assembly = transfer_outputs.transfer_date
+>>>>>>> 85ecf0320c3b2844f848fae9e3da70fd4a7aec08
     }
 }

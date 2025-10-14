@@ -43,11 +43,11 @@ task call_variants_ivar {
 
     String docker = "andersenlabapps/ivar:1.3.1"
 
-    command {
-        samtools faidx ${ref}
-        samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ${ref} ${bam} | \
-        ivar variants -p ${sample_name}_variants -q 30 -t 0.6 -m 10 -r ${ref} -g ${gff}
-    }
+    command <<<
+        samtools faidx ~{ref}
+        samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ~{ref} ~{bam} | \
+        ivar variants -p ~{sample_name}_variants -q 30 -t 0.6 -m 10 -r ~{ref} ~{if defined(gff) then "--gff " + gff else ""}
+    >>>
 
     output {
         File var_out = "${sample_name}_variants.tsv"

@@ -11,8 +11,9 @@ workflow viral_amp_wwt_variant_calling {
 
         Array[File] trimsort_bam
         Array[String] sample_name
-        Array[String] out_dir_array
-        Boolean overwrite
+        Array[String]? out_dir_array
+        Boolean overwrite = true
+        Boolean transfer_results = true
         Array[String] project_name_array 
         Array[String] freyja_pathogen
         Array[String] workflow_version
@@ -127,12 +128,14 @@ workflow viral_amp_wwt_variant_calling {
         ])
     ]}
 
-    call transfer_task.transfer as transfer_set_results {
-        input:
-            out_dir = out_dir,
-            overwrite = overwrite,
-            cpu = 8,
-            subdirs_to_files = subdirs_to_files
+    if (transfer_results) {
+        call transfer_task.transfer as transfer_set_results {
+            input:
+                out_dir = out_dir,
+                overwrite = overwrite,
+                cpu = 8,
+                subdirs_to_files = subdirs_to_files
+        }
     }
 
     output {
@@ -143,7 +146,7 @@ workflow viral_amp_wwt_variant_calling {
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
         File version_capture_viral_amp_variant_calling = create_version_capture_file.version_capture_viral_amp_variant_calling
-        String transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
+        String? transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
     }
 }
 

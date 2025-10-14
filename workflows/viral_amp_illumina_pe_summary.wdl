@@ -32,12 +32,11 @@ workflow viral_amp_illumina_pe_summary {
     String wf_version = select_first(workflow_version)
     String wf_version_und = select_first(workflow_version_und)
 
-     call version_capture.workflow_metadata as w_meta {
+    call version_capture.workflow_metadata as w_meta {
         input:
-             docker = version_capture_docker,
-             workflow_name = workflow_name
-             workflow_version = workflow_version
-
+            docker = version_capture_docker,
+            workflow_name = workflow_name
+            workflow_version = workflow_version
     } 
 
     call summary_tasks.concatenate_consensus as concatenate_consensus {
