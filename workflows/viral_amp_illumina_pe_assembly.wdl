@@ -24,13 +24,14 @@ workflow viral_amp_illumina_pe_assembly {
 
         File viral_amp_primer_bed
         File viral_amp_ref_fasta
-        File viral_amp_ref_gff
+        File? viral_amp_ref_gff
 
         File calc_percent_coverage_py
     }
 
     #private declarations
     String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v0.1.0'
+    String ubuntu_docker = "ubuntu:jammy-20240627.1"
     String workflow_name = 'viral_amp_illumina_pe_assembly'
     String workflow_version = 'v1.0.0'
     String workflow_version_und = sub(workflow_version, "\\.", "_")
@@ -39,7 +40,7 @@ workflow viral_amp_illumina_pe_assembly {
     
     call version_capture.workflow_metadata as w_meta {
         input:
-             #docker = version_capture_docker,
+             docker = ubuntu_docker,
              workflow_name = workflow_name
              workflow_version = workflow_version
 
@@ -183,12 +184,12 @@ workflow viral_amp_illumina_pe_assembly {
         call_clades.nextclade_version_info
     ]
 
-    call version_capture.capture_versions as version_cap {
+    call version_capture.capture_versions as capture_versions {
         input:
             version_array = version_array,
             workflow_name = workflow_name,
-            workflow_version = workflow_version_und,
-            project_name = project_name,
+            workflow_version = workflow_version,
+            project_name = "",
             analysis_date = w_meta.analysis_date,
             docker = version_capture_docker
     }
@@ -227,7 +228,7 @@ workflow viral_amp_illumina_pe_assembly {
 
     output {
         #String workflow_version = workflow_version_capture.workflow_version
-        String wf_version = workflow_version
+        String workflow_version = w_meta.version_info.version
         String wf_version_und = workflow_version_und
 
         File filtered_reads_1 = filter_reads.cleaned_1
@@ -263,7 +264,7 @@ workflow viral_amp_illumina_pe_assembly {
         File nextclade_csv = call_clades.nextclade_csv
         File nextclade_json = call_clades.nextclade_json
 
-        File version_capture_file = task_version_capture.version_capture_file
+        File version_capture_file = capture_versions.output_file
         String transfer_date_assembly = transfer_outputs.transfer_date
     }
 }

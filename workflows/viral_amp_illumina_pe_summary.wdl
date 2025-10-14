@@ -40,10 +40,6 @@ workflow viral_amp_illumina_pe_summary {
 
     } 
 
-    call version_capture_tasks.workflow_version_capture {
-        input:
-    }
-
     call summary_tasks.concatenate_consensus as concatenate_consensus {
         input:
             renamed_consensus = select_all(renamed_consensus)
@@ -85,5 +81,7 @@ workflow viral_amp_illumina_pe_summary {
         File cat_fastas = concatenate_consensus.cat_fastas
 
         File sequencing_results_csv = summarize_results.sequencing_results_csv
+
+        File 
     }
 }
