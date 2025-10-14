@@ -10,7 +10,8 @@ workflow viral_amp_illumina_pe_summary {
         Array[File?] cov_out # cov as in coverage
         Array[File?] percent_cvg_csv
         Array[File?] nextclade_csv
-        Array[String] out_dir_array
+        Array[String]? out_dir_array
+        Boolean transfer_results = true
         Array[String] project_name_array
         Array[String?] assembler_version_array
         Array[File] workbook_path_array
@@ -62,11 +63,13 @@ workflow viral_amp_illumina_pe_summary {
         workbook_path = workbook_path
     }
 
-    call summary_tasks.transfer_outputs as transfer_outputs {
-        input:
-            out_dir = "~{out_dir_path}/summary_results/assembly/~{version_capture.workflow_version_path}",
-            cat_fastas = concatenate_consensus.cat_fastas,
-            sequencing_results_csv = summarize_results.sequencing_results_csv
+    if (transfer_results) {
+        call summary_tasks.transfer_outputs as transfer_outputs {
+            input:
+                out_dir = "~{out_dir_path}/summary_results/assembly/~{version_capture.workflow_version_path}",
+                cat_fastas = concatenate_consensus.cat_fastas,
+                sequencing_results_csv = summarize_results.sequencing_results_csv
+        }
     }
 
     call version_capture.capture_versions as version_cap {
