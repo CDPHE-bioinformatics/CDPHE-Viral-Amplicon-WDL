@@ -169,10 +169,6 @@ workflow viral_amp_illumina_pe_assembly {
         "version": "v0.1.0"
     }
 
-    #call version_capture.workflow_version_capture {
-     #   input:
-    #}
-
     Array[VersionInfo] version_array = [
         w_meta.version_info,
         filter_reads.seqyclean_version_info,
@@ -267,12 +263,9 @@ workflow viral_amp_illumina_pe_assembly {
         File nextclade_csv = call_clades.nextclade_csv
         File nextclade_json = call_clades.nextclade_json
 
-<<<<<<< HEAD
         File version_capture_file = capture_versions.output_file
         String transfer_date_assembly = transfer_outputs.transfer_date
-=======
         File version_capture_file = task_version_capture.version_capture_file
         String? transfer_date_assembly = transfer_outputs.transfer_date
->>>>>>> 85ecf0320c3b2844f848fae9e3da70fd4a7aec08
     }
 }
