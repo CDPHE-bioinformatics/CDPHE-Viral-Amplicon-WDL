@@ -19,7 +19,7 @@ workflow viral_amp_illumina_pe_assembly {
         File fastq_1
         File fastq_2
         File contam_fasta
-        String out_dir
+        String? out_dir
         String analysis_date
 
         File viral_amp_primer_bed
