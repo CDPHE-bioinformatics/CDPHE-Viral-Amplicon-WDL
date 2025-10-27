@@ -1,6 +1,6 @@
 version 1.0
 
-import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" as version_capture
 
 task trim_primers_ivar {
     input {
@@ -46,7 +46,7 @@ task call_variants_ivar {
     command <<<
         samtools faidx ~{ref}
         samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ~{ref} ~{bam} | \
-        ivar variants -p ~{sample_name}_variants -q 30 -t 0.6 -m 10 -r ~{ref} ~{if defined(gff) then "--gff " + gff else ""}
+        ivar variants -p ~{sample_name}_variants -q 30 -t 0.6 -m 10 -r ~{ref} ~{if defined(gff) then "-g " + gff else ""}
     >>>
 
     output {

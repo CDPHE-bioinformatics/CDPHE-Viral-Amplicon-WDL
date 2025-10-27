@@ -62,33 +62,6 @@ task rename_fasta {
     }
 }
 
-task calc_percent_coverage {
-    input {
-        File fasta
-        String sample_name
-        File reference_file
-        File calc_percent_coverage_py
-    }
-
-    command {
-        python ~{calc_percent_coverage_py} \
-            --sample_name ~{sample_name} \
-            --fasta_file ~{fasta} \
-            --reference_file ~{reference_file}
-    }
-
-    output {
-        File percent_cvg_csv = "${sample_name}_consensus_cvg_stats.csv"
-    }
-
-    runtime {
-        cpu: 2
-        memory: "2G"
-        disks: "local-disk 1 HDD"
-        docker: "mchether/py3-bio:v1"
-    }
-}
-
 task call_clades_nextclade {
     input {
         String sample_name
@@ -96,7 +69,7 @@ task call_clades_nextclade {
         String organism_id
     }
 
-    String docker = "nextstrain/nextclade:3.10.2"
+    String docker = "nextstrain/nextclade:3.8.2"
 
     command <<<
         nextclade --version | awk '/nextclade/ {print $2}' > VERSION
