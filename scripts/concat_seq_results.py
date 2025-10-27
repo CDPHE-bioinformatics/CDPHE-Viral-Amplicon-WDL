@@ -42,9 +42,6 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     parser.add_argument("--workbook_path")
     parser.add_argument("--cov_out_files", 
         help="txt file with list of bam file paths")
-    parser.add_argument("--percent_cvg_files", 
-        help="txt file with list of percent cvg file paths"
-    )
     parser.add_argument("--nextclade_csv_files", 
         help="txt file with list of nextclade csv file paths"
     )
@@ -111,18 +108,6 @@ def concat_cov_out(cov_out_file_list: list[str]) -> pd.DataFrame:
     return df
 
 
-def concat_percent_cvg(percent_cvg_file_list: list[str]) -> pd.DataFrame:
-    """Concatenate percent coverage files."""
-    df_list = []
-    for file in percent_cvg_file_list:
-        d = pd.read_csv(file, dtype={"sample_name": object})
-        df_list.append(d)
-
-    df = pd.concat(df_list)
-
-    return df
-
-
 def concat_nextclade_csv(nextclade_csv_file_list: list[str]) -> pd.DataFrame:
     """Concatenate nextclade csv files."""
     df_list = []
@@ -140,7 +125,6 @@ def concat_results(
     project_name: str,
     assembler_version: str,
     cov_out_df: pd.DataFrame,
-    percent_cvg_df: pd.DataFrame,
     nextclade_df: pd.DataFrame,
 ) -> pd.DataFrame:
     """Concatenate results."""
@@ -173,8 +157,6 @@ def concat_results(
     # set index on the samtools_df and percent_cvg_df and variants_df to prepare for joining
     cov_out_df["sample_name"] = cov_out_df["sample_name"].astype(str)
     cov_out_df = cov_out_df.set_index("sample_name")
-    percent_cvg_df["sample_name"] = percent_cvg_df["sample_name"].astype(str)
-    percent_cvg_df = percent_cvg_df.set_index("sample_name")
     #Filtering the nextclade columns here to only those needed in the final output
     nextclade_df["sample_name"] = nextclade_df["seqName"].apply(
         get_sample_name_from_fasta_header
@@ -187,25 +169,12 @@ def concat_results(
 
     # join
     j = df.join(workbook, how="left")
-    j = j.join(percent_cvg_df, how="left")
     j = j.join(cov_out_df, how="left")
     j = j.join(nextclade_df, how="left")
     j = j.reset_index()
 
     # add fasta header
     j["fasta_header"] = j.apply(lambda x: create_fasta_header(x.sample_name), axis=1)
-
-    # add assembled column and fill in failed assembles with 0% coveage
-    j.percent_coverage = j.percent_coverage.fillna(value=0)
-
-    def get_assembly_pass(percent_coverage: float) -> bool:
-        if percent_coverage > 0:
-            return True
-        return False
-
-    j["assembly_pass"] = j.apply(
-        lambda x: get_assembly_pass(x.percent_coverage), axis=1
-    )
 
     # order columns
     columns = j.columns.tolist()
@@ -215,11 +184,10 @@ def concat_results(
         "sample_name",
         "project_name",
         "analysis_date",
-        "assembly_pass",
+        #"assembly_pass",
         "plate_name",
         "run_name",
         "run_date",
-        "percent_coverage",
         "clade",
     ]
     for column in columns:
@@ -241,8 +209,6 @@ def main(args: argparse.Namespace) -> None:
 
     sample_name_array = args.sample_name_array
     workbook_path = args.workbook_path
-    cov_out_files = args.cov_out_files
-    percent_cvg_files = args.percent_cvg_files
     nextclade_csv_files = args.nextclade_csv_files
     assembler_version = args.assembler_version
     project_name = args.project_name
@@ -252,10 +218,7 @@ def main(args: argparse.Namespace) -> None:
         write_lines_input=sample_name_array
     )
     cov_out_file_list = create_list_from_write_lines_input(
-        write_lines_input=cov_out_files
-    )
-    percent_cvg_file_list = create_list_from_write_lines_input(
-        write_lines_input=percent_cvg_files
+        write_lines_input=args.cov_out_files
     )
     nextclade_csv_file_list = create_list_from_write_lines_input(
         write_lines_input=nextclade_csv_files
@@ -263,7 +226,6 @@ def main(args: argparse.Namespace) -> None:
 
     # concat cov_out files, percent_cvg files, and nextclade files
     cov_out_df = concat_cov_out(cov_out_file_list=cov_out_file_list)
-    percent_cvg_df = concat_percent_cvg(percent_cvg_file_list=percent_cvg_file_list)
     nextclade_df = concat_nextclade_csv(nextclade_csv_file_list=nextclade_csv_file_list)
 
     # create results file
@@ -273,7 +235,6 @@ def main(args: argparse.Namespace) -> None:
         project_name=project_name,
         assembler_version=assembler_version,
         cov_out_df=cov_out_df,
-        percent_cvg_df=percent_cvg_df,
         nextclade_df=nextclade_df,
     )
 
