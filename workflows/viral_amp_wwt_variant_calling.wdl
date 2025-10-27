@@ -1,7 +1,6 @@
-
 version 1.0
 
-import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" as version_capture
 
 import "../tasks/transfer_task.wdl" as transfer_task
 
@@ -18,34 +17,29 @@ workflow viral_amp_wwt_variant_calling {
         Array[String] freyja_pathogen
         Array[String] workflow_version
         Array[String] workflow_version_und
+        File? lineages_yml
 
         # reference files/workspace data
         File reference_genome
         File? reference_gff
 
-        # python scripts
-        File version_capture_viral_amp_variant_calling_py ##
     }
     #private declarations
-    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v0.1.0'
+    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v1.0.0'
     String workflow_name = 'viral_amp_wwt_variant_calling'
     String wf_version = select_first(workflow_version)
     String wf_version_und = select_first(workflow_version_und)
 
     # secret variables
     String project_name = project_name_array[0]
-    String out_dir = out_dir_array[0]
+    String out_dir = select_first([out_dir_array])[0]
+    String pathogen = select_first(freyja_pathogen)
 
     scatter (id_bam in zip(sample_name, trimsort_bam)) {
-        call add_RG {
-            input:
-                sample_name = id_bam.left,
-                bam = id_bam.right
-        }
 
         call variant_calling {
             input:
-                bam = add_RG.rgbam,
+                bam = id_bam.right,
                 ref = reference_genome,
                 ref_gff = reference_gff,
                 sample_name = id_bam.left
@@ -56,7 +50,8 @@ workflow viral_amp_wwt_variant_calling {
                 variants = variant_calling.variants,
                 depth = variant_calling.depth,
                 sample_name = id_bam.left,
-                freyja_pathogen = freyja_pathogen
+                freyja_pathogen = pathogen,
+                lineages_yml = lineages_yml
         }
         
         call mutations_tsv {
@@ -79,33 +74,17 @@ workflow viral_amp_wwt_variant_calling {
 
     call version_capture.workflow_metadata as w_meta {
         input:
-            #docker = version_capture_docker,
-            workflow_name = workflow_name
-            workflow_version = workflow_version
+            docker = version_capture_docker,
+            workflow_name = workflow_name,
+            workflow_version = workflow_version[0]
 
-    }
-    
-    call version_capture.workflow_version_capture as workflow_version_capture {
-        input:
-    }
-    
-    call create_version_capture_file {
-        input:
-            version_capture_viral_amp_variant_calling_py = version_capture_viral_amp_variant_calling_py,
-            project_name = project_name,
-            samtools_version_staphb = select_all(add_RG.samtools_version_staphb)[0],
-            samtools_version_andersenlabapps = select_all(variant_calling.samtools_version_andersenlabapps)[0],
-            ivar_version = select_all(variant_calling.ivar_version)[0],
-            freyja_version = select_all(freyja_demix.freyja_version)[0],
-            analysis_date = workflow_version_capture.analysis_date,
-            workflow_version_path = workflow_version_capture.workflow_version_path
     }
 
     call version_capture.capture_versions as version_cap {
         input:
-            version_array = version_array,
+            version_array = [],
             workflow_name = workflow_name,
-            workflow_version = workflow_version_und,
+            workflow_version = wf_version_und,
             project_name = project_name,
             analysis_date = w_meta.analysis_date,
             docker = version_capture_docker
@@ -122,9 +101,6 @@ workflow viral_amp_wwt_variant_calling {
         ("viral_amp_variant_calling", [
             combine_mutations_tsv.combined_mutations_tsv,
             freyja_aggregate.demix_aggregated
-        ]),
-        ("version_capture", [
-            create_version_capture_file.version_capture_viral_amp_variant_calling
         ])
     ]}
 
@@ -139,13 +115,11 @@ workflow viral_amp_wwt_variant_calling {
     }
 
     output {
-        Array[File] addrg_bam = add_RG.rgbam
         Array[File] variants = variant_calling.variants
         Array[File] depth = variant_calling.depth
         Array[File] demix = freyja_demix.demix
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
-        File version_capture_viral_amp_variant_calling = create_version_capture_file.version_capture_viral_amp_variant_calling
         String? transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
     }
 }
@@ -154,7 +128,7 @@ task variant_calling {
     input {
         File bam
         File ref
-        File ref_gff
+        File? ref_gff
         String sample_name
     }
 
@@ -193,17 +167,26 @@ task freyja_demix {
         File variants
         File depth
         String freyja_pathogen
+        File? lineages_yml
     }
 
     command <<<
+         if [ -f "~{lineages_yml}" ]; then
+            echo "Installing custom lineages file for ~{freyja_pathogen}"
+            cp ~{lineages_yml} /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/~{freyja_pathogen}_lineages.yml
+        fi
+
         freyja --version | awk '{print $NF}' | tee VERSION
         # $NF refers to the last field split by white spaces
+
+        # Update freyja barcodes for the specified pathogen
+        freyja update --pathogen ~{freyja_pathogen}
 
 
         #creates a temp file with the same name as the intended output file that will get output in case of failure or overwritten in case of sucess
         echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
         
-        freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 --confirmedonly ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
+        freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
     >>>
 
     output {
@@ -212,7 +195,7 @@ task freyja_demix {
     }
 
     runtime {
-        docker: "staphb/freyja:2.0.1"
+        docker: "staphb/freyja:latest"
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 200 SSD"
@@ -287,40 +270,5 @@ task combine_mutations_tsv {
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 500 HDD"
-    }
-}
-
-task create_version_capture_file {
-    input {
-        File version_capture_viral_amp_variant_calling_py
-        String project_name
-        String samtools_version_staphb
-        String samtools_version_andersenlabapps
-        String ivar_version
-        String freyja_version
-        String analysis_date
-        String workflow_version_path
-    }
-
-    command <<<
-        python ~{version_capture_viral_amp_variant_calling_py} \
-        --project_name "~{project_name}" \
-        --samtools_version_staphb "~{samtools_version_staphb}" \
-        --samtools_version_andersenlabapps "~{samtools_version_andersenlabapps}" \
-        --ivar_version "~{ivar_version}" \
-        --freyja_version "~{freyja_version}" \
-        --analysis_date "~{analysis_date}" \
-        --workflow_version "~{workflow_version_path}"
-    >>>
-
-    output {
-        File version_capture_viral_amp_variant_calling = "version_capture_viral_amp_variant_calling_~{project_name}_~{workflow_version_path}.csv"
-}
-
-    runtime {
-      docker: "mchether/py3-bio:v4"
-      memory: "4 GB"
-      cpu: 4
-      disks: "local-disk 10 SSD"
     }
 }

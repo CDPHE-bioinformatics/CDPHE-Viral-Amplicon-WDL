@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/summary_tasks.wdl"
-import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/b59cb189af2149f00ac0ad04eb3e0813d1cc3971/version_capture_tasks.wdl" as version_capture
+import "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/tasks/summary_tasks.wdl"
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" as version_capture
 
 
 workflow viral_amp_illumina_pe_summary {
@@ -9,7 +9,6 @@ workflow viral_amp_illumina_pe_summary {
         Array[String] sample_name
         Array[File?] renamed_consensus
         Array[File?] cov_out # cov as in coverage
-        Array[File?] percent_cvg_csv
         Array[File?] nextclade_csv
         Array[String] out_dir_array
         Array[String] project_name_array
@@ -21,9 +20,8 @@ workflow viral_amp_illumina_pe_summary {
         File concat_seq_results_py
     }
     #private declarations
-    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v0.1.0'
+    String version_capture_docker = 'ariannaesmith/cdphe_wdl_version_capture:v1.0.0'
     String workflow_name = 'viral_amp_illumina_pe_summary'
-    
 
     String project_name = project_name_array[0]
     File workbook_path = workbook_path_array[0]
@@ -36,8 +34,8 @@ workflow viral_amp_illumina_pe_summary {
     call version_capture.workflow_metadata as w_meta {
         input:
             docker = version_capture_docker,
-            workflow_name = workflow_name
-            workflow_version = workflow_version
+            workflow_name = workflow_name,
+            workflow_version = workflow_version[0]
     } 
 
     call summary_tasks.concatenate_consensus as concatenate_consensus {
@@ -47,12 +45,11 @@ workflow viral_amp_illumina_pe_summary {
 
     call summary_tasks.summarize_results as summarize_results {
       input:
-        workflow_version = workflow_version_capture.workflow_version,
+        workflow_version = w_meta.version_info.version,
         sample_name = sample_name,
         concat_seq_results_py = concat_seq_results_py,
         nextclade_csv = select_all(nextclade_csv),
         cov_out = select_all(cov_out),
-        percent_cvg_csv = select_all(percent_cvg_csv),
         project_name = project_name,
         assembler_version= assembler_version,
         workbook_path = workbook_path
@@ -60,28 +57,26 @@ workflow viral_amp_illumina_pe_summary {
 
     call summary_tasks.transfer_outputs as transfer_outputs {
         input:
-            out_dir = "~{out_dir_path}/summary_results/assembly/~{version_capture.workflow_version_path}",
+            out_dir = "~{out_dir_path}/~{wf_version_und}",
             cat_fastas = concatenate_consensus.cat_fastas,
-            sequencing_results_csv = summarize_results.sequencing_results_csv
+            sequencing_results_csv = summarize_results.sequencing_results_csv,
+            nextclade_csv = select_all(nextclade_csv)[0] 
     }
 
-    call version_capture.capture_versions as version_cap {
-        input:
-            version_array = version_array,
-            workflow_name = workflow_name,
-            workflow_version = workflow_version_und,
-            project_name = project_name,
-            analysis_date = w_meta.analysis_date,
-            docker = version_capture_docker
-    }
+    #call version_capture.capture_versions as capture_versions {
+        #input:
+            #version_array = [w_meta.version_info],
+            #workflow_name = workflow_name,
+            #workflow_version = workflow_version_und,
+            #project_name = project_name,
+            #analysis_date = w_meta.analysis_date,
+            #docker = version_capture_docker
+    #}
 
     output {
-        String workflow_version = workflow_version_capture.workflow_version
-
+        String wf_version_output = w_meta.version_info.version
         File cat_fastas = concatenate_consensus.cat_fastas
 
         File sequencing_results_csv = summarize_results.sequencing_results_csv
-
-        File 
     }
 }
