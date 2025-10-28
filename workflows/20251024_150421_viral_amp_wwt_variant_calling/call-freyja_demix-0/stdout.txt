@@ -1,0 +1,7 @@
+Installing custom lineages file for MEASLESN450
+2.0.0
+Getting outbreak data
+Downloading barcodes
+Using default lineage hierarchy yml for MEASLESN450
+Validating the lineage hierarchy yaml ...
+Lineage yaml file validated... All parents exist.

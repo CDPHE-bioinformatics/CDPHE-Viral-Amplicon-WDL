@@ -1,0 +1,6 @@
+{
+  "fastq_1": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-filter_reads/out/cleaned_1/2503120184-braz_clean_PE1.fastq.gz",
+  "fastq_2": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-filter_reads/out/cleaned_2/2503120184-braz_clean_PE2.fastq.gz",
+  "ref": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.fasta",
+  "sample_name": "2503120184-braz"
+}

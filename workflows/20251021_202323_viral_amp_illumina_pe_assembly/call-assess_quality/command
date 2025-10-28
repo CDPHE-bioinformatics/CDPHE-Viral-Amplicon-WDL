@@ -1,0 +1,3 @@
+
+fastqc --version | awk '/FastQC/ {print $2}' | tee VERSION
+fastqc --outdir "$PWD" /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1.fastq /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2.fastq

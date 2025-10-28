@@ -1,0 +1,11 @@
+
+cp $APPDIR/* .
+python3 version_capture.py \
+--analysis_date 2025-10-24 \
+--docker_name $NAME \
+--docker_host $HOST  \
+--docker_version $VERSION  \
+--out_fn version_capture_viral_amp_wwt_variant_calling_Measles_test_v1_0_0.csv \
+--project_name Measles_test \
+--versions_json /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/tmp64mz5np2 \
+

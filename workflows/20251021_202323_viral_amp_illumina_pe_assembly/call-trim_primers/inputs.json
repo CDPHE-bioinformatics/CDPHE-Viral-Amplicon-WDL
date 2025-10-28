@@ -1,0 +1,5 @@
+{
+  "bam": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-align_reads/out/out_bam/2503120184-braz_aln.sorted.bam",
+  "primers": "/home/rojina_sapkota/Viralamp_wdl_test/measles_braz_primers.bed",
+  "sample_name": "2503120184-braz"
+}

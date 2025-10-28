@@ -1,0 +1,8 @@
+{
+  "workflow_metadata.analysis_date": "2025-10-22",
+  "workflow_metadata.version_info": {
+    "docker": "",
+    "software": "viral_amp_illumina_pe_summary",
+    "version": "[\"v1.0.0\"]"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "analysis_date": "2025-10-21",
+  "docker": "ariannaesmith/cdphe_wdl_version_capture:v1.0.0",
+  "project_name": "Measles_test",
+  "version_array": [
+    {
+      "docker": "",
+      "software": "viral_amp_illumina_pe_assembly",
+      "version": "v1.0.0"
+    },
+    {
+      "docker": "staphb/seqyclean:1.10.09",
+      "software": "seqyclean",
+      "version": "1.10.09"
+    },
+    {
+      "docker": "staphb/fastqc:0.11.9",
+      "software": "fastqc",
+      "version": "v0.11.9"
+    },
+    {
+      "docker": "quay.io/broadinstitute/viral-core:2.2.3",
+      "software": "bwa",
+      "version": "0.7.17-r1188"
+    },
+    {
+      "docker": "quay.io/broadinstitute/viral-core:2.2.3",
+      "software": "samtools",
+      "version": "1.18"
+    },
+    {
+      "docker": "andersenlabapps/ivar:1.3.1",
+      "software": "ivar",
+      "version": "1.3.1"
+    },
+    {
+      "docker": "andersenlabapps/ivar:1.3.1",
+      "software": "samtools",
+      "version": "1.9"
+    },
+    {
+      "docker": "staphb/samtools:1.16",
+      "software": "samtools",
+      "version": "1.16"
+    },
+    {
+      "docker": "nextstrain/nextclade:3.8.2",
+      "software": "nextclade",
+      "version": "3.8.2"
+    }
+  ],
+  "workflow_name": "viral_amp_illumina_pe_assembly",
+  "workflow_version": "v1.0.0"
+}

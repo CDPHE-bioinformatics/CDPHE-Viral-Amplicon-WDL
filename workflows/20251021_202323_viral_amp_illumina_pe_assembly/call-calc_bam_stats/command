@@ -1,0 +1,6 @@
+
+samtools --version | awk '/samtools/ {print $2}' | tee VERSION
+samtools flagstat /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam > 2503120184-braz_flagstat.txt
+samtools stats /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam > 2503120184-braz_stats.txt
+samtools coverage -m -o 2503120184-braz_coverage_hist.txt /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam
+samtools coverage -o 2503120184-braz_coverage.txt /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam

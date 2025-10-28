@@ -1,0 +1,21 @@
+{
+  "error": "RunFailed",
+  "task": "mutations_tsv",
+  "run": "call-mutations_tsv-0",
+  "dir": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251023_163936_viral_amp_wwt_variant_calling/call-mutations_tsv-0",
+  "cause": {
+    "error": "Terminated",
+    "run": "call-mutations_tsv-0",
+    "dir": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251023_163936_viral_amp_wwt_variant_calling/call-mutations_tsv-0",
+    "pos": {
+      "source": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/viral_amp_wwt_variant_calling.wdl",
+      "line": 198,
+      "column": 1
+    }
+  },
+  "pos": {
+    "source": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/viral_amp_wwt_variant_calling.wdl",
+    "line": 198,
+    "column": 1
+  }
+}

@@ -1,0 +1,24 @@
+Strand not found in primer BED file so strand will not be considered for trimming
+Found 2 primers in BED file
+Amplicons detected: 
+Building BAM index
+
+Number of references in file: 1
+NC_001498.1
+Using Region: NC_001498.1
+
+Found 2 mapped reads
+Found 0 unmapped reads
+Sorted By Coordinate
+-------
+Processed 10% reads ... 
+
+-------
+Results: 
+Primer Name	Read Count
+	0
+	0
+
+Trimmed primers from 0% (0) of reads.
+0% (0) of reads were quality trimmed below the minimum length of 30 bp and were not written to file.
+100% (2) of reads started outside of primer regions. Since the -e flag was given, these reads were written to file.

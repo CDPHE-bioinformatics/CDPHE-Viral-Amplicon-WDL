@@ -1,0 +1,15 @@
+{
+  "align_reads_bwa.assembler_version": "0.7.17-r1188",
+  "align_reads_bwa.bwa_version_info": {
+    "docker": "quay.io/broadinstitute/viral-core:2.2.3",
+    "software": "bwa",
+    "version": "0.7.17-r1188"
+  },
+  "align_reads_bwa.out_bam": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-align_reads/out/out_bam/2503120184-braz_aln.sorted.bam",
+  "align_reads_bwa.out_bamindex": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-align_reads/out/out_bamindex/2503120184-braz_aln.sorted.bam.bai",
+  "align_reads_bwa.samtools_version_info": {
+    "docker": "quay.io/broadinstitute/viral-core:2.2.3",
+    "software": "samtools",
+    "version": "1.18"
+  }
+}

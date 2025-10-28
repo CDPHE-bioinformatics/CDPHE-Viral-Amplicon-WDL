@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/utils.py", line 1059, in collapse_barcodes
+    duplicates = df_barcodes.groupby(df_barcodes.columns.tolist()).apply(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/pandas/core/frame.py", line 9210, in groupby
+    return DataFrameGroupBy(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/pandas/core/groupby/groupby.py", line 1331, in __init__
+    grouper, exclusions, obj = get_grouper(
+                               ^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/pandas/core/groupby/grouper.py", line 1071, in get_grouper
+    raise ValueError("No group keys passed!")
+ValueError: No group keys passed!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/freyja-env/bin/freyja", line 10, in <module>
+    sys.exit(cli())
+             ^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/click/core.py", line 1462, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/click/core.py", line 1383, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/click/core.py", line 1850, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/click/core.py", line 1246, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/click/core.py", line 814, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/_cli.py", line 168, in demix
+    df_barcodes = collapse_barcodes(df_barcodes, df_depth, depthcutoff,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/utils.py", line 1063, in collapse_barcodes
+    raise ValueError(f'Error: --depthcutoff {depthcutoff} threshold'
+ValueError: Error: --depthcutoff 2 threshold too high for data with max depth 2, min depth 0, Not enough coverage depth at all sites

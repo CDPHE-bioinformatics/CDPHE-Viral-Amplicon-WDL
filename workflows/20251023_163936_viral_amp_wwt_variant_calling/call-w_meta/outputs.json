@@ -1,0 +1,8 @@
+{
+  "workflow_metadata.analysis_date": "2025-10-23",
+  "workflow_metadata.version_info": {
+    "docker": "",
+    "software": "viral_amp_wwt_variant_calling",
+    "version": "[\"v1.0.0\"]"
+  }
+}

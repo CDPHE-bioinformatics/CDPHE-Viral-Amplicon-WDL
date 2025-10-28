@@ -1,0 +1,8 @@
+
+mkdir -p /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/multifasta/
+mkdir -p /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/summary_results/
+mkdir -p /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/nextclade_output/
+
+cp /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/concatenate_assemblies.fasta /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/multifasta/
+cp /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/Measles_test_sequencing_results.csv /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/summary_results/
+cp /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_nextclade.csv /home/rojina_sapkota/Viralamp_wdl_test/v1_0_0/nextclade_output/

@@ -1,0 +1,5 @@
+{
+  "project_name": "Measles_test",
+  "sample_name": "2503120184-braz",
+  "variants": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251024_160603_viral_amp_wwt_variant_calling/call-variant_calling-0/out/variants/2503120184-braz_variants.tsv"
+}

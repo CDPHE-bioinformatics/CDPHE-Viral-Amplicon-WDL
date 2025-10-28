@@ -1,0 +1,64 @@
+====================Parameters========================
+Version: 1.10.09 (2018-10-16)
+--------------------Basic parameters--------------------
+Provided data files : 
+PE1: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1.fastq, PE2: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2.fastq
+Adapters trimming: YES. 
+Vector screening: NO
+Contaminants screening: YES. File_of_contaminants: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/general_Adapters_plus_PhiX_174.fasta
+K-mer size for contaminants: 15
+Quality trimming: YES
+Maximum error: 30
+Maximum error at ends: 30
+Poly A/T trimming: NO
+Duplicates removal: NO
+--------------------Output files--------------------
+Output prefix: 2503120184-braz_clean
+Report files: 2503120184-braz_clean_PE1_Report.tsv, 2503120184-braz_clean_PE2_Report.tsv
+PE1 file: 2503120184-braz_clean_PE1.fastq.gz
+PE2 file: 2503120184-braz_clean_PE2.fastq.gz
+Single-end reads: 2503120184-braz_clean_SE.fastq.gz
+--------------------Other parameters--------------------
+Maximum number of mismatches allowed in alignment: 7
+Minimum read length to accept: 25
+New to old-style Illumina headers: NO
+Old-style Illumina: NO
+Q-value: 33
+====================Starting the process====================
+Parsing screening file /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/general_Adapters_plus_PhiX_174.fasta
+Running the Illumina cleaning process...
+Processing files: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1.fastq, /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2.fastq
+====================Summary Statistics====================
+PE1 reads analyzed: 604770, Bases: 59778866
+Reads trimmed from 5' ->
+By adapter: 59961
+By quality: 34210
+Average trim length from 5': 2.88412 bp
+Reads trimmed from 3' ->
+By adapter: 0
+By quality: 502207
+Average trim length from 3': 3.20691 bp
+PE1 reads discarded: 2537
+-----------------------------------------------------------
+PE2 reads analyzed: 604770, Bases: 59858773
+Reads trimmed from 5' ->
+By adapter: 59961
+By quality: 37280
+Average trim length from 5': 3.12756 bp
+Reads trimmed from 3' ->
+By adapter: 239
+By quality: 496742
+Average trim length from 3': 2.75698 bp
+PE2 reads discarded:8002
+----------------------Summary for PE & SE----------------------
+Pairs kept: 494205, 81.7178%, Bases: 102596674, 85.7562%
+Pairs discarded: 0, 0%, Bases: 0, 0%
+Contaminated pairs: 0
+Single Reads PE1 kept: 8002, Bases: 459313
+Single Reads PE2 kept: 2537, Bases: 139411
+Average trimmed length PE1: 103.232 bp
+Average trimmed length PE2: 103.393 bp
+Adapters found: 148553, 24.5636%
+====================Done cleaning====================
+Program finished.
+Elapsed time = 193.555 seconds.

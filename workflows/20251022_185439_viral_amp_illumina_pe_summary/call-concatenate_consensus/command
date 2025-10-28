@@ -1,0 +1,2 @@
+
+cat /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_consensus_renamed.fa > concatenate_assemblies.fasta

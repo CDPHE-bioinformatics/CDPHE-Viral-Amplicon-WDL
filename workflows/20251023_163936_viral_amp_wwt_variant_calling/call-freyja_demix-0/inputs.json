@@ -1,0 +1,6 @@
+{
+  "depth": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251023_163936_viral_amp_wwt_variant_calling/call-variant_calling-0/out/depth/2503120184-braz_depth.tsv",
+  "freyja_pathogen": "MEASLES",
+  "sample_name": "2503120184-braz",
+  "variants": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251023_163936_viral_amp_wwt_variant_calling/call-variant_calling-0/out/variants/2503120184-braz_variants.tsv"
+}

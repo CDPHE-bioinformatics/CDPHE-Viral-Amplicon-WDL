@@ -1,0 +1,8 @@
+
+nextclade --version | awk '/nextclade/ {print $2}' > VERSION
+nextclade dataset get --name "measles" \
+    --output-dir "/data/measles"
+nextclade run --input-dataset "/data/measles" \
+    --output-json "2503120184-braz_nextclade.json" \
+    --output-csv "2503120184-braz_nextclade.csv" \
+    "/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_consensus_renamed.fa"

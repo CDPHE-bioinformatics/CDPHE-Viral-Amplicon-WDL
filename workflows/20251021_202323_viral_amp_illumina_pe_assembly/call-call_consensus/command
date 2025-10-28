@@ -1,0 +1,6 @@
+
+ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
+samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
+samtools faidx /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta
+samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam | \
+ivar consensus -p 2503120184-braz_consensus -q 30 -t 0.6 -m 10

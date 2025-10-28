@@ -1,0 +1,4 @@
+ref_genome	position	ref_nucl	alt_nucl	ref_depth	REF_RV	ref_qual	alt_depth	ALT_RV	alt_qual	alt_freq	total_depth	pval	pass	gff_feature	ref_codon	ref_aa	alt_codon	alt_aa	sample_name	project_name
+NC_001498.1	1321	G	A	0	0	0	2	1	38	1	2	0.333333	FALSE	cds-NP_056918.1	AGG	R	AAG	K	2503120184-braz	Measles_test
+NC_001498.1	1337	C	T	0	0	0	2	1	38	1	2	0.333333	FALSE	cds-NP_056918.1	GTC	V	GTT	V	2503120184-braz	Measles_test
+NC_001498.1	1358	G	A	0	0	0	2	1	38	1	2	0.333333	FALSE	cds-NP_056918.1	GTG	V	GTA	V	2503120184-braz	Measles_test

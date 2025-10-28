@@ -1,0 +1,6 @@
+{
+  "cat_fastas": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251022_185439_viral_amp_illumina_pe_summary/call-concatenate_consensus/out/cat_fastas/concatenate_assemblies.fasta",
+  "nextclade_csv": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/out/nextclade_csv/2503120184-braz_nextclade.csv",
+  "out_dir": "/home/rojina_sapkota/Viralamp_wdl_test/v1_0_0",
+  "sequencing_results_csv": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251022_185439_viral_amp_illumina_pe_summary/call-summarize_results/out/sequencing_results_csv/Measles_test_sequencing_results.csv"
+}

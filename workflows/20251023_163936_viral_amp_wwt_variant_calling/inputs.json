@@ -1,0 +1,27 @@
+{
+  "viral_amp_wwt_variant_calling.freyja_pathogen": [
+    "MEASLES"
+  ],
+  "viral_amp_wwt_variant_calling.out_dir_array": [
+    "/home/rojina_sapkota/Viralamp_wdl_test/"
+  ],
+  "viral_amp_wwt_variant_calling.overwrite": true,
+  "viral_amp_wwt_variant_calling.project_name_array": [
+    "Measles_test"
+  ],
+  "viral_amp_wwt_variant_calling.reference_genome": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.fasta",
+  "viral_amp_wwt_variant_calling.reference_gff": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.gff",
+  "viral_amp_wwt_variant_calling.sample_name": [
+    "2503120184-braz"
+  ],
+  "viral_amp_wwt_variant_calling.transfer_results": true,
+  "viral_amp_wwt_variant_calling.trimsort_bam": [
+    "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/out/trimsort_bam/2503120184-braz_trim.sort.bam"
+  ],
+  "viral_amp_wwt_variant_calling.workflow_version": [
+    "v1.0.0"
+  ],
+  "viral_amp_wwt_variant_calling.workflow_version_und": [
+    "v1_0_0"
+  ]
+}

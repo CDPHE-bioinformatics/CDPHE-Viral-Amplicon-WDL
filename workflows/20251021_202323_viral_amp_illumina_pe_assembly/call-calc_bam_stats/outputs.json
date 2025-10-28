@@ -1,0 +1,11 @@
+{
+  "calc_bam_stats_samtools.cov_out": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-calc_bam_stats/out/cov_out/2503120184-braz_coverage.txt",
+  "calc_bam_stats_samtools.covhist_out": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-calc_bam_stats/out/covhist_out/2503120184-braz_coverage_hist.txt",
+  "calc_bam_stats_samtools.flagstat_out": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-calc_bam_stats/out/flagstat_out/2503120184-braz_flagstat.txt",
+  "calc_bam_stats_samtools.samtools_version_info": {
+    "docker": "staphb/samtools:1.16",
+    "software": "samtools",
+    "version": "1.16"
+  },
+  "calc_bam_stats_samtools.stats_out": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-calc_bam_stats/out/stats_out/2503120184-braz_stats.txt"
+}

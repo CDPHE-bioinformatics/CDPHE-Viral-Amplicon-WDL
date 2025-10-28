@@ -1,0 +1,58 @@
+MPXV:
+ - name: "mpox"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/MPX/latest/barcode.csv"
+   lineageyml: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/MPX/latest/mpox_lineages.yml"
+
+H5NX:
+ - name: "H5Nx"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/H5Nx/latest/barcode.csv"
+
+H5NX-cattle:
+  - name: "H5Nx-cattle"
+    barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/H5Nx-cattle/latest/barcode.csv"
+    lineageyml: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/H5Nx-cattle/latest/h5nx_cattle_lineages.yml"
+
+H1N1pdm:
+ - name: "H1N1"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/H1N1/latest/barcode.csv"
+
+FLU-B-VIC:
+ - name: "FLU-B-VIC"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/FLU-B-VIC/latest/barcode.csv"
+
+H3N2:
+ - name: "H3N2"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/H3N2/latest/barcode.csv"
+
+
+MEASLESN450:
+ - name: "MEASLESN450"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/MEASLESN450/latest/barcode.csv"
+
+MEASLES:
+ - name: "MEASLESwholegenome"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/MEASLESgenome/latest/barcode.csv"
+
+RSVa:
+ - name: "RSVa"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/RSVa/latest/barcode.csv"
+
+RSVb:
+ - name: "RSVb"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/RSVb/latest/barcode.csv"
+
+DENV1:
+ - name: "DENV1"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/DENV1/latest/barcode.csv"
+
+DENV2:
+ - name: "DENV2"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/DENV2/latest/barcode.csv"
+
+DENV3:
+ - name: "DENV3"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/DENV3/latest/barcode.csv"
+
+DENV4:
+ - name: "DENV4"
+   barcodes: "https://raw.githubusercontent.com/andersen-lab/Freyja-barcodes/refs/heads/main/DENV4/latest/barcode.csv"

@@ -1,0 +1,6 @@
+{
+  "bam": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/out/trimsort_bam/2503120184-braz_trim.sort.bam",
+  "ref": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.fasta",
+  "ref_gff": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.gff",
+  "sample_name": "2503120184-braz"
+}

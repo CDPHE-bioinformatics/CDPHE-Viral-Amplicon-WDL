@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "3.0.0",
+  "nextcladeAlgoVersion": "3.8.2",
+  "createdAt": "2025-10-21T20:27:14.170038798+00:00",
+  "cladeNodeAttrKeys": [],
+  "phenotypeAttrKeys": [],
+  "refNodes": {
+    "default": "__root__",
+    "search": [
+      {
+        "name": "AF266288",
+        "description": "Show mutations relative to the vaccine strain Edmonston",
+        "criteria": [
+          {
+            "node": [
+              {
+                "searchAlgo": "full",
+                "name": [
+                  "AF266288"
+                ]
+              }
+            ]
+          }
+        ],
+        "displayname": "Vaccine strain AF266288 (Edmonston)"
+      }
+    ]
+  },
+  "results": [],
+  "errors": [
+    {
+      "index": 0,
+      "seqName": "2503120184-braz",
+      "errors": [
+        "When processing sequence #0 '2503120184-braz': When calculating seed matches: Unable to align: seed alignment was unable to find any matches that are long enough. Only matches of at least 30 nucleotides long are considered (configurable using 'min match length' CLI flag or dataset property). This is likely due to low quality of the provided sequence, or due to using incorrect reference sequence."
+      ]
+    }
+  ]
+}

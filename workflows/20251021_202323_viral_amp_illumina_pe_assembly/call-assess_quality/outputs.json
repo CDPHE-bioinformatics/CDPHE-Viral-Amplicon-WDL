@@ -1,0 +1,11 @@
+{
+  "assess_quality_fastqc.fastqc1_html": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-assess_quality/out/fastqc1_html/2503120184-braz_R1_fastqc.html",
+  "assess_quality_fastqc.fastqc1_zip": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-assess_quality/out/fastqc1_zip/2503120184-braz_R1_fastqc.zip",
+  "assess_quality_fastqc.fastqc2_html": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-assess_quality/out/fastqc2_html/2503120184-braz_R2_fastqc.html",
+  "assess_quality_fastqc.fastqc2_zip": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-assess_quality/out/fastqc2_zip/2503120184-braz_R2_fastqc.zip",
+  "assess_quality_fastqc.fastqc_version_info": {
+    "docker": "staphb/fastqc:0.11.9",
+    "software": "fastqc",
+    "version": "v0.11.9"
+  }
+}

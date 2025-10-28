@@ -1,0 +1,5 @@
+{
+  "docker": "ubuntu:jammy-20240627.1",
+  "workflow_name": "viral_amp_illumina_pe_assembly",
+  "workflow_version": "v1.0.0"
+}
