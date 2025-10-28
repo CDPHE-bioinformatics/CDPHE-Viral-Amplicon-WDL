@@ -1,8 +1,0 @@
-{
-  "analysis_date": "2025-10-23",
-  "docker": "ariannaesmith/cdphe_wdl_version_capture:v1.0.0",
-  "project_name": "Measles_test",
-  "version_array": [],
-  "workflow_name": "viral_amp_wwt_variant_calling",
-  "workflow_version": "v1_0_0"
-}

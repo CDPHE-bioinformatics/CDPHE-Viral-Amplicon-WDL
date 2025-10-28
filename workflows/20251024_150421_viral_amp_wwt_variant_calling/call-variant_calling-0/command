@@ -1,9 +1,0 @@
-
-
-# grab ivar and samtools versions
-ivar version | awk '/version/ {print $3}' | tee VERSION_ivar
-samtools --version | awk '/samtools/ {print $2}' | tee VERSION_samtools
-
-samtools mpileup -A -aa -d 600000 -B -Q 20 -q 0 -f /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam | tee >(cut -f1-4 > 2503120184-braz_depth.tsv) | \
-ivar variants -p 2503120184-braz_variants.tsv -q 20 -t 0.0 -r /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta -g /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.gff
-

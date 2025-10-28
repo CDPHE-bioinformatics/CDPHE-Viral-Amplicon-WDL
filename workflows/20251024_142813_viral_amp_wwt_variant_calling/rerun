@@ -1,1 +1,0 @@
-pushd /home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows && miniwdl run --verbose viral_amp_wwt_variant_calling.wdl -i /home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/inputs/viral_amp_variant_calling.json; popd

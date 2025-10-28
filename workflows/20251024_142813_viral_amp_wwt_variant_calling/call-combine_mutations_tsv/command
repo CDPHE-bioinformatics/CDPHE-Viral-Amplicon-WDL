@@ -1,3 +1,0 @@
-
-# combine the coutns and frequency files for all samples into one
-awk 'FNR==1 && NR!=1{next;}{print}' /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_mutations.tsv >> combined_mutations.tsv

@@ -1,2 +1,0 @@
-project_name,analysis_date,software,associated_docker_container,version
-Measles_test,2025-10-24,cdphe_wdl_version_capture,ariannaesmith/cdphe_wdl_version_capture,v1.0.0
