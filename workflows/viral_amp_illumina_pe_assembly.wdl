@@ -15,7 +15,6 @@ workflow viral_amp_illumina_pe_assembly {
     input {
         String project_name
         String sample_name
-        String viral_amp_nextclade_organism_id
         File fastq_1
         File fastq_2
         File contam_fasta
@@ -109,13 +108,6 @@ workflow viral_amp_illumina_pe_assembly {
             fasta = call_consensus.consensus_out
     }
 
-    call post_assembly_tasks.call_clades_nextclade as call_clades {
-        input:
-            sample_name = sample_name,
-            renamed_consensus = rename_fasta.renamed_consensus,
-            organism_id = viral_amp_nextclade_organism_id
-    }
-
     Array[VersionInfo] version_array = [
         w_meta.version_info,
         filter_reads.seqyclean_version_info,
@@ -125,7 +117,6 @@ workflow viral_amp_illumina_pe_assembly {
         call_consensus.ivar_version_info,
         call_consensus.samtools_version_info,
         calc_bam_stats.samtools_version_info,
-        call_clades.nextclade_version_info
     ]
 
     call version_capture.capture_versions as capture_versions {
@@ -194,8 +185,7 @@ workflow viral_amp_illumina_pe_assembly {
 
         File renamed_consensus = rename_fasta.renamed_consensus
 
-        File nextclade_csv = call_clades.nextclade_csv
-        File nextclade_json = call_clades.nextclade_json
+
 
         File version_capture_file = capture_versions.output_file
         #File version_capture_file = task_version_capture.version_capture_file

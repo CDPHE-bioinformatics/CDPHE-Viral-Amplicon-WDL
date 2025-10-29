@@ -62,44 +62,6 @@ task rename_fasta {
     }
 }
 
-task call_clades_nextclade {
-    input {
-        String sample_name
-        File renamed_consensus
-        String organism_id
-    }
-
-    String docker = "nextstrain/nextclade:3.8.2"
-
-    command <<<
-        nextclade --version | awk '/nextclade/ {print $2}' > VERSION
-        nextclade dataset get --name "~{organism_id}" \
-            --output-dir "/data/~{organism_id}"
-        nextclade run --input-dataset "/data/~{organism_id}" \
-            --output-json "~{sample_name}_nextclade.json" \
-            --output-csv "~{sample_name}_nextclade.csv" \
-            "~{renamed_consensus}"
-    >>>
-
-    output {
-        VersionInfo nextclade_version_info = object {
-            software: "nextclade",
-            docker: docker,
-            version: read_string("VERSION")
-        }
-        
-        File nextclade_json = "~{sample_name}_nextclade.json"
-        File nextclade_csv = "~{sample_name}_nextclade.csv"
-    }
-
-    runtime {
-        cpu: 4
-        memory: "8G"
-        disks: "local-disk 10 HDD"
-        docker: docker
-    }
-}
-
 task transfer_outputs {
     meta {
         description: "Transfers files generated in the assembly workflow."

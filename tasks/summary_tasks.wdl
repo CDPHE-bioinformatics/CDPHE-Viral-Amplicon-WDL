@@ -27,7 +27,6 @@ task summarize_results {
         Array[String] sample_name
         File concat_seq_results_py
         Array[File] cov_out
-        Array[File] nextclade_csv
         String project_name
         String assembler_version
         File workbook_path
@@ -39,7 +38,6 @@ task summarize_results {
             --sample_name_array "~{write_lines(sample_name)}" \
             --workbook_path "~{workbook_path}" \
             --cov_out_files "~{write_lines(cov_out)}" \
-            --nextclade_csv_files "~{write_lines(nextclade_csv)}" \
             --assembler_version "~{assembler_version}" \
             --project_name "~{project_name}" 
     >>>
@@ -61,7 +59,6 @@ task transfer_outputs {
         String out_dir
         File cat_fastas
         File sequencing_results_csv
-        File nextclade_csv
     }
 
     String outdirpath = sub(out_dir, "/$", "")
@@ -70,11 +67,9 @@ task transfer_outputs {
     #remove the mdkir part and add gsutil -m before cp for gcp 
         mkdir -p ~{outdirpath}/multifasta/
         mkdir -p ~{outdirpath}/summary_results/
-        mkdir -p ~{outdirpath}/nextclade_output/
 
         cp ~{cat_fastas} ~{outdirpath}/multifasta/
         cp ~{sequencing_results_csv} ~{outdirpath}/summary_results/
-        cp ~{nextclade_csv} ~{outdirpath}/nextclade_output/
     >>>
 
     runtime {
