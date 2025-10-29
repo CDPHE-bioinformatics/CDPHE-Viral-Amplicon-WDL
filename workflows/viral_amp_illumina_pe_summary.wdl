@@ -64,7 +64,7 @@ workflow viral_amp_illumina_pe_summary {
         input:
             version_array = [w_meta.version_info],
             workflow_name = workflow_name,
-            workflow_version = workflow_version_und,
+            workflow_version = wf_version_und,
             project_name = project_name,
             analysis_date = w_meta.analysis_date,
             docker = version_capture_docker

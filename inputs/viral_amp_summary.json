@@ -1,0 +1,12 @@
+{
+    "viral_amp_illumina_pe_summary.sample_name": ["2503120184-braz"],
+    "viral_amp_illumina_pe_summary.renamed_consensus": ["/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/out/renamed_consensus/2503120184-braz_consensus_renamed.fa"],
+    "viral_amp_illumina_pe_summary.cov_out": ["/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/out/cov_out/2503120184-braz_coverage.txt"],
+    "viral_amp_illumina_pe_summary.out_dir_array": ["/home/rojina_sapkota/Viralamp_wdl_test/"],
+    "viral_amp_illumina_pe_summary.project_name_array": ["Measles_test"],
+    "viral_amp_illumina_pe_summary.assembler_version_array":  ["0.7.17-r1188"],
+    "viral_amp_illumina_pe_summary.workbook_path_array": ["/home/rojina_sapkota/MEASLES/preprocess/measles-test-0008/test_measles_0008_miseq/test_measles_0008_miseq_mev_braz_terra_data_table.tsv"],
+    "viral_amp_illumina_pe_summary.workflow_version": ["v1.0.0"],
+    "viral_amp_illumina_pe_summary.workflow_version_und":["v1_0_0"],
+    "viral_amp_illumina_pe_summary.concat_seq_results_py": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/scripts/concat_seq_results.py"
+}
