@@ -6,7 +6,7 @@
     "viral_amp_wwt_variant_calling.overwrite": true,
     "viral_amp_wwt_variant_calling.project_name_array": "${this.sample_name}.project_name",
     "viral_amp_wwt_variant_calling.reference_genome": "${workspace.viral_amp_imap_ref_fasta}",
-    "viral_amp_wwt_variant_calling.reference_gff": "${workspace.imap_viral_amp_ref_gff}",
+    "viral_amp_wwt_variant_calling.reference_gff": "${workspace.viral_amp_imap_ref_gff}",
     "viral_amp_wwt_variant_calling.transfer_results": true
 
 }
