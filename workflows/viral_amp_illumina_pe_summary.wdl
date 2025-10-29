@@ -44,7 +44,7 @@ workflow viral_amp_illumina_pe_summary {
 
     call summary_tasks.summarize_results as summarize_results {
       input:
-        workflow_version = w_meta.version_info.version,
+        workflow_version = workflow_version[0],
         sample_name = sample_name,
         concat_seq_results_py = concat_seq_results_py,
         cov_out = select_all(cov_out),
