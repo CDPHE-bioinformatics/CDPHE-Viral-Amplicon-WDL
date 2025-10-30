@@ -29,10 +29,11 @@ workflow viral_amp_wwt_variant_calling {
     String workflow_name = 'viral_amp_wwt_variant_calling'
     String wf_version = select_first(workflow_version)
     String wf_version_und = select_first(workflow_version_und)
+    String out_dir_path = sub(out_dir_array[0], "/$", "") # remove trailing slash
 
     # secret variables
     String project_name = project_name_array[0]
-    String out_dir = select_first([out_dir_array])[0]
+    #String out_dir = select_first([out_dir_array])[0]
     String pathogen = select_first(freyja_pathogen)
 
     scatter (id_bam in zip(sample_name, trimsort_bam)) {
@@ -91,14 +92,14 @@ workflow viral_amp_wwt_variant_calling {
     }
     
     SubdirsToFiles subdirs_to_files = object { subdirs_to_files: [
-        ("viral_amp_variant_calling/freyja",
+        ("viral_amp_wwt_variant_calling/freyja",
             flatten([
                 variant_calling.variants,
                 variant_calling.depth,
                 freyja_demix.demix
             ])
         ),
-        ("viral_amp_variant_calling", [
+        ("viral_amp_wwt_variant_calling", [
             combine_mutations_tsv.combined_mutations_tsv,
             freyja_aggregate.demix_aggregated
         ])
@@ -107,7 +108,7 @@ workflow viral_amp_wwt_variant_calling {
     if (transfer_results) {
         call transfer_task.transfer as transfer_set_results {
             input:
-                out_dir = out_dir,
+                out_dir = "~{out_dir_path}/~{workflow_version_und},
                 overwrite = overwrite,
                 cpu = 8,
                 subdirs_to_files = subdirs_to_files
@@ -120,7 +121,7 @@ workflow viral_amp_wwt_variant_calling {
         Array[File] demix = freyja_demix.demix
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
-        String? transfer_date_viral_amp_variant_calling = transfer_set_results.transfer_date
+        String? transfer_date_viral_amp_wwt_variant_calling = transfer_set_results.transfer_date
     }
 }
 
