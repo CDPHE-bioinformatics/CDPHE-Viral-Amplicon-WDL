@@ -178,7 +178,7 @@ task freyja_demix {
 
 
         #creates a temp file with the same name as the intended output file that will get output in case of failure or overwritten in case of sucess
-        #echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
+        echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
         
         freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
     >>>
