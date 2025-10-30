@@ -17,7 +17,6 @@ workflow viral_amp_wwt_variant_calling {
         Array[String] freyja_pathogen
         Array[String] workflow_version
         Array[String] workflow_version_und
-        File? lineages_yml
 
         # reference files/workspace data
         File reference_genome
@@ -51,8 +50,7 @@ workflow viral_amp_wwt_variant_calling {
                 variants = variant_calling.variants,
                 depth = variant_calling.depth,
                 sample_name = id_bam.left,
-                freyja_pathogen = pathogen,
-                lineages_yml = lineages_yml
+                freyja_pathogen = pathogen
         }
         
         call mutations_tsv {
@@ -96,7 +94,7 @@ workflow viral_amp_wwt_variant_calling {
             flatten([
                 variant_calling.variants,
                 variant_calling.depth,
-                freyja_demix.demix
+                select_all(freyja_demix.demix)
             ])
         ),
         ("viral_amp_wwt_variant_calling", [
@@ -168,14 +166,9 @@ task freyja_demix {
         File variants
         File depth
         String freyja_pathogen
-        File? lineages_yml
     }
 
     command <<<
-         if [ -f "~{lineages_yml}" ]; then
-            echo "Installing custom lineages file for ~{freyja_pathogen}"
-            cp ~{lineages_yml} /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/~{freyja_pathogen}_lineages.yml
-        fi
 
         freyja --version | awk '{print $NF}' | tee VERSION
         # $NF refers to the last field split by white spaces
@@ -231,7 +224,7 @@ task mutations_tsv {
 
 task freyja_aggregate {
     input {
-        Array[File?] demix
+        Array[File] demix
     }
 
     command <<<
