@@ -118,7 +118,7 @@ workflow viral_amp_wwt_variant_calling {
     output {
         Array[File] variants = variant_calling.variants
         Array[File] depth = variant_calling.depth
-        Array[File] demix = select_all(freyja_demix.demix)
+        Array[File] demix = freyja_demix.demix
         File demix_aggregated = freyja_aggregate.demix_aggregated
         File combined_mutations_tsv = combine_mutations_tsv.combined_mutations_tsv
         String? transfer_date_viral_amp_wwt_variant_calling = transfer_set_results.transfer_date
