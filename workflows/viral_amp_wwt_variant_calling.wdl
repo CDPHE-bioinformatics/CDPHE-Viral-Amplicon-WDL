@@ -10,7 +10,7 @@ workflow viral_amp_wwt_variant_calling {
 
         Array[File] trimsort_bam
         Array[String] sample_name
-        Array[String]? out_dir_array
+        Array[String] out_dir_array
         Boolean overwrite = true
         Boolean transfer_results = true
         Array[String] project_name_array 
