@@ -42,9 +42,6 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     parser.add_argument("--workbook_path")
     parser.add_argument("--cov_out_files", 
         help="txt file with list of bam file paths")
-    parser.add_argument("--nextclade_csv_files", 
-        help="txt file with list of nextclade csv file paths"
-    )
     parser.add_argument("--assembler_version")
     parser.add_argument("--project_name")
 
@@ -108,16 +105,6 @@ def concat_cov_out(cov_out_file_list: list[str]) -> pd.DataFrame:
     return df
 
 
-def concat_nextclade_csv(nextclade_csv_file_list: list[str]) -> pd.DataFrame:
-    """Concatenate nextclade csv files."""
-    df_list = []
-    for file in nextclade_csv_file_list:
-        d = pd.read_csv(file, sep=";")
-        df_list.append(d)
-
-    df = pd.concat(df_list)
-    return df
-
 
 def concat_results(
     sample_name_list: list[str],
@@ -125,7 +112,7 @@ def concat_results(
     project_name: str,
     assembler_version: str,
     cov_out_df: pd.DataFrame,
-    nextclade_df: pd.DataFrame,
+    #nextclade_df: pd.DataFrame,
 ) -> pd.DataFrame:
     """Concatenate results."""
 
@@ -157,20 +144,11 @@ def concat_results(
     # set index on the samtools_df and percent_cvg_df and variants_df to prepare for joining
     cov_out_df["sample_name"] = cov_out_df["sample_name"].astype(str)
     cov_out_df = cov_out_df.set_index("sample_name")
-    #Filtering the nextclade columns here to only those needed in the final output
-    nextclade_df["sample_name"] = nextclade_df["seqName"].apply(
-        get_sample_name_from_fasta_header
-    )
-    nextclade_df["sample_name"] = nextclade_df["sample_name"].astype(str) 
-
-    
-    nextclade_df = nextclade_df.set_index("sample_name")
 
 
     # join
     j = df.join(workbook, how="left")
     j = j.join(cov_out_df, how="left")
-    j = j.join(nextclade_df, how="left")
     j = j.reset_index()
 
     # add fasta header
@@ -188,7 +166,6 @@ def concat_results(
         "plate_name",
         "run_name",
         "run_date",
-        "clade",
     ]
     for column in columns:
         if column not in primary_columns:
@@ -209,7 +186,7 @@ def main(args: argparse.Namespace) -> None:
 
     sample_name_array = args.sample_name_array
     workbook_path = args.workbook_path
-    nextclade_csv_files = args.nextclade_csv_files
+    #nextclade_csv_files = args.nextclade_csv_files
     assembler_version = args.assembler_version
     project_name = args.project_name
 
@@ -220,13 +197,10 @@ def main(args: argparse.Namespace) -> None:
     cov_out_file_list = create_list_from_write_lines_input(
         write_lines_input=args.cov_out_files
     )
-    nextclade_csv_file_list = create_list_from_write_lines_input(
-        write_lines_input=nextclade_csv_files
-    )
 
     # concat cov_out files, percent_cvg files, and nextclade files
     cov_out_df = concat_cov_out(cov_out_file_list=cov_out_file_list)
-    nextclade_df = concat_nextclade_csv(nextclade_csv_file_list=nextclade_csv_file_list)
+    #nextclade_df = concat_nextclade_csv(nextclade_csv_file_list=nextclade_csv_file_list)
 
     # create results file
     concat_results(
@@ -235,7 +209,6 @@ def main(args: argparse.Namespace) -> None:
         project_name=project_name,
         assembler_version=assembler_version,
         cov_out_df=cov_out_df,
-        nextclade_df=nextclade_df,
     )
 
     log.info("Sequencing results summary end.")
