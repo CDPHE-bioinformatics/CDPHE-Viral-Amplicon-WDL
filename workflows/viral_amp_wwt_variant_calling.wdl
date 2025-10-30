@@ -108,7 +108,7 @@ workflow viral_amp_wwt_variant_calling {
     if (transfer_results) {
         call transfer_task.transfer as transfer_set_results {
             input:
-                out_dir = "~{out_dir_path}/~{workflow_version_und},
+                out_dir = "~{out_dir_path}/~{wf_version_und},
                 overwrite = overwrite,
                 cpu = 8,
                 subdirs_to_files = subdirs_to_files
