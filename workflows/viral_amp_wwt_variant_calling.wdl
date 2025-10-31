@@ -218,7 +218,7 @@ task mutations_tsv {
 
 task freyja_aggregate {
     input {
-        Array[File] demix
+        Array[File?] demix
     }
 
     command <<<
