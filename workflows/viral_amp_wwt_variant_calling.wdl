@@ -222,10 +222,20 @@ task freyja_aggregate {
     }
 
     command <<<
+        set -e
         mkdir demix_outputs
-        mv ~{sep=' ' demix} -t demix_outputs/
-        freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+        # Only move files if array is not empty
+        if [ ~{length(demix)} -gt 0 ]; then
+            mv ~{sep=' ' demix} -t demix_outputs/
+            freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+        else
+            # Create empty output file if no demix files
+            echo "No demix files to aggregate" > demix_aggregated.tsv
+        fi
     >>>
+        #mv ~{sep=' ' demix} -t demix_outputs/
+        #freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+    #>>>
 
     output {
         File demix_aggregated = "demix_aggregated.tsv"
