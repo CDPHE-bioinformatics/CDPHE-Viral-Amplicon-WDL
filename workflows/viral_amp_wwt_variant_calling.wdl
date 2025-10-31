@@ -173,9 +173,6 @@ task freyja_demix {
         freyja --version | awk '{print $NF}' | tee VERSION
         # $NF refers to the last field split by white spaces
 
-        # Update freyja barcodes for the specified pathogen
-        freyja update --pathogen ~{freyja_pathogen}
-
 
         #creates a temp file with the same name as the intended output file that will get output in case of failure or overwritten in case of sucess
         echo -e "\t~{sample_name}\nsummarized\tLowCov\nlineages\tLowCov\nabundances\tLowCov\nresid\tLowCov\ncoverage\tLowCov" > ~{sample_name}_demixed.tsv
