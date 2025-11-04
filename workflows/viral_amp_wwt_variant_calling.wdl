@@ -224,13 +224,11 @@ task freyja_aggregate {
     Array[File] demix_files = select_all(demix) 
 
     command <<<
+        set -euo pipefail
               
         #mkdir ./demix_outputs/
         #mv ~{sep=' ' demix_files} demix_outputs/
         #freyja aggregate demix_outputs/ --output demix_aggregated.tsv
-
-        set -euo pipefail
-        
         mkdir -p ./demix_outputs/
         
         # WDL localizes files to the current directory
