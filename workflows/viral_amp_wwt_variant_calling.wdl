@@ -222,9 +222,12 @@ task freyja_aggregate {
     }
 
     command <<<
-        set -e
-        mkdir demix_outputs
-        mv ~{sep=' ' demix} -t demix_outputs/
+        
+        freyja_demixed_array="~{sep=' ' demix}"
+        mkdir ./demix_outputs/
+        echo "mv ${freyja_demixed_array[@]} demix_outputs/"
+        mv ${freyja_demixed_array[@]} ./demix_outputs/
+
         freyja aggregate demix_outputs/ --output demix_aggregated.tsv
     >>>
 
