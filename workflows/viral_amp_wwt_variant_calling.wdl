@@ -224,24 +224,11 @@ task freyja_aggregate {
     Array[File] demix_files = select_all(demix) 
 
     command <<<
-        set -euo pipefail
               
-        #mkdir ./demix_outputs/
-        #mv ~{sep=' ' demix_files} demix_outputs/
-        #freyja aggregate demix_outputs/ --output demix_aggregated.tsv
-        
-        mkdir -p ./demix_outputs/
-        
-        # Copy files using bash loop
-        for file in ~{sep=' ' demix_files}; do
-            cp "$file" ./demix_outputs/
-        done
-        
-        # Verify files were copied
-        echo "Files in demix_outputs:"
-        ls -lh ./demix_outputs/
-        
+        mkdir ./demix_outputs/
+        mv ~{sep=' ' demix_files} demix_outputs/
         freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+
     >>>
 
     output {
