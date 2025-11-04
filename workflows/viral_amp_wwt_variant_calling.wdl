@@ -228,7 +228,7 @@ task freyja_aggregate {
         echo "mv ${freyja_demixed_array[@]} demix_outputs/"
         mv ${freyja_demixed_array[@]} ./demix_outputs/
 
-        freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+        freyja aggregate ./demix_outputs/ --output demix_aggregated.tsv
     >>>
 
     output {
