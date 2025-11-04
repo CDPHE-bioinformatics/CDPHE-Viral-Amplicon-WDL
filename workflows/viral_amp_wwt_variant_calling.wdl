@@ -165,7 +165,7 @@ task freyja_demix {
         String sample_name
         File variants
         File depth
-        String freyja_pathogen
+        String pathogen
     }
 
     command <<<
@@ -174,7 +174,7 @@ task freyja_demix {
         # $NF refers to the last field split by white spaces
 
 
-        freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
+        freyja demix --eps 0.01 --covcut 10 --pathogen ~{pathogen} --depthcutoff 10 ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
     >>>
 
     output {
