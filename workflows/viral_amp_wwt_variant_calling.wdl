@@ -229,11 +229,13 @@ task freyja_aggregate {
         #mkdir ./demix_outputs/
         #mv ~{sep=' ' demix_files} demix_outputs/
         #freyja aggregate demix_outputs/ --output demix_aggregated.tsv
+        
         mkdir -p ./demix_outputs/
         
-        # WDL localizes files to the current directory
-        # Copy them to demix_outputs/
-        ~{sep='\n' prefix('cp ', suffix(' ./demix_outputs/', demix_files))}
+        # Copy files using bash loop
+        for file in ~{sep=' ' demix_files}; do
+            cp "$file" ./demix_outputs/
+        done
         
         # Verify files were copied
         echo "Files in demix_outputs:"
