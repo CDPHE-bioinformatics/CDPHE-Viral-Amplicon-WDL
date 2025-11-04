@@ -220,15 +220,13 @@ task freyja_aggregate {
     input {
         Array[File?] demix
     }
+    Array[demix_files] select_all(Array[demix?]) 
 
     command <<<
-        
-        freyja_demixed_array="~{sep=' ' demix}"
+              
         mkdir ./demix_outputs/
-        echo "mv ${freyja_demixed_array[@]} demix_outputs/"
-        mv ${freyja_demixed_array[@]} ./demix_outputs/
-
-        freyja aggregate ./demix_outputs/ --output demix_aggregated.tsv
+        mv ~{sep=' ' demix_files} demix_outputs/
+        freyja aggregate demix_outputs/ --output demix_aggregated.tsv
     >>>
 
     output {
