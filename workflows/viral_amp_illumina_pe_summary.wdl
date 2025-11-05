@@ -1,6 +1,7 @@
 version 1.0
 
 import "../tasks/summary_tasks.wdl"
+import "../tasks/transfer_task.wdl" as transfer_task
 import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" as version_capture
 
 
@@ -73,7 +74,7 @@ workflow viral_amp_illumina_pe_summary {
     output {
         String wf_version_output = w_meta.version_info.version
         File cat_fastas = concatenate_consensus.cat_fastas
-
         File sequencing_results_csv = summarize_results.sequencing_results_csv
+        String transfer_date = transfer_outputs.transfer_date 
     }
 }
