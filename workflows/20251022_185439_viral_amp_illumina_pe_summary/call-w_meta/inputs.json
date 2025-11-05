@@ -1,5 +1,0 @@
-{
-  "docker": "ariannaesmith/cdphe_wdl_version_capture:v1.0.0",
-  "workflow_name": "viral_amp_illumina_pe_summary",
-  "workflow_version": "[\"v1.0.0\"]"
-}

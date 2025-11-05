@@ -1,9 +1,0 @@
-
-python3 /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/concat_seq_results.py \
-    --workflow_version "["v1.0.0"]" \
-    --sample_name_array "/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/tmpekfwpcl_" \
-    --workbook_path "/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/test_measles_0008_miseq_mev_braz_terra_data_table.tsv" \
-    --cov_out_files "/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/tmpjdd3_qxw" \
-    --nextclade_csv_files "/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/tmp6julj2sp" \
-    --assembler_version "0.7.17-r1188" \
-    --project_name "Measles_test" 
