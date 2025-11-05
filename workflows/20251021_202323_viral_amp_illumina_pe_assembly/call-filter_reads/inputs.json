@@ -1,6 +1,0 @@
-{
-  "contam": "/home/rojina_sapkota/Viralamp_wdl_test/general_Adapters_plus_PhiX_174.fasta",
-  "fastq_1": "/home/rojina_sapkota/MEASLES/preprocess/test_measles_0005_miseq/fastq_files/2503120184-braz_R1.fastq",
-  "fastq_2": "/home/rojina_sapkota/MEASLES/preprocess/test_measles_0005_miseq/fastq_files/2503120184-braz_R2.fastq",
-  "sample_name": "2503120184-braz"
-}

@@ -1,1 +1,0 @@
-[E::idx_find_and_load] Could not retrieve index file for '/mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_aln.sorted.bam'

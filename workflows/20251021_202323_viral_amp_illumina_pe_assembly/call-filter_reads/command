@@ -1,3 +1,0 @@
-
-seqyclean -h | awk '/Version/ {print $2}' | tee VERSION
-seqyclean -minlen 25 -qual 30 30 -gz -1 /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1.fastq -2 /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2.fastq -c /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/general_Adapters_plus_PhiX_174.fasta -o 2503120184-braz_clean

@@ -1,4 +1,0 @@
-
-samtools faidx /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta
-samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam | \
-ivar variants -p 2503120184-braz_variants -q 30 -t 0.6 -m 10 -r /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta -g /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.gff

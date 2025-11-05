@@ -1,3 +1,0 @@
-v0.11.9
-Analysis complete for 2503120184-braz_R1.fastq
-Analysis complete for 2503120184-braz_R2.fastq

@@ -1,5 +1,0 @@
-{
-  "bai": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-trim_primers/out/trimsort_bamindex/2503120184-braz_trim.sort.bam.bai",
-  "bam": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/20251021_202323_viral_amp_illumina_pe_assembly/call-trim_primers/out/trimsort_bam/2503120184-braz_trim.sort.bam",
-  "sample_name": "2503120184-braz"
-}

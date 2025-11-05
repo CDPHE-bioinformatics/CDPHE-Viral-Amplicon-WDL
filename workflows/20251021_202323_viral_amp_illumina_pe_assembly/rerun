@@ -1,1 +1,0 @@
-pushd /home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows && miniwdl run viral_amp_illumina_pe_assembly.wdl -i /home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/inputs/viral_amp_assembly.json; popd

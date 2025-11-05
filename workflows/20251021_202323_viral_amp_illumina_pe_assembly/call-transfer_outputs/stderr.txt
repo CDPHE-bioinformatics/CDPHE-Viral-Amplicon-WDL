@@ -1,52 +1,0 @@
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_clean_PE1.fastq.gz...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/seqyclean/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/ 15.5 MiB]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_clean_PE2.fastq.gz...
-/ [0/1 files][    0.0 B/ 15.4 MiB]   0% Done                                    / [1/1 files][ 15.4 MiB/ 15.4 MiB] 100% Done                                    
-Operation completed over 1 objects/15.4 MiB.                                     
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_clean_SummaryStatistics.tsv...
-/ [0/1 files][    0.0 B/  2.0 KiB]   0% Done                                    / [1/1 files][  2.0 KiB/  2.0 KiB] 100% Done                                    
-Operation completed over 1 objects/2.0 KiB.                                      
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1_fastqc.html...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/fastqc/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/631.0 KiB]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R1_fastqc.zip...
-/ [0/1 files][    0.0 B/429.4 KiB]   0% Done                                    / [1/1 files][429.4 KiB/429.4 KiB] 100% Done                                    
-Operation completed over 1 objects/429.4 KiB.                                    
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2_fastqc.html...
-/ [0/1 files][    0.0 B/630.4 KiB]   0% Done                                    / [1/1 files][630.4 KiB/630.4 KiB] 100% Done                                    
-Operation completed over 1 objects/630.4 KiB.                                    
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_R2_fastqc.zip...
-/ [0/1 files][    0.0 B/426.6 KiB]   0% Done                                    / [1/1 files][426.6 KiB/426.6 KiB] 100% Done                                    
-Operation completed over 1 objects/426.6 KiB.                                    
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/alignments/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/  624.0 B]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_trim.sort.bam.bai...
-/ [0/1 files][    0.0 B/   96.0 B]   0% Done                                    / [1/1 files][   96.0 B/   96.0 B] 100% Done                                    
-Operation completed over 1 objects/96.0 B.                                       
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_variants.tsv...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/variants/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/  139.0 B]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_consensus.fa...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/assemblies/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/ 15.6 KiB]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_flagstat.txt...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/bam_stats/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/  455.0 B]   0% Done                                    Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_stats.txt...
-/ [0/1 files][    0.0 B/ 32.0 KiB]   0% Done                                    / [1/1 files][ 32.0 KiB/ 32.0 KiB] 100% Done                                    
-Operation completed over 1 objects/32.0 KiB.                                     
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_coverage_hist.txt...
-/ [0/1 files][    0.0 B/  960.0 B]   0% Done                                    / [1/1 files][  960.0 B/  960.0 B] 100% Done                                    
-Operation completed over 1 objects/960.0 B.                                      
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_coverage.txt...
-/ [0/1 files][    0.0 B/  127.0 B]   0% Done                                    / [1/1 files][  127.0 B/  127.0 B] 100% Done                                    
-Operation completed over 1 objects/127.0 B.                                      
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_consensus_renamed.fa...
-/ [0/1 files][    0.0 B/ 15.5 KiB]   0% Done                                    / [1/1 files][ 15.5 KiB/ 15.5 KiB] 100% Done                                    
-Operation completed over 1 objects/15.5 KiB.                                     
-Copying file:///mnt/miniwdl_task_container/work/_miniwdl_inputs/0/version_capture_viral_amp_illumina_pe_assembly_Measles_test_v1_0_0.csv...
-[Errno 21] Is a directory: '/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows/v1_0_0/summary_results/'
-CommandException: 1 file/object could not be transferred.
-/ [0/1 files][    0.0 B/  770.0 B]   0% Done                                    

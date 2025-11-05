@@ -1,4 +1,0 @@
-
-ivar trim -e -i /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_aln.sorted.bam -b /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/measles_braz_primers.bed -p 2503120184-braz_trim.bam
-samtools sort 2503120184-braz_trim.bam -o 2503120184-braz_trim.sort.bam
-samtools index 2503120184-braz_trim.sort.bam

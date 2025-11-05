@@ -1,8 +1,0 @@
-
-bwa 2>&1 | awk '/Version/{print $2}' | tee VERSION_BWA
-samtools --version | awk '/samtools / {print $2}' | tee VERSION_SAMTOOLS
-bwa index -p reference.fasta -a is /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/NC_001498-1_measles_reference_genome.fasta
-bwa mem -t 2 reference.fasta /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_clean_PE1.fastq.gz /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/2503120184-braz_clean_PE2.fastq.gz | \
-samtools sort | \
-samtools view -u -h -F 4 -o ./2503120184-braz_aln.sorted.bam
-samtools index ./2503120184-braz_aln.sorted.bam
