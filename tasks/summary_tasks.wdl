@@ -55,6 +55,9 @@ task summarize_results {
 }
 
 task transfer_outputs {
+    meta {
+        description: "Transfers files generated in the summary workflow."
+    }
     input {
         String out_dir
         File cat_fastas
@@ -64,13 +67,16 @@ task transfer_outputs {
     String outdirpath = sub(out_dir, "/$", "")
 
     command <<<
-    #remove the mdkir part and add gsutil -m before cp for gcp 
-        mkdir -p ~{outdirpath}/multifasta/
-        mkdir -p ~{outdirpath}/summary_results/
+        gsutil -m cp ~{cat_fastas} ~{outdirpath}/multifasta/
+        gsutil -m cp ~{sequencing_results_csv} ~{outdirpath}/summary_results/
 
-        cp ~{cat_fastas} ~{outdirpath}/multifasta/
-        cp ~{sequencing_results_csv} ~{outdirpath}/summary_results/
+        TRANSFER_DATE=$(date)
+        echo "$TRANSFER_DATE" | tee TRANSFER_DATE
     >>>
+    
+    output {
+        String transfer_date = read_string("TRANSFER_DATE")
+    }
 
     runtime {
         cpu: 2
