@@ -138,7 +138,7 @@ task variant_calling {
     samtools --version | awk '/samtools/ {print $2}' | tee VERSION_samtools
 
     samtools mpileup -A -aa -d 600000 -B -Q 20 -q 0 -f ~{ref} ~{bam} | tee >(cut -f1-4 > ~{sample_name}_depth.tsv) | \
-    ivar variants -p ~{sample_name}_variants.tsv -q 20 -t 0.0 -r ~{ref} -g ~{ref_gff}
+    ivar variants -p ~{sample_name}_variants.tsv -q 20 -t 0.01 -m 10 -r ~{ref} -g ~{ref_gff}
     
     >>>
 
@@ -174,7 +174,9 @@ task freyja_demix {
         # $NF refers to the last field split by white spaces
 
 
-        freyja demix --eps 0.01 --covcut 10 --pathogen ~{freyja_pathogen} --depthcutoff 10 ~{variants} ~{depth} --output ~{sample_name}_demixed.tsv
+        mkdir ./freyja_db
+        freyja update --pathogen ~{freyja_pathogen} --outdir ./freyja_db
+        freyja demix --eps 0.01 --covcut 10 --depthcutoff 10 --barcodes ./freyja_db/barcode.csv --meta ./freyja_db/auspice_tree.json --output ~{sample_name}_demixed.tsv ~{variants} ~{depth}
     >>>
 
     output {
@@ -221,11 +223,11 @@ task freyja_aggregate {
         Array[File?] demix
     }
 
-    Array[File] demix_files = select_all(demix) 
+    Array[File] demix_files = select_all(Array[File?] demix) 
 
     command <<<
               
-        mkdir ./demix_outputs/
+        mkdir demix_outputs/
         mv ~{sep=' ' demix_files} demix_outputs/
         freyja aggregate demix_outputs/ --output demix_aggregated.tsv
 

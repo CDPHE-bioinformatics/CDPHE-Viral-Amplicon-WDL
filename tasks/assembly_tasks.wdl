@@ -2,6 +2,52 @@ version 1.0
 
 import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" as version_capture
 
+task align_reads_bwa {
+    input {
+        File fastq_1
+        File fastq_2
+        File ref
+        String sample_name
+    }
+
+    String docker = "quay.io/broadinstitute/viral-core:2.2.3"
+
+    command <<<
+        bwa 2>&1 | awk '/Version/{print $2}' | tee VERSION_BWA
+        samtools --version | awk '/samtools / {print $2}' | tee VERSION_SAMTOOLS
+        bwa index -p reference.fasta -a is ~{ref}
+        bwa mem -t 2 reference.fasta ~{fastq_1} ~{fastq_2} | \
+        samtools sort | \
+        samtools view -u -h -F 4 -o ./~{sample_name}_aln.sorted.bam
+        samtools index ./~{sample_name}_aln.sorted.bam
+    >>>
+
+    output {
+        VersionInfo bwa_version_info = object {
+            software: "bwa",
+            docker: docker,
+            version: read_string("VERSION_BWA")
+        }
+
+        VersionInfo samtools_version_info = object {
+            software: "samtools",
+            docker: docker,
+            version: read_string("VERSION_SAMTOOLS")
+        }
+
+        File out_bam = "${sample_name}_aln.sorted.bam"
+        File out_bamindex = "${sample_name}_aln.sorted.bam.bai"
+        String assembler_version = read_string("VERSION_BWA")
+    }
+
+    runtime {
+        cpu: 2
+        memory: "2G"
+        disks: "local-disk 2 HDD"
+        docker: docker
+    }
+}
+
 task trim_primers_ivar {
     input {
         File primers
@@ -102,52 +148,6 @@ task call_consensus_ivar {
         disks: "local-disk 1 HDD"
         maxRetries: 2
         bootDiskSizeGb: 10
-        docker: docker
-    }
-}
-
-task align_reads_bwa {
-    input {
-        File fastq_1
-        File fastq_2
-        File ref
-        String sample_name
-    }
-
-    String docker = "quay.io/broadinstitute/viral-core:2.2.3"
-
-    command <<<
-        bwa 2>&1 | awk '/Version/{print $2}' | tee VERSION_BWA
-        samtools --version | awk '/samtools / {print $2}' | tee VERSION_SAMTOOLS
-        bwa index -p reference.fasta -a is ~{ref}
-        bwa mem -t 2 reference.fasta ~{fastq_1} ~{fastq_2} | \
-        samtools sort | \
-        samtools view -u -h -F 4 -o ./~{sample_name}_aln.sorted.bam
-        samtools index ./~{sample_name}_aln.sorted.bam
-    >>>
-
-    output {
-        VersionInfo bwa_version_info = object {
-            software: "bwa",
-            docker: docker,
-            version: read_string("VERSION_BWA")
-        }
-
-        VersionInfo samtools_version_info = object {
-            software: "samtools",
-            docker: docker,
-            version: read_string("VERSION_SAMTOOLS")
-        }
-
-        File out_bam = "${sample_name}_aln.sorted.bam"
-        File out_bamindex = "${sample_name}_aln.sorted.bam.bai"
-        String assembler_version = read_string("VERSION_BWA")
-    }
-
-    runtime {
-        cpu: 2
-        memory: "2G"
-        disks: "local-disk 2 HDD"
         docker: docker
     }
 }
