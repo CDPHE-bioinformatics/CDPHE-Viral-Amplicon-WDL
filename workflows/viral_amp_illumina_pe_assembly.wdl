@@ -117,7 +117,8 @@ workflow viral_amp_illumina_pe_assembly {
     Array[VersionInfo] version_array = [
         w_meta.version_info,
         filter_reads.seqyclean_version_info,
-        assess_quality.fastqc_version_info,
+        assess_quality_raw.fastqc_version_info,
+        assess_quality_clean.fastqc_version_info,
         align_reads.bwa_version_info,
         align_reads.samtools_version_info,
         call_consensus.ivar_version_info,
