@@ -171,10 +171,15 @@ workflow viral_amp_illumina_pe_assembly {
         File filtered_reads_2 = filter_reads.cleaned_2
         File seqyclean_summary = filter_reads.seqyclean_summary
 
-        File fastqc_raw1_html = assess_quality.fastqc1_html
-        File fastqc_raw1_zip = assess_quality.fastqc1_zip
-        File fastqc_raw2_html = assess_quality.fastqc2_html
-        File fastqc_raw2_zip = assess_quality.fastqc2_zip
+        File fastqc_raw1_html = assess_quality_raw.fastqc1_html
+        File fastqc_raw1_zip = assess_quality_raw.fastqc1_zip
+        File fastqc_raw2_html = assess_quality_raw.fastqc2_html
+        File fastqc_raw2_zip = assess_quality_raw.fastqc2_zip
+
+        File fastqc_clean1_html = assess_quality_clean.fastqc1_html
+        File fastqc_clean1_zip = assess_quality_clean.fastqc1_zip
+        File fastqc_clean2_html = assess_quality_clean.fastqc2_html
+        File fastqc_clean2_zip = assess_quality_clean.fastqc2_zip
 
         File out_bam = align_reads.out_bam
         File out_bamindex = align_reads.out_bamindex
