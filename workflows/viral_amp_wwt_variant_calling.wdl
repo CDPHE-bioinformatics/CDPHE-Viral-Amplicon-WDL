@@ -223,7 +223,7 @@ task freyja_aggregate {
         Array[File?] demix
     }
 
-    Array[File] demix_files = select_all(Array[File?] demix) 
+    Array[File] demix_files = select_all(demix) 
 
     command <<<
               
