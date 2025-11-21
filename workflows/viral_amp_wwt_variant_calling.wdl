@@ -176,7 +176,7 @@ task freyja_demix {
 
         mkdir ./freyja_db
         freyja update --pathogen ~{freyja_pathogen} --outdir ./freyja_db
-        freyja demix --eps 0.01 --covcut 10 --depthcutoff 10 --barcodes ./freyja_db/barcode.csv --meta ./freyja_db/auspice_tree.json --output ~{sample_name}_demixed.tsv ~{variants} ~{depth}
+        freyja demix --eps 0.01 --covcut 10 --depthcutoff 10 --barcodes ./freyja_db/*barcodes.csv --output ~{sample_name}_demixed.tsv ~{variants} ~{depth}
     >>>
 
     output {
