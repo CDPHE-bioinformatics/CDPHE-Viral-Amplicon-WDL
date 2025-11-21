@@ -54,10 +54,16 @@ workflow viral_amp_illumina_pe_assembly {
             fastq_2 = fastq_2
     }
 
-    call pre_assembly_tasks.assess_quality_fastqc as assess_quality {
+    call pre_assembly_tasks.assess_quality_fastqc as assess_quality_raw {
         input:
            fastq_1 = fastq_1,
            fastq_2 = fastq_2
+    }
+
+    call pre_assembly_tasks.assess_quality_fastqc as assess_quality_clean {
+        input:
+            fastq_1 = filter_reads.cleaned_1,
+            fastq_2 = filter_reads.cleaned_2
     }
 
     ##Assembly tasks
