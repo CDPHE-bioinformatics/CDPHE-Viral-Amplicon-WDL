@@ -1,5 +1,6 @@
 version 1.0
 
+import "../tasks/hostile_task.wdl" as hostile_task
 import "../tasks/pre_assembly_tasks.wdl"
 import "../tasks/assembly_tasks.wdl"
 import "../tasks/post_assembly_tasks.wdl"
@@ -21,6 +22,9 @@ workflow viral_amp_illumina_pe_assembly {
         Boolean transfer_results = true
         String? out_dir
         String analysis_date
+        Boolean scrub_reads = false
+        Array[File]? scrub_genome_index
+        Boolean overwrite
 
         File viral_amp_primer_bed
         File viral_amp_ref_fasta
@@ -44,14 +48,24 @@ workflow viral_amp_illumina_pe_assembly {
             workflow_version = workflow_version
     }
 
-    ## Pre-assembly tasks    
+    ## Pre-assembly tasks  
+
+    if (scrub_reads) {
+       call hostile_task.hostile as hostile {
+        input:
+            fastq1 = fastq_1,
+            fastq2 = fastq_2,
+            genome_index = select_first([scrub_genome_index]),
+            seq_method = "ILLUMINA"
+        }
+    }  
 
     call pre_assembly_tasks.filter_reads_seqyclean as filter_reads {
         input:
             contam = contam_fasta,
             sample_name = sample_name,
-            fastq_1 = fastq_1,
-            fastq_2 = fastq_2
+            fastq_1 = select_first([hostile.fastq1_scrubbed, fastq_1]),
+            fastq_2 = select_first([hostile.fastq2_scrubbed, fastq_2])
     }
 
     call pre_assembly_tasks.assess_quality_fastqc as assess_quality_raw {
@@ -125,10 +139,13 @@ workflow viral_amp_illumina_pe_assembly {
         call_consensus.samtools_version_info,
         calc_bam_stats.samtools_version_info,
     ]
+    if (scrub_reads) {
+        Array[VersionInfo] version_array_with_hostile = flatten([version_array, select_all([hostile.hostile_version_info])])
+    }
 
     call version_capture.capture_versions as capture_versions {
         input:
-            version_array = version_array,
+            version_array = select_first([version_array_with_hostile, version_array]),
             workflow_name = workflow_name,
             workflow_version = workflow_version,
             project_name = project_name,
@@ -165,6 +182,11 @@ workflow viral_amp_illumina_pe_assembly {
     }
 
     output {
+        Int? human_reads_removed = hostile.human_reads_removed
+        Float? human_reads_removed_proportion = hostile.human_reads_removed_proportion
+        File? fastq1_scrubbed = hostile.fastq1_scrubbed
+        File? fastq2_scrubbed = hostile.fastq2_scrubbed
+        
         String wf_version = w_meta.version_info.version
         String wf_version_und = workflow_version_und
 
