@@ -57,13 +57,14 @@ task trim_primers_ivar {
 
     String docker = "andersenlabapps/ivar:1.3.1"
 
-    command {
+    command <<<
         ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
         samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
+
         ivar trim -e -i ${bam} -b ${primers} -p ${sample_name}_trim.bam
         samtools sort ${sample_name}_trim.bam -o ${sample_name}_trim.sort.bam
         samtools index ${sample_name}_trim.sort.bam
-    }
+    >>>
 
     output {
         VersionInfo ivar_version_info = object {
@@ -106,7 +107,7 @@ task call_variants_ivar {
     command <<<
         ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
         samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
-        
+
         samtools faidx ~{ref}
         samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ~{ref} ~{bam} | \
         ivar variants -p ~{sample_name}_variants -q 30 -t 0.6 -m 10 -r ~{ref} ~{if defined(gff) then "-g " + gff else ""}
