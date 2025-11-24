@@ -61,9 +61,9 @@ task trim_primers_ivar {
         ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
         samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
 
-        ivar trim -e -i ${bam} -b ${primers} -p ${sample_name}_trim.bam
-        samtools sort ${sample_name}_trim.bam -o ${sample_name}_trim.sort.bam
-        samtools index ${sample_name}_trim.sort.bam
+        ivar trim -e -i ~{bam} -b ~{primers} -p ~{sample_name}_trim.bam
+        samtools sort ~{sample_name}_trim.bam -o ~{sample_name}_trim.sort.bam
+        samtools index ~{sample_name}_trim.sort.bam
     >>>
 
     output {
