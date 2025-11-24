@@ -4,7 +4,7 @@
 
 version 1.0
 
-import "../tasks/version_capture_task.wdl"
+import "https://raw.githubusercontent.com/CDPHE-bioinformatics/wdl-shared/dba3e70cee747617bacbd0312d1de2f6b0731de3/version_capture_tasks.wdl" 
 
 task hostile {
   input {
