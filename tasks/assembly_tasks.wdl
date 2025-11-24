@@ -58,12 +58,26 @@ task trim_primers_ivar {
     String docker = "andersenlabapps/ivar:1.3.1"
 
     command {
+        ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
+        samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
         ivar trim -e -i ${bam} -b ${primers} -p ${sample_name}_trim.bam
         samtools sort ${sample_name}_trim.bam -o ${sample_name}_trim.sort.bam
         samtools index ${sample_name}_trim.sort.bam
     }
 
     output {
+        VersionInfo ivar_version_info = object {
+            software: "ivar",
+            docker: docker,
+            version: read_string("VERSION_IVAR")
+        }
+
+        VersionInfo samtools_version_info = object {
+            software: "samtools",
+            docker: docker,
+            version: read_string("VERSION_SAMTOOLS")
+        } 
+
         File trim_bam = "${sample_name}_trim.bam"
         File trimsort_bam = "${sample_name}_trim.sort.bam"
         File trimsort_bamindex = "${sample_name}_trim.sort.bam.bai"
@@ -90,12 +104,27 @@ task call_variants_ivar {
     String docker = "andersenlabapps/ivar:1.3.1"
 
     command <<<
+        ivar version | awk '/version/ {print $3}' | tee VERSION_IVAR
+        samtools --version | awk '/samtools/ {print $2}' | tee VERSION_SAMTOOLS
+        
         samtools faidx ~{ref}
         samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ~{ref} ~{bam} | \
         ivar variants -p ~{sample_name}_variants -q 30 -t 0.6 -m 10 -r ~{ref} ~{if defined(gff) then "-g " + gff else ""}
     >>>
 
     output {
+        VersionInfo ivar_version_info = object {
+            software: "ivar",
+            docker: docker,
+            version: read_string("VERSION_IVAR")
+        }
+
+        VersionInfo samtools_version_info = object {
+            software: "samtools",
+            docker: docker,
+            version: read_string("VERSION_SAMTOOLS")
+        }
+
         File var_out = "${sample_name}_variants.tsv"
     }
 
