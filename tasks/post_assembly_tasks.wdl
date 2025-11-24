@@ -78,6 +78,10 @@ task transfer_outputs {
         File fastqc_raw1_zip
         File fastqc_raw2_html
         File fastqc_raw2_zip
+        File fastqc_clean1_html      
+        File fastqc_clean1_zip        
+        File fastqc_clean2_html     
+        File fastqc_clean2_zip
 
         File trimsort_bam
         File trimsort_bamindex
