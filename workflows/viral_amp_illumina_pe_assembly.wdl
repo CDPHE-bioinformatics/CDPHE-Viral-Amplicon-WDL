@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/hostile_task.wdl" as hostile_task
+import "../tasks/hostile_task.wdl" 
 import "../tasks/pre_assembly_tasks.wdl"
 import "../tasks/assembly_tasks.wdl"
 import "../tasks/post_assembly_tasks.wdl"
@@ -186,7 +186,7 @@ workflow viral_amp_illumina_pe_assembly {
         Float? human_reads_removed_proportion = hostile.human_reads_removed_proportion
         File? fastq1_scrubbed = hostile.fastq1_scrubbed
         File? fastq2_scrubbed = hostile.fastq2_scrubbed
-        
+
         String wf_version = w_meta.version_info.version
         String wf_version_und = workflow_version_und
 
