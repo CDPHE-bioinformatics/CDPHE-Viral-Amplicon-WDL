@@ -35,9 +35,9 @@ graph TD
     C --> E[Read Alignment<br/>BWA]
     E --> F[Primer Trimming<br/>iVar]
     F --> G[Variant Calling<br/>iVar]
-    F --> H[Consensus Calling<br/>iVar]
-    F --> I[Coverage Stats<br/>Samtools]
-    H --> J[FASTA Header Formatting]
+    F --> H[Coverage Stats<br/>Samtools]
+    F --> I[Consensus Calling<br/>iVar]
+    I --> J[FASTA Header Formatting]
     D & F & G & H & I & J --> K[Assembly Workflow Outputs]
     K --> L[Cloud Storage Transfer<br/>optional task]
 ```
