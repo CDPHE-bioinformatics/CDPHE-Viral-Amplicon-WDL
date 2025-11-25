@@ -34,26 +34,26 @@ graph TD
     E --> G[Consensus Calling<br/>iVar]
     E --> H[Coverage Stats<br/>Samtools]
     G --> I[FASTA Formatting]
-    B & C & F & G & H & I --> J[Assembly Outputs]
-    J --> K[Cloud Storage Transfer]
+    B & C & F & G & H & I --> J[Assembly Workflow Outputs]
+    J --> K[Cloud Storage Transfer<br/>optional task]
 ```
 
 ```mermaid
 graph LR
-    A[Assembly Outputs] --> B[Sequence Concatenation]
+    A[Assembly Workflow Outputs] --> B[Sequence Concatenation]
     A --> C[Results Summarization]
-    B & C --> D[Summary Report]
-    D --> E[Cloud Storage Transfer]
+    C --> D[Summary Report]
+    B & D --> E[Cloud Storage Transfer]
 ```
 
 ```mermaid
 graph TD
-    A[Assembly Outputs] --> B[Read Alignment<br/>BWA]
-    A --> C[Primer Trimming<br/>iVar]
-    B & C --> D[Lineage Detection<br/>Freyja]
-    D --> E[Abundance Aggregation]
-    D --> F[Variant Table Generation]
-    E & F --> G[Version Capture]
+    A[Assembly Workflow Outputs<br/>bam files] --> B[Variant Calling<br/>ivar]
+    B --> C[Lineage Deconvolution<br/>Freyja]
+    C --> D[Lineage and Abundance Aggregation<br/>Freyja]
+    B --> E[Generate Mutations Table]
+    E --> F[Aggregate Mutations Table]
+    D & F --> G[Version Capture]
     G --> H[Cloud Storage Transfer]
 ```
 
