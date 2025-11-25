@@ -26,61 +26,38 @@ Our Viral whole genome reference-based assembly workflows are highly adaptable a
 
 ```mermaid
 graph TD
-    subgraph Assembly
-    A1(Raw Reads) --> B1
-    A1 --> C1
-    B1[filter_reads_seqyclean] --> D1
-    B1 --> L1
-    C1[assess_quality_fastqc] --> L1
-    D1[align_reads_bwa] --> E1
-    D1 --> L1
-    E1[trim_primers_ivar] --> F1
-    E1 --> G1
-    E1 --> H1
-    F1[call_variants_ivar] --> L1
-    G1[call_consensus_ivar] --> I1
-    G1 --> L1
-    H1[calc_bam_stats_samtools] --> L1
-    I1[FASTA formatting] --> J1
-    L1([Assembly Files]) --> M1
-    M1[transfer_outputs] --> N1
-    N1{{Cloud Bucket}}
-    end
+    A[Raw Paired-End Reads] --> B[Quality Filtering<br/>SeqyClean]
+    A --> C[Quality Assessment<br/>FastQC]
+    B --> D[Read Alignment<br/>BWA]
+    D --> E[Primer Trimming<br/>iVar]
+    E --> F[Variant Calling<br/>iVar]
+    E --> G[Consensus Calling<br/>iVar]
+    E --> H[Coverage Stats<br/>Samtools]
+    G --> I[FASTA Formatting]
+    I --> J[Coverage Calculation]
+    I --> K[Clade Assignment<br/>Nextclade]
+    B & C & F & G & H & J & K --> L[Assembly Outputs]
+    L --> M[Cloud Storage Transfer]
+```
+
+```mermaid
+graph LR
+    A[Assembly Outputs] --> B[Sequence Concatenation]
+    A --> C[Results Summarization]
+    B & C --> D[Summary Report]
+    D --> E[Cloud Storage Transfer]
 ```
 
 ```mermaid
 graph TD
-    subgraph Summary
-    A2(Assembly Files) --> B2
-    B2[concatenate_consensus] --> D2
-    A2 --> C2
-    C2[summarize_results] --> D2
-    D2([Summary Files]) --> E2
-    E2[transfer_outputs] --> F2
-    F2{{Cloud Bucket}}
-    end
+    A[Assembly Outputs] --> B[Read Alignment<br/>BWA]
+    A --> C[Primer Trimming<br/>iVar]
+    B & C --> D[Lineage Detection<br/>Freyja]
+    D --> E[Abundance Aggregation]
+    D --> F[Variant Table Generation]
+    E & F --> G[Version Capture]
+    G --> H[Cloud Storage Transfer]
 ```
-
-```mermaid
-graph TD
-    subgraph Variant_Calling
-    A3(Assembly Files) --> B3
-    A3 --> C3
-    B3[align_reads_bwa] --> D3
-    B3 --> L3
-    C3[trim_primers_ivar] --> D3
-    D3[call_variants_freyja] --> E3
-    D3 --> F3
-    E3[aggregate_lineage_abundances] --> G3
-    F3[generate_variant_tables] --> G3
-    G3[version_capture_viral_amp_variant_calling] --> H3
-    G3 --> L3
-    H3([Variant Calling Files]) --> I3
-    I3[transfer_outputs] --> J3
-    J3{{Cloud Bucket}}
-    end
-```
-
 
 ## Process
 
