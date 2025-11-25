@@ -60,7 +60,7 @@ title: viral_amp_wwt_variant_calling
 graph TD
     A[Assembly Workflow Outputs<br/>bam files] --> B[Variant Calling<br/>ivar]
     B --> C[Lineage Deconvolution<br/>Freyja]
-    C --> D[Lineage and Abundance Aggregation<br/>Freyja]
+    C --> D[Aggregate Results<br/>Freyja]
     B --> E[Generate Mutations Table]
     E --> F[Aggregate Mutations Table]
     D & F --> G[Version Capture]
