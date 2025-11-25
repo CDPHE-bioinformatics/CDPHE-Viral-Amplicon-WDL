@@ -25,6 +25,9 @@ Our viral reference-based assembly workflows are highly adaptable and facilitate
 
 
 ```mermaid
+---
+title: viral_amp_illumina_pe_assembly
+---
 graph TD
     A[Raw Paired-End Reads] --> B[Human Read Scrubbing<br/>Hostile]
     B --> C[Quality Filtering<br/>SeqyClean]
@@ -40,6 +43,9 @@ graph TD
 ```
 
 ```mermaid
+---
+title: viral_amp_pe_summary
+---
 graph LR
     A[Assembly Workflow Outputs] --> B[Sequence Concatenation]
     A --> C[Results Summarization]
@@ -48,6 +54,9 @@ graph LR
 ```
 
 ```mermaid
+---
+title: viral_amp_wwt_variant_calling
+---
 graph TD
     A[Assembly Workflow Outputs<br/>bam files] --> B[Variant Calling<br/>ivar]
     B --> C[Lineage Deconvolution<br/>Freyja]
