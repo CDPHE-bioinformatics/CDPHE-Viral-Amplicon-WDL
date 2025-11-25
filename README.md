@@ -44,7 +44,7 @@ graph TD
 
 ```mermaid
 ---
-title: viral_amp_pe_summary
+title: viral_amp_illumina_pe_summary
 ---
 graph LR
     A[Assembly Workflow Outputs] --> B[Sequence Concatenation]
