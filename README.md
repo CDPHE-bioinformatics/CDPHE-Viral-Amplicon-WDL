@@ -13,9 +13,7 @@ Our Viral whole genome reference-based assembly workflows are highly adaptable a
 
 <br/>
 
-## Workflows
-
-Below is a list of available and maintained workflows and a brief description of the workflow. A full description of each workflow can be found on each workflow's readme page. 
+## Available Workflows
 
 <br/>
 
@@ -43,11 +41,7 @@ graph TD
     G1[call_consensus_ivar] --> I1
     G1 --> L1
     H1[calc_bam_stats_samtools] --> L1
-    I1[rename_fasta] --> J1
-    I1 --> K1
-    I1 --> L1
-    J1[calc_percent_coverage] --> L1
-    K1[call_clades_nextclade] --> L1
+    I1[FASTA formatting] --> J1
     L1([Assembly Files]) --> M1
     M1[transfer_outputs] --> N1
     N1{{Cloud Bucket}}
