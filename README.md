@@ -54,7 +54,7 @@ graph TD
     B --> E[Generate Mutations Table]
     E --> F[Aggregate Mutations Table]
     D & F --> G[Version Capture]
-    G --> H[Cloud Storage Transfer]
+    G --> H[Cloud Storage Transfer<br/>optional]
 ```
 
 ## Process
