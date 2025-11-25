@@ -43,7 +43,7 @@ graph LR
     A[Assembly Workflow Outputs] --> B[Sequence Concatenation]
     A --> C[Results Summarization]
     C --> D[Summary Report]
-    B & D --> E[Cloud Storage Transfer]
+    B & D --> E[Cloud Storage Transfer<br/>optional task]
 ```
 
 ```mermaid
