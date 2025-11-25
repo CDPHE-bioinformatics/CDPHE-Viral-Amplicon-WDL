@@ -34,10 +34,8 @@ graph TD
     E --> G[Consensus Calling<br/>iVar]
     E --> H[Coverage Stats<br/>Samtools]
     G --> I[FASTA Formatting]
-    I --> J[Coverage Calculation]
-    I --> K[Clade Assignment<br/>Nextclade]
-    B & C & F & G & H & J & K --> L[Assembly Outputs]
-    L --> M[Cloud Storage Transfer]
+    B & C & F & G & H & I --> J[Assembly Outputs]
+    J --> K[Cloud Storage Transfer]
 ```
 
 ```mermaid
