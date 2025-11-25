@@ -7,9 +7,9 @@
 
 ## Overview
 
-The following documentation describes the Colorado Department of Public Health and Environment's workflows for the assembly and analysis of whole genome sequencing data of Viral Amplicon on GCP's Terra.bio platform. Workflows are written in WDL and can be imported into a Terra.bio workspace through dockstore (see Setup section below: https://dockstore.org/).
+The following documentation describes the Colorado Department of Public Health and Environment's workflows for the assembly and analysis of viral amplicon whole genome and targeted sequencing data on GCP's Terra.bio platform. Workflows are written in WDL and can be imported into a Terra.bio workspace through dockstore (see Setup section below: https://dockstore.org/).
 
-Our Viral whole genome reference-based assembly workflows are highly adaptable and facilitate the assembly and analysis of tiled amplicon based sequencing data of Viral samples. The workflows can accommodate various amplicon primer schemes including Artic V1 and Measles (BRAZ/WHO), as well as different sequencing technology platforms such as Illumina. These workflows can be applied to both (1) whole-genome tiled amplicon approaches and (2) targeted sequencing approaches using known primer locations to amplify specific regions of the viral genome.
+Our viral reference-based assembly workflows are highly adaptable and facilitate the assembly and analysis of tiled amplicon based sequencing data of viral samples. The workflows can accommodate various amplicon primer schemes sequenced using Illumina paired-end sequencing. These workflows can be applied to both (1) whole-genome tiled amplicon approaches and (2) targeted sequencing approaches using known primer locations to amplify specific regions of the viral genome.
 
 <br/>
 
@@ -19,9 +19,9 @@ Our Viral whole genome reference-based assembly workflows are highly adaptable a
 
 |Workflow Name | Description |
 |--------------|-------------|
-| ``viral_amp_illumina_pe_assembly`` | Performs reference-based assembly of viral genomes from Illumina paired-end amplicon data. |
-| ``viral_amp_illumina_pe_summary`` | Generates summary statistics and quality metrics from assembled viral genomes. |
-| ``viral_amp_wwt_variant_calling`` | Uses Freyja to estimate relative lineage abundances and variant composition from mixed viral samples (e.g., wastewater). |
+| ``viral_amp_illumina_pe_assembly`` | Performs reference-based assembly of viral genomes or targeted regions from Illumina paired-end amplicon data. |
+| ``viral_amp_illumina_pe_summary`` | Generates summary statistics and quality metrics from assembled viral genomes or targeted regions. |
+| ``viral_amp_wwt_variant_calling`` | Uses Freyja to estimate relative lineage abundances and variant composition from wastewater samples. |
 
 
 ```mermaid
@@ -59,12 +59,12 @@ graph TD
 
 ## Process
 
-### Wastewater Viral sequence assembly and variant calling
-Processing of wastewater viral sequencing data involves three coordinated workflows (Figure 1). The first, ``viral_amp_illumina_pe_assembly``, takes raw paired-end Illumina reads and performs quality control, contamination filtering, primer trimming, reference-guided assembly, variant calling, and consensus genome generation. Intermediate files and consensus sequences are then transferred to a designated Google Cloud bucket(GCP) for storage and downstream access.
+### Viral sequence assembly and variant calling
+Processing of viral sequencing data involves two coordinated workflows (Figure 1). When analyzing wastewater samples, processing of viral sequencing data involves two coordinated workflows (Figure 1). The first, ``viral_amp_illumina_pe_assembly``, takes raw paired-end Illumina reads and performs quality control, contamination filtering, primer trimming, reference-guided assembly, variant calling, and consensus genome generation. Intermediate files and consensus sequences are then transferred to a designated Google Cloud bucket(GCP) for storage and downstream access (optional).
 
-Next, the ``viral_amp_illumina_pe_summary`` workflow aggregates the outputs from multiple samples, concatenates consensus sequences, and generates a comprehensive sequencing results report (including coverage statistics and clade assignments), while also organizing the outputs into a versioned results directory.
+Next, the ``viral_amp_illumina_pe_summary`` workflow aggregates the outputs from multiple samples, concatenates consensus sequences, and generates a comprehensive sequencing results report (including coverage metrics), while also organizing the outputs into a versioned results directory.
 
-Finally, the ``viral_amp_wwt_variant_calling workflow`` applies Freyja to estimate relative lineage abundances in wastewater samples, accounting for the mixed nature of viral populations present. 
+Finally, if wastewater samples are being analyzed, the ``viral_amp_wwt_variant_calling workflow`` applies Freyja to estimate relative lineage abundances in wastewater samples, accounting for the mixed nature of viral populations present. 
 
 
 ## Setup
@@ -83,7 +83,7 @@ To use the workflow on the Terra platform, first you will need to import the wor
 <br/>
 
 ### Workspace Data
-Prior to running any of the workflows, you must set up the Terra workspace data with the correct reference files and custom python scripts. The reference files can be found in this repository in the ``data/workspace_data`` directory. Python scripts can be found in the ``scripts`` directory. Workspace variables are named using the following format ``{organism}_{description}_{file_type}``, except for the primer bed files which are named as ``{description}_{file_type}``. Reference files and python scripts should be copied from this repo into a GCP bucket. The GCP bucket path to the file will serve as the "value" when adding data to the terra workspace data table. 
+Prior to running any of the workflows, you must set up the Terra workspace data with the correct reference files and custom python scripts. Python scripts can be found in the ``scripts`` directory. Workspace variables are named using the following format ``{organism}_{description}_{file_type}``, except for the primer bed files which are named as ``{description}_{file_type}``. Reference files and python scripts should be copied from this repo into a GCP bucket. The GCP bucket path to the file will serve as the "value" when adding data to the terra workspace data table. Alternatively, reference files and scripts can be uploaded and saved as workspace files on Terra.bio, and the backend Terra.bio GCP bucket address can be used.
 
 To add data to the terra workspace data:
 1. Navigate to the Data tab in your Terra workspace.
@@ -98,13 +98,9 @@ Below is a data table detailing the workspace data you will need to set up in or
 |-------------------------|------------|----------------|-----------------|
 | ``adapters_and_contaminants`` | ``viral_amp_illumina_pe_assembly`` | Adapters_plus_PhiX_174.fasta | Adapters and PhiX contaminant sequences removed during FASTQ cleaning and filtering using SeqyClean. Thanks to Erin Young at Utah Public Health Laboratory for providing this file! |
 | ``calc_percent_coverage_py`` | ``viral_amp_illumina_pe_assembly`` | calc_percent_coverage.py | Python script used in the Viral Amplicon assembly workflow to calculate percent genome coverage from consensus sequences. |
-| ``k2_standard_8gb`` | ``viral_amp_wwt_variant_calling`` | k2_standard_08gb_20230605.tar.gz | Kraken2 standard database (8 GB version) used for taxonomic classification during variant calling. |
-| ``viral_amp_braz_primer_bed`` | ``viral_amp_illumina_pe_assembly`` | measles_braz_primers.bed | Primer BED file for the Measles Braz amplicon set used during genome assembly. |
-| ``viral_amp_braz_ref_fasta`` | ``viral_amp_illumina_pe_assembly`` | AF266290_A_Zagreb_vax.fasta | Reference genome FASTA for Measles Braz amplicon assembly workflow. Matches the Zagreb vaccine strain used for assembly. |
-| ``viral_amplicon_braz_ref_gff`` | ``viral_amp_illumina_pe_assembly`` | AF266290_A_Zagreb_vax.gff | Genome annotation file (GFF) corresponding to the Braz reference FASTA used for Measles viral amplicon assembly. |
-| ``viral_amp_imap_primer`` | ``viral_amp_illumina_pe_assembly`` | measles_artic_v-1-0-0_primers.bed | Primer BED file for the Measles ARTIC v1.0.0 (IMAP) primer set used for assembly. |
-| ``viral_amp_imap_ref_fasta`` | ``viral_amp_illumina_pe_assembly`` | NC_001498-1_measles_reference_genome.fasta | Reference genome FASTA for Measles IMAP amplicon assembly. Matches the whole genome reference used by Freyja. |
-| ``viral_amp_imap_ref_gff`` | ``viral_amp_illumina_pe_assembly`` | NC_001498-1_measles_reference_genome.gff | Genome annotation file (GFF) for the Measles IMAP reference genome FASTA. |
+| ``<your_primers_bed>`` | ``viral_amp_illumina_pe_assembly`` | <your_primers>.bed | Primer BED file for the amplicon set used during genome or targeted assembly. |
+| ``<your_ref>_fasta`` | ``viral_amp_illumina_pe_assembly`` | <your_ref>.fasta | Reference genome FASTA that correpsonds to your primer bed file to use for read mapping. |
+| ``<your_ref>_gff`` | ``viral_amp_illumina_pe_assembly`` | <your_ref>.gff | Genome annotation file (GFF) corresponding to the reference fasta used for viral amplicon assembly. If you are running the wastewater workflow. This reference fasta need to match the reference used by Freyja. |
 | ``viral_amp_concat_seq_results_py`` | ``viral_amp_illumina_pe_assembly`` | concat_seq_results.py | Python script used to concatenate sequence metrics and results from the Viral Amplicon assembly workflow. |
 | ``viral_amp_version_capture_py`` | ``viral_amp_illumina_pe_assembly`` | version_capture.py | Generates version capture output files for documenting software versions used in the assembly workflow. |
 | ``viral_amp_version_capture_variant_calling_py`` | ``viral_amp_variant_calling`` | version_capture_viral_amp_variant_calling.py | Generates version capture output files for documenting software versions used in the variant calling workflow. |
