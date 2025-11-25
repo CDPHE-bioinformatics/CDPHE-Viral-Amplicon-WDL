@@ -26,16 +26,17 @@ Our viral reference-based assembly workflows are highly adaptable and facilitate
 
 ```mermaid
 graph TD
-    A[Raw Paired-End Reads] --> B[Quality Filtering<br/>SeqyClean]
-    A --> C[Quality Assessment<br/>FastQC]
-    B --> D[Read Alignment<br/>BWA]
-    D --> E[Primer Trimming<br/>iVar]
-    E --> F[Variant Calling<br/>iVar]
-    E --> G[Consensus Calling<br/>iVar]
-    E --> H[Coverage Stats<br/>Samtools]
-    G --> I[FASTA Formatting]
-    B & C & F & G & H & I --> J[Assembly Workflow Outputs]
-    J --> K[Cloud Storage Transfer<br/>optional task]
+    A[Raw Paired-End Reads] --> B[Human Read Scrubbing<br/>Hostile]
+    B --> C[Quality Filtering<br/>SeqyClean]
+    A & C --> D[Quality Assessment<br/>FastQC]
+    C --> E[Read Alignment<br/>BWA]
+    E --> F[Primer Trimming<br/>iVar]
+    F --> G[Variant Calling<br/>iVar]
+    F --> H[Consensus Calling<br/>iVar]
+    F --> I[Coverage Stats<br/>Samtools]
+    H --> J[FASTA Header Formatting]
+    D & F & G & H & I & J --> K[Assembly Workflow Outputs]
+    K --> L[Cloud Storage Transfer<br/>optional task]
 ```
 
 ```mermaid
