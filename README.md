@@ -28,20 +28,19 @@ Our viral reference-based assembly workflows are highly adaptable and facilitate
 
 File: viral_amp_illumina_pe_assembly.wdl
 
-This workflow was developed for the assembly of Illumina 150 bp paired-end read data using the Illumina Nextera XT library prep protocol. The workflow accepts "sample" as the root entity type. The workflow will:
+This workflow was developed for the assembly of Illumina paired-end read data using the Illumina Nextera XT library prep protocol. The workflow accepts "sample" as the root entity type. The workflow will:
 
 1. Perform human read scrubbing on the fastq files using [hostile](https://github.com/bede/hostile) if `scrub_reads` is set to true.
 2. Use Seqyclean to quality filter and trim raw fastq files
-    - Seqyclean parameters include a minimum read length set to 70 bp and quality trimming set to a minimum Phred quality score of 30.
+    - Seqyclean parameters include a minimum read length set to 25 bp and quality trimming set to a minimum Phred quality score of 30.
 3. Run FastQC on both the raw and cleaned reads
 4. Align reads to the reference genome using bwa and then sort the bam by coordinates using Samtools
 5. Use iVar trim to trim primer regions and then sort the trimmed bam by coordinates using Samtools
 6. Use iVar variants to call variants from the trimmed and sorted bam
-   - iVar variants parameters include a minimum quality score set to 20, a minimum variant base frequency set to 0.6 and a minimum read depth set to 10.
+   - iVar variants parameters include a minimum quality score set to 30, a minimum variant base frequency set to 0.6 and a minimum read depth set to 10.
 7. Use iVar consensus to call the consensus genome sequence from the trimmed and sorted bam
-   - iVar consensus parameters include a minimum quality score set to 20, a minimum variant base frequency set to 0.6 and a minimum read depth set to 10.
+   - iVar consensus parameters include a minimum quality score set to 30, a minimum variant base frequency set to 0.6 and a minimum read depth set to 10.
 8. Use Samtools flagstat, stats, and coverage to output statistics from the bam
-9. Rename the fasta header of consensus sequences in the GISAID-acceptable format: CO-CDPHE-{sample_id}
 
 ```mermaid
 ---
