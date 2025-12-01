@@ -27,6 +27,7 @@ Our viral reference-based assembly workflows are highly adaptable and facilitate
 ## viral_amp_illumina_pe_assembly
 
 File: viral_amp_illumina_pe_assembly.wdl
+
 This workflow was developed for the assembly of Illumina 150 bp paired-end read data using the Illumina Nextera XT library prep protocol. The workflow accepts "sample" as the root entity type. The workflow will:
 
 1. Perform human read scrubbing on the fastq files using [hostile](https://github.com/bede/hostile) if `scrub_reads` is set to true.
@@ -80,7 +81,7 @@ See [setup](setup.md).
 
 #### 3. Setting Up the Workflow Inputs
 
-For setting up the workflow inputs, use the `viral_amp_braz_illumina_pe_assembly.json` for N450 samples and `viral_amp_imap_illumina_pe_assembly.json` for WGS samples in the `inputs` directory.
+For setting up the workflow inputs, use the `viral_amp_braz_illumina_pe_assembly.json` for N450 samples and `viral_amp_imap_illumina_pe_assembly.json` for WGS samples, in the `inputs` directory.
 
 | workflow variable           | attribute (input syntax into workflow)   |
 | --------------------------- | ---------------------------------------- |
@@ -92,7 +93,7 @@ For setting up the workflow inputs, use the `viral_amp_braz_illumina_pe_assembly
 | `fastq_2`                   | this.fastq_2                             |
 | `out_dir`                   | this.out_dir                             |
 | `overwrite`                 | `true` or `false`                        |
-| `viral_amp_primer_bed`      | workspace.viral_amp_braz_primer_bed      |
+| `viral_amp_primer_bed`      | workspace.viral_amp_*_primer_bed      |
 | `project_name`              | this.project_name                        |
 | `sample_name`               | this.{entity_name}\_id                   |
 | `scrub_reads`               | `true` or `false`                        |
@@ -128,14 +129,11 @@ For setting up the workflow inputs, use the `viral_amp_braz_illumina_pe_assembly
 | bam_stats                | samtools flagstat, stats, percent_coverage | `flagstat_out`             | file                                                                                                                    |
 | bam_stats                | samtools flagstat, stats, percent_coverage | `stats_out`                | file                                                                                                                    |
 | bam_stats                | samtools flagstat, stats, percent_coverage | `covhist_out`              | file                                                                                                                    |
-| bam_stats                | samtools flagstat, stats, percent_coverage | `depth_out`                | file
-| bam_stats                | samtools flagstat, stats, percent_coverage | `cov_out`                  | file                                                                                                                    |
-| bam_stats                | samtools flagstat, stats, percent_coverage | `cov_s_gene_amplicons_out` | file                                                                                                                    |
-| bam_stats                | samtools flagstat, stats, percent_coverage | `cov_s_gene_out`           | file                                                                                                                    |
+| bam_stats                | samtools flagstat, stats, percent_coverage | `cov_out`                  | file                                                                                                                    |                                                        
 | rename_fasta             | N/A                                        | `renamed_consensus`        | fasta file; consensus genome sequence with the fasta header renamed to be CO-CDPHE-{sample_name}                        |
-| calc_percent_cvg         | calc_percent_coverage.py                   | `percent_cvg_csv`          | csv file, see calc_percent_cvg.py script readme for details found in the ./python_scripts directory of this repository. |
-| version_capture          | version_capture.py                         | `version_capture_illumina_pe_assembly` | csv file                                                                                                    |
+| version_capture          | version_capture.py                         | `version_capture_file` |  file                                                                                                    |
 | transfer                 | gsutil                                     | `transfer_date_assembly`   | String                                                                                                                  |
+|
 
 ```mermaid
 ---
