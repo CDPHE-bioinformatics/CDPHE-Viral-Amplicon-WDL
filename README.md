@@ -132,11 +132,24 @@ For setting up the workflow inputs, use the `viral_amp_braz_illumina_pe_assembly
 | rename_fasta             | N/A                                        | `renamed_consensus`        | fasta file; consensus genome sequence with the fasta header renamed to be CO-CDPHE-{sample_name}                        |
 | version_capture          | version_capture.py                         | `version_capture_file` |  file                                                                                                    |
 | transfer                 | gsutil                                     | `transfer_date_assembly`   | String                                                                                                                  |
-|
+
+
+## viral_amp_illumina_pe_summary
+
+File: viral_amp_illumina_pe_summary.wdl
+
+The workflow accepts "sample_set" as the root entity type and uses the data table from the assembly workflow. 
+This workflow summarizes results from viral amplicon Illumina paired-end sequencing assembly runs. It processes outputs from the assembly workflow to generate consolidated reports and transfers results to Google Cloud Storage. The workflow performs the following operations:
+
+1. Concatenate Consensus Sequences - Combines all consensus sequences from the sequencing run into a single FASTA file
+2. Summarize Results - Aggregates sequencing metrics, coverage statistics, and metadata into a comprehensive CSV report
+3. Transfer Outputs - Uploads summary files and concatenated sequences to a user-defined Google Cloud Storage bucket
+4. Capture Version Information - Records workflow and tool versions for reproducibility
+
 
 ```mermaid
 ---
-title: viral_amp_illumina_pe_summary
+title: viral_amp_illumina_pe_summary workflow
 ---
 graph LR
     A[Assembly Workflow Outputs] --> B[Sequence Concatenation]
@@ -144,6 +157,50 @@ graph LR
     C --> D[Summary Report]
     B & D --> E[Cloud Storage Transfer<br/>optional task]
 ```
+
+### Inputs
+
+Below is a summary of the workflow input variables along with the syntax used for the attribute column when setting up the workflow to run on Terra.bio. For the attributes, the "this.sample{terra_data table_name}s." syntax tells Terra to pull the variable from the sample-level terra data table. These variables were either in the original terra data table as inputs for the assembly workflow or added as outputs during the assembly workflow (see reference based assembly workflow inputs and outputs sections for more details). The "workspace." syntax tells Terra to pull the variable from the terra workspace data. Workspace data is described in the `Getting Started` drop down menu above.
+
+| workflow variable                                | terra attribute (input syntax into workflow)                          |     |
+| ------------------------------------------------ | --------------------------------------------------------------------- | --- |
+| `concat_seq_results_py`                          | workspace.viral_amp_concat_results_py                                 |     |
+| `cov_out`                                        | this.sample{terra_data_table_name}s.cov_out                           |     |
+| `out_dir_array`                                  | this.sample{terra_data_table_name}s.out_dir                           |     |
+| `overwrite`                                      | `true` or `false`                                                     |     |
+| `project_name_array`                             | this.sample{terra_data_table_name}s.project_name                      |     |
+| `renamed_consensus`                              | this.sample{terra_data_table_name}s.renamed_consensus                 |     |
+| `sample_name`                                    | this.sample{terra_data_table_name}s.sample{terra_data_table_name}\_id |     |
+| `workbook_path_array`                            | this.sample{terra_data_table_name}s.workbook_path                     |     |
+| `assembler_version_array`                        | this.sample{terra_data_table_name}s.assembler_version                 |     | 
+| `workflow_version`                               | this.sample{terra_data_table_name}s.wf_version                        |     |
+| `workflow_version_und`                           | this.sample{terra_data_table_name}s.wf_version_und                    |     |
+
+### Outputs
+
+This workflow generates several output files that are transferred to the user defined user google bucket defined by this.sample{terra_data_table_name}s.out_dir. The table below details each output.  For more details regarding the values in each column, see either the software readmes or the readme for the specific python script listed in the description.
+
+| output variable name                          | file_name                                                               | description                                    | google bucket path                                |
+| --------------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------- |
+| `cat_fastas`                                  | `concatenate_assemblies.fasta`                                          | all consensus sequences from assembly in a single fasta file  | `gs://{user_defined_gcp_bucket}/multifasta/`|
+| `sequencing_results_csv`                      | `{seq_run}_sequencing_results.csv`                                      | summary of the sequencing metrics and lineage/clade assignments for each sequence generated from the `concat_seq_metrics_and_lineage_results.py` script. See the script's readme for more details. | `gs://{user_defined_gcp_bucket}/summary_results/` |
+| `transfer_date`                               | N/A                                                                     | date transfer task was run                     | N/A                                               |
+| `wf_version_output`                           | `version_capture_{workflow_name}_{project_name}_{workflow_version}.csv` | version capture CSV file                       | `gs://{user_defined_gcp_bucket}/summary_results/` |
+
+## viral_amp_wwt_variant_calling
+
+File: viral_amp_wwt_variant_calling.wdl
+
+The workflow accepts "sample_set" as the root entity type and uses the data table from either of the assembly workflows. Both assembly workflows (illumina pe and ont) are compatible with this workflow.
+
+Briefly, the workflow performs the following:
+
+1. Add read groups to the bam files using samtools
+2. Use freyja variants to perform variant calling using freyja and generate a depths filter_reads
+3. Run freyja demix to perform lineage de-convolution and to estimate lineage abundances
+4. Pull out a set of curated VOC-associated mutations from the variants file generated by freyja
+5. Generate a summary of constellations of VOC-associated mutations
+6. Transfer the outputs to a user-defined google bucket
 
 ```mermaid
 ---
@@ -158,6 +215,35 @@ graph TD
     D & F --> G[Version Capture]
     G --> H[Cloud Storage Transfer<br/>optional task]
 ```
+### Inputs
+
+Below is a summary of the workflow input variables along with the syntax used for the attribute column when setting up the workflow to run on Terra.bio. For the attributes, the "this.sample{terra_data table_name}s." syntax tells Terra to pull the variable from the sample-level terra data table. These variables were either in the original terra data table as inputs for the assembly workflow or added as outputs during the assembly workflow (see reference based assembly workflow inputs and outputs sections for more details). The "workspace." syntax tells Terra to pull the variable from the terra workspace data. Workspace data is described in the `Getting Started` drop down menu above.
+
+| workflow variable                        | attribute (input syntax into workflow)                                |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| `covid_genome`                           | workspace.covid_genome                                                |
+| `covid_gff`                              | workspace.covid_genome_gff                                            |
+| `out_dir_array`                          | this.{terra_data_table_names}s.out_dir                                |
+| `overwrite`                              | `true` or `false`                                                     |
+| `project_name_array`                     | `this.{terra_data_table_name}s.project_name                           |
+| `sample_name`                            | this.{terra_data_table_name}s.{terra_data_table_name}_id              |
+| `trimsort_bam`                           | this.{terra_data_table_name}s.trimsort_bam                            |
+| `version_capture_wwt_variant_calling_py` | workspace.covid_version_capture_wastewater_variant_calling_py         |
+
+### Outputs
+
+This workflow generates several output files which are transferred to the user defined google bucket as defined by a string (e.g. "gs://covid_terra/NEXSEQ_101/terra_outputs"). The table below details each output. For more details regarding the values in each column, see either the software readmes or the readme for the specific python script listed in the description.
+
+| output variable name                  | file_name                                                               | description                                            | google bucket path                                                            |
+| ------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `addrg_bam`                           | `{sample_name}_addRG.bam`                                               | ???                                                    | N/A                                                                           |
+| `combined_mutations_tsv`              | `combined_mutations.tsv`                                                | mutation counts for all samples                        | `gs://{user_defined_gcp_bucket}/waste_water_variant_calling/`                 |
+| `variants`                            | `{sample_name}_variants.tsv`                                            | generated for each sample; output from freyja demix    | `gs://{user_defined_gcp_bucket}/waste_water_variant_calling/freyja/`          |
+| `depth`                               | `{sample_name}_depth.tsv`                                               | generated for each sample; output from freyja variants | `gs://{user_defined_gcp_bucket}/waste_water_variant_calling/freyja/`          |
+| `demix`                               | `{sample_name}_demixed.tsv`                                             | generated for each sample; output from freyja demix    | `gs://{user_defined_gcp_bucket}/waste_water_variant_calling/freyja/`          |
+| `demix_aggregated`                    | `demix_aggregated.tsv`                                                  |                                                        | `gs://{user_defined_gcp_bucket}/waste_water_variant_calling/`                 |
+| `transfer_date_wwt_variant_calling`   | N/A                                                                     | date the workflow was run                              | N/A                                                                           |
+| `version_capture_wwt_variant_calling` | `version_capture_{workflow_name}_{project_name}_{workflow_version}.csv` | software versions used in analysis                     | `gs://{user_defined_gcp_bucket}/summary_results/`                             |
 
 ## Process
 
