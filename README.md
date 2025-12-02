@@ -71,8 +71,8 @@ The terra data table must include the following columns as listed below. Note th
 | `fastq_1`          | The google bucket path to the R1 fastq file.                                                     |
 | `fastq_2`          | The google bucket path to the R2 fastq file.                                                     |
 | `out_dir`          | User defined google bucket for where the files will be transferred during the transfer workflows. |
-| `workbook_path`    | (optional; required for lineage calling workflow)                                                |
-| `project_name`     | (optional; required for lineage calling workflow)                                                |
+| `workbook_path`    | (optional; required for summary workflow)                                                         |
+| `project_name`     | (optional; required for summary workflow)                                                |
 
 #### 2. Terra Workspace Data
 
