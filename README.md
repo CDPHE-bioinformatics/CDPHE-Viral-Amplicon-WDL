@@ -46,7 +46,7 @@ This workflow was developed for the assembly of Illumina paired-end read data us
 ---
 title: viral_amp_illumina_pe_assembly
 ---
-graph TD
+graph LR
     A[Raw Paired-End Reads] --> B[Human Read Scrubbing<br/>Hostile]
     B --> C[Quality Filtering<br/>SeqyClean]
     A & C --> D[Quality Assessment<br/>FastQC]
