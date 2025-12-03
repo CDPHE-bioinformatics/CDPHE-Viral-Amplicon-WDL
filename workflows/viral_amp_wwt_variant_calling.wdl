@@ -14,7 +14,7 @@ workflow viral_amp_wwt_variant_calling {
         Boolean overwrite = true
         Boolean transfer_results = true
         Array[String] project_name_array 
-        Array[String] freyja_pathogen
+        String freyja_pathogen
         Array[String] workflow_version
         Array[String] workflow_version_und
 
