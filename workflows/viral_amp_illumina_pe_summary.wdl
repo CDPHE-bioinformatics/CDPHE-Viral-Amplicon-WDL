@@ -16,6 +16,8 @@ workflow viral_amp_illumina_pe_summary {
         Array[File] workbook_path_array
         Array[String] workflow_version
         Array[String] workflow_version_und
+        Boolean transfer_results = true
+
 
         File concat_seq_results_py
     }
@@ -54,11 +56,13 @@ workflow viral_amp_illumina_pe_summary {
         workbook_path = workbook_path
     }
 
-    call summary_tasks.transfer_outputs as transfer_outputs {
-        input:
-            out_dir = "~{out_dir_path}/~{wf_version_und}",
-            cat_fastas = concatenate_consensus.cat_fastas,
-            sequencing_results_csv = summarize_results.sequencing_results_csv,
+    if (transfer_results) {
+      call summary_tasks.transfer_outputs as transfer_outputs {
+          input:
+              out_dir = "~{out_dir_path}/~{wf_version_und}",
+              cat_fastas = concatenate_consensus.cat_fastas,
+              sequencing_results_csv = summarize_results.sequencing_results_csv,
+      }
     }
 
     call version_capture.capture_versions as capture_versions {
