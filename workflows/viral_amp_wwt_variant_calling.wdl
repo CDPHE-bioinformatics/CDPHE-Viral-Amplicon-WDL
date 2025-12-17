@@ -185,7 +185,7 @@ task freyja_demix {
     }
 
     runtime {
-        docker: "staphb/freyja:2.0.1"
+        docker: "staphb/freyja:2.0.2"
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 200 SSD"
@@ -238,7 +238,7 @@ task freyja_aggregate {
     }
 
     runtime {
-        docker: "staphb/freyja:2.0.1"
+        docker: "staphb/freyja:2.0.2"
         memory: "32 GB"
         cpu: 8
         disks: "local-disk 200 SSD"
