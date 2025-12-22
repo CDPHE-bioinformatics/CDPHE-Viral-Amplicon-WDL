@@ -80,5 +80,6 @@ workflow viral_amp_illumina_pe_summary {
         File cat_fastas = concatenate_consensus.cat_fastas
         File sequencing_results_csv = summarize_results.sequencing_results_csv
         String? transfer_date = transfer_outputs.transfer_date 
+        File version_capture_file = capture_versions.output_file
     }
 }
