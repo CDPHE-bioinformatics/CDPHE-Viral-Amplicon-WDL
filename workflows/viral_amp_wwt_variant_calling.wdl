@@ -138,8 +138,8 @@ task variant_calling {
     ivar version | awk '/version/ {print $3}' | tee VERSION_ivar
     samtools --version | awk '/samtools/ {print $2}' | tee VERSION_samtools
 
-    samtools mpileup -A -aa -d 600000 -B -Q 20 -q 0 -f ~{ref} ~{bam} | tee >(cut -f1-4 > ~{sample_name}_depth.tsv) | \
-    ivar variants -p ~{sample_name}_variants.tsv -q 20 -t 0.01 -m 10 -r ~{ref} -g ~{ref_gff}
+    samtools mpileup -A -aa -d 600000 -B -Q 30 -q 30 -f ~{ref} ~{bam} | tee >(cut -f1-4 > ~{sample_name}_depth.tsv) | \
+    ivar variants -p ~{sample_name}_variants.tsv -q 30 -t 0.01 -m 10 -r ~{ref} -g ~{ref_gff}
     
     >>>
 
