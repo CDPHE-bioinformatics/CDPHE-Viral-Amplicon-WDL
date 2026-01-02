@@ -62,6 +62,7 @@ workflow viral_amp_illumina_pe_summary {
               out_dir = "~{out_dir_path}/~{wf_version_und}",
               cat_fastas = concatenate_consensus.cat_fastas,
               sequencing_results_csv = summarize_results.sequencing_results_csv,
+              version_capture_file = capture_versions.output_file
       }
     }
 
