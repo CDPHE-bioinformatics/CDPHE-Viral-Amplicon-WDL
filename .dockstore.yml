@@ -1,0 +1,12 @@
+version: 1.2
+
+workflows:
+  - name: viral_amp_illumina_pe_assembly
+    subclass: WDL
+    primaryDescriptorPath: /workflows/viral_amp_illumina_pe_assembly.wdl
+  - name: viral_amp_illumina_pe_summary
+    subclass: WDL
+    primaryDescriptorPath: /workflows/viral_amp_illumina_pe_summary.wdl
+  - name: viral_amp_wwt_variant_calling
+    subclass: WDL
+    primaryDescriptorPath: /workflows/viral_amp_wwt_variant_calling.wdl

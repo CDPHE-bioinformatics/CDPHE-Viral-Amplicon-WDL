@@ -1,0 +1,13 @@
+{
+    "viral_amp_illumina_pe_assembly.project_name": "Measles_test",
+    "viral_amp_illumina_pe_assembly.sample_name": "2503120184-braz",
+    "viral_amp_illumina_pe_assembly.fastq_1": "/home/rojina_sapkota/MEASLES/preprocess/test_measles_0005_miseq/fastq_files/2503120184-braz_R1.fastq",
+    "viral_amp_illumina_pe_assembly.fastq_2": "/home/rojina_sapkota/MEASLES/preprocess/test_measles_0005_miseq/fastq_files/2503120184-braz_R2.fastq",
+    "viral_amp_illumina_pe_assembly.contam_fasta": "/home/rojina_sapkota/Viralamp_wdl_test/general_Adapters_plus_PhiX_174.fasta",
+    "viral_amp_illumina_pe_assembly.viral_amp_nextclade_organism_id": "measles",
+    "viral_amp_illumina_pe_assembly.viral_amp_primer_bed": "/home/rojina_sapkota/Viralamp_wdl_test/measles_braz_primers.bed",
+    "viral_amp_illumina_pe_assembly.viral_amp_ref_fasta": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.fasta",
+    "viral_amp_illumina_pe_assembly.viral_amp_ref_gff": "/home/rojina_sapkota/Viralamp_wdl_test/NC_001498-1_measles_reference_genome.gff",
+    "viral_amp_illumina_pe_assembly.analysis_date": "2025-10-20",
+    "viral_amp_illumina_pe_assembly.out_dir": "/home/rojina_sapkota/CDPHE-Viral-Amplicon-WDL/workflows"
+}

@@ -1,0 +1,11 @@
+{
+    "viral_amp_illumina_pe_summary.sample_name": "${this.sample_name}",
+    "viral_amp_illumina_pe_summary.renamed_consensus": "${this.renamed_consensus}",
+    "viral_amp_illumina_pe_summary.cov_out": "${this.cov_out}",
+    "viral_amp_illumina_pe_summary.out_dir_array": "${this.sample_name}.out_dir",
+    "viral_amp_illumina_pe_summary.project_name_array": "${this.sample_name}.project_name",
+    "viral_amp_illumina_pe_summary.assembler_version_array": "${this.assembler_version_array}",
+    "viral_amp_illumina_pe_summary.workbook_path_array": "${this.workbook_path_array}",
+    "viral_amp_illumina_pe_summary.concat_seq_results_py": "${workspace.viral_amp_concat_seq_results_py}"
+}
+
