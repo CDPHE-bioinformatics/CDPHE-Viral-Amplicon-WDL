@@ -146,6 +146,7 @@ workflow viral_amp_illumina_pe_assembly {
     call version_capture.capture_versions as capture_versions {
         input:
             version_array = select_first([version_array_with_hostile, version_array]),
+            sample_name = sample_name,
             workflow_name = workflow_name,
             workflow_version = workflow_version,
             project_name = project_name,
