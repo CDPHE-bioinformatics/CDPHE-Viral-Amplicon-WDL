@@ -99,7 +99,8 @@ workflow viral_amp_wwt_variant_calling {
         ),
         ("viral_amp_wwt_variant_calling", [
             combine_mutations_tsv.combined_mutations_tsv,
-            freyja_aggregate.demix_aggregated
+            freyja_aggregate.demix_aggregated,
+            version_cap.output_file
         ])
     ]}
 
