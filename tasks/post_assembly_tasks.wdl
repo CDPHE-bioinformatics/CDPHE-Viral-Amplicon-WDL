@@ -124,7 +124,7 @@ task transfer_outputs {
         gsutil -m cp ~{cov_out} ~{out_dir_path}/bam_stats/
                        
         gsutil -m cp ~{renamed_consensus} ~{out_dir_path}/assemblies/
-        gsutil -m cp ~{version_capture_file} ~{out_dir_path}/summary_results/
+        gsutil -m cp ~{version_capture_file} ~{out_dir_path}/summary_results/assembly/
                        
         TRANSFER_DATE=$(date)
         echo "$TRANSFER_DATE" | tee TRANSFER_DATE
