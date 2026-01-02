@@ -62,6 +62,7 @@ task transfer_outputs {
         String out_dir
         File cat_fastas
         File sequencing_results_csv
+        File version_capture_file
     }
 
     String outdirpath = sub(out_dir, "/$", "")
@@ -69,6 +70,7 @@ task transfer_outputs {
     command <<<
         gsutil -m cp ~{cat_fastas} ~{outdirpath}/multifasta/
         gsutil -m cp ~{sequencing_results_csv} ~{outdirpath}/summary_results/
+        gsutil -m cp ~{version_capture_file} ~{outdirpath}/versions/
 
         TRANSFER_DATE=$(date)
         echo "$TRANSFER_DATE" | tee TRANSFER_DATE
